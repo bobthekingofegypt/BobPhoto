@@ -26,12 +26,14 @@ NSInteger IndexFromIndexPath(NSIndexPath *path, NSInteger entriesPerRow) {
 			entryPadding = _entryPadding,
 			entrySize = _entrySize,
 			startingIndexPath,
-			endingIndexPath;
+			endingIndexPath,
+            numberOfEntriesPerRow = _numberOfEntriesPerRow;
 
 
 
 - (id)initWithFrame:(CGRect)frame {
-	if (self = [super initWithFrame:frame]) {
+    self = [super initWithFrame:frame];
+	if (self) {
 		self.datasource = nil;
 		self.bsgViewDelegate = nil;
 		
@@ -60,6 +62,9 @@ NSInteger IndexFromIndexPath(NSIndexPath *path, NSInteger entriesPerRow) {
 		self.alwaysBounceHorizontal = NO;
 		
 		self.autoresizesSubviews = NO;
+        
+        _contentInsetsPortrait = UIEdgeInsetsMake(66.0f, 2.0f, 2.0f, 2.0f);
+        _contentInsetsLandscape = UIEdgeInsetsMake(50.0f, 2.0f, 2.0f, 2.0f);
 	}
 	
 	return self;
@@ -283,6 +288,13 @@ NSInteger IndexFromIndexPath(NSIndexPath *path, NSInteger entriesPerRow) {
 
 -(void) reloadDataAnimated:animated {
 	
+    UIInterfaceOrientation orientation = [[UIDevice currentDevice] orientation];
+    if (UIInterfaceOrientationIsPortrait(orientation)) {
+        self.contentInset = _contentInsetsPortrait;
+    } else {
+        self.contentInset = _contentInsetsLandscape;
+    }
+    
 	[startingIndexPath release], startingIndexPath = nil;
 	[endingIndexPath release], endingIndexPath = nil;
 	
@@ -300,9 +312,6 @@ NSInteger IndexFromIndexPath(NSIndexPath *path, NSInteger entriesPerRow) {
 	[self removeAllVisibleItems];
 	
 	oldBounds = self.bounds;
-	//[self redrawForLocation:self.contentOffset animated:animated];
-	//[self setNeedsLayout];
-	//TODO check the bounds is inside this new content size
 }
 
 -(void) removeAllVisibleItems {
@@ -384,70 +393,18 @@ NSInteger IndexFromIndexPath(NSIndexPath *path, NSInteger entriesPerRow) {
 
 -(void) layoutSubviews {
 	[super layoutSubviews];
-	//NSLog(@"Layout,  %@", NSStringFromCGRect(self.bounds));
-	
 	if (entriesOnScreen == _entryCount) {
 		return;
 	}
-	
 	if (_entrySize.width == 0 || _entrySize.height == 0) {
 		return;
 	}
 	
-	if (!CGRectEqualToRect(oldBounds, self.bounds)) {
-		
-		
-		//[self reloadDataAnimated:YES];
-	}
-	
 	[self redrawForLocation:self.contentOffset];
-	
-}
-
--(void) prepareForOrientationChange:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
-	//NSLog(@"Prep");
-	//NSArray *entries = [visibleEntries allValues];
-	//[UIView beginAnimations:nil context:NULL];
-	//[UIView setAnimationDuration:0.12];
-	//[UIView setAnimationRepeatAutoreverses:NO];
-	//for (BSGEntryView *entry in entries) {
-	///	entry.alpha = 0;
-	//}
-	//[UIView commitAnimations];
-	[startingIndexPath release], startingIndexPath = nil;
-	[endingIndexPath release], endingIndexPath = nil;
-	
-	_entryCount = [self.datasource entryCount];
-	_numberOfEntriesPerRow = [self.datasource numberOfEntriesPerRow];
-	_numberOfRows = ceil(_entryCount / (double)_numberOfEntriesPerRow);
-	
-	NSInteger entryWidthWithPadding = (self.entrySize.width + self.entryPadding.left + self.entryPadding.right);
-	NSInteger entryHeightWithPadding = (self.entrySize.height + self.entryPadding.top + self.entryPadding.bottom);
-	_entrySizeWithPadding = CGSizeMake(entryWidthWithPadding, entryHeightWithPadding);
-	
-	NSInteger contentWidth = ceil((_entrySizeWithPadding.width) * _numberOfEntriesPerRow);
-	NSInteger contentHeight = ceil((_entrySizeWithPadding.height) * _numberOfRows);
-	self.contentSize = CGSizeMake(contentWidth, contentHeight);
-	
-	oldBounds = self.bounds;
-	oldVisibleEntries = [visibleEntries copy];
-	[visibleEntries removeAllObjects];
-	
-	if (UIInterfaceOrientationIsLandscape(toInterfaceOrientation)) {
-		
-		NSIndexPath *rotationStartingIndex = [NSIndexPath indexPathForRow:0 inSection:4];
-		NSIndexPath *rotationEndingIndex = [NSIndexPath indexPathForRow:5 inSection:6];
-		
-		//[self addNewVisibleEntriesForStartingIndex:rotationStartingIndex andEndingIndex:rotationEndingIndex animated:NO];
-		[self redrawForLocation:CGPointMake(0.0f, 0.0f) animated:YES];
-	}
-	
-	//[self reloadDataAnimated:YES];
-	//[self redrawForLocation:self.contentOffset animated:YES];
 }
 
 
--(NSSet *) visibleEntries {
+-(NSArray *) visibleEntries {
     return [visibleEntries allValues];
 }
 

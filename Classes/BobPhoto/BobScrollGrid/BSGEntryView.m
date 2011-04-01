@@ -23,15 +23,16 @@
 		selectedBackgroundView.alpha = 0.4;
 		selectedBackgroundView.hidden = YES;
 		
-		//[self addSubview:backgroundView];
+		[self addSubview:backgroundView];
 		[self addSubview:selectedBackgroundView];
-		//[self addSubview:contentView];
+		[self addSubview:contentView];
     }
     return self;
 }
 
 -(void) prepareForReuse {
-	
+	_selected = NO;
+    _highlighted = NO;
 }
 
 -(void) setSelected:(BOOL)selected animated:(BOOL)animated {

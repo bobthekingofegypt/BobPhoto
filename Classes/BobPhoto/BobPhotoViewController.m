@@ -14,9 +14,6 @@
         operationQueue = [[NSOperationQueue alloc] init];
         [operationQueue setMaxConcurrentOperationCount:3];
         bobCache = [[BobCache alloc] initWithCapacity:100];
-        
-        _contentInsetsPortrait = UIEdgeInsetsMake(66.0f, 2.0f, 2.0f, 2.0f);
-        _contentInsetsLandscape = UIEdgeInsetsMake(50.0f, 2.0f, 2.0f, 2.0f);
 		
 		numberOfEntriesPerRow = 4;
     }
@@ -45,7 +42,6 @@
 	_bsgView.datasource = self;
 	_bsgView.bsgViewDelegate = self;
 	_bsgView.alwaysBounceVertical = YES;
-	_bsgView.contentInset = _contentInsetsPortrait;
 	
 	_bsgView.entrySize = CGSizeMake(75, 75);
 	_bsgView.entryPadding = UIEdgeInsetsMake(2.0f, 2.0f, 2.0f, 2.0f);
@@ -60,13 +56,6 @@
 }
 
 -(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-	if (interfaceOrientation == UIInterfaceOrientationLandscapeLeft || interfaceOrientation == UIInterfaceOrientationLandscapeRight) {
-		numberOfEntriesPerRow = 6;
-        _bsgView.contentInset = _contentInsetsLandscape;
-	} else {
-		numberOfEntriesPerRow = 4;
-        _bsgView.contentInset = _contentInsetsPortrait;
-	}
 	return YES;
 }
 
@@ -75,7 +64,7 @@
 }
 
 -(BSGEntryView *)bsgView:(BSGView *)bsgView viewForEntryAtIndexPath:(NSIndexPath *)indexPath {
-	NSInteger index = IndexFromIndexPath(indexPath, numberOfEntriesPerRow);
+	NSInteger index = IndexFromIndexPath(indexPath, _bsgView.numberOfEntriesPerRow);
 	DiskThumbEntryView *entry = (DiskThumbEntryView *)[bsgView dequeReusableEntry:@"Bob"];
 	
 	if (entry == nil) {
@@ -103,7 +92,11 @@
 }
 
 -(NSInteger) numberOfEntriesPerRow {
-	return numberOfEntriesPerRow;
+    UIInterfaceOrientation orientation = [[UIDevice currentDevice] orientation];
+    if (UIInterfaceOrientationIsPortrait(orientation)) {
+        return 4;
+    } 
+    return 6;
 }
 
 @end
