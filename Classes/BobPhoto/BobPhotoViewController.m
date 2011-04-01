@@ -14,10 +14,20 @@
         operationQueue = [[NSOperationQueue alloc] init];
         [operationQueue setMaxConcurrentOperationCount:3];
         bobCache = [[BobCache alloc] initWithCapacity:100];
+        
+        _contentInsetsPortrait = UIEdgeInsetsMake(66.0f, 2.0f, 2.0f, 2.0f);
+        _contentInsetsLandscape = UIEdgeInsetsMake(50.0f, 2.0f, 2.0f, 2.0f);
 		
 		numberOfEntriesPerRow = 4;
     }
     return self;
+}
+
+- (void)dealloc {
+	[_photos release];
+	[_thumbnailImages release];
+	[_bsgView release];
+    [super dealloc];
 }
 
 - (void)loadView {
@@ -35,9 +45,7 @@
 	_bsgView.datasource = self;
 	_bsgView.bsgViewDelegate = self;
 	_bsgView.alwaysBounceVertical = YES;
-    _bsgView.delegate = self;
-	
-	_bsgView.contentInset = UIEdgeInsetsMake(66.0f, 2.0f, 2.0f, 2.0f);
+	_bsgView.contentInset = _contentInsetsPortrait;
 	
 	_bsgView.entrySize = CGSizeMake(75, 75);
 	_bsgView.entryPadding = UIEdgeInsetsMake(2.0f, 2.0f, 2.0f, 2.0f);
@@ -47,22 +55,23 @@
 	[backgroundView release];
 }
 
+-(void) viewWillAppear:(BOOL)animated {
+    [_bsgView reloadData];
+}
+
 -(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
 	if (interfaceOrientation == UIInterfaceOrientationLandscapeLeft || interfaceOrientation == UIInterfaceOrientationLandscapeRight) {
 		numberOfEntriesPerRow = 6;
+        _bsgView.contentInset = _contentInsetsLandscape;
 	} else {
 		numberOfEntriesPerRow = 4;
+        _bsgView.contentInset = _contentInsetsPortrait;
 	}
 	return YES;
 }
 
 -(void) willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
-	//[_bsgView prepareForOrientationChange:toInterfaceOrientation duration:duration];
-	NSLog(@"Will rotate");
-}
-
--(void) didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
-	[_bsgView reloadData];
+    [_bsgView reloadData];
 }
 
 -(BSGEntryView *)bsgView:(BSGView *)bsgView viewForEntryAtIndexPath:(NSIndexPath *)indexPath {
@@ -70,22 +79,15 @@
 	DiskThumbEntryView *entry = (DiskThumbEntryView *)[bsgView dequeReusableEntry:@"Bob"];
 	
 	if (entry == nil) {
-		entry = [[[DiskThumbEntryView alloc] initWithFrame:CGRectMake(0, 0, 75, 75) andReuseIdentifier:@"Bob"] autorelease];
+		entry = [[[DiskThumbEntryView alloc] initWithFrame:CGRectMake(0, 0, _bsgView.entrySize.width, _bsgView.entrySize.height) 
+                                        andReuseIdentifier:@"Bob"] autorelease];
         entry.bobCache = bobCache;
         entry.operationQueue = operationQueue;
 	} 
 	
-	//UIImage *image = [_thumbnailImages objectForKey:[NSNumber numberWithInt:index]];
-	//if (!image) {
     BobDiskPhoto *photo = (BobDiskPhoto *)[_photos objectAtIndex:index];
-		//image = [UIImage imageNamed:photo.thumbnailLocation];
-		//[_thumbnailImages setObject:image forKey:[NSNumber numberWithInt:index]];
-	//}
 	[entry setPath:photo.thumbnailLocation];
-    
-    if (check) {
-        [entry triggerDownload];
-    }
+    [entry triggerDownload];
 	return entry;
 }
 
@@ -96,49 +98,12 @@
 	[controller release];
 }
 
-
 -(NSInteger) entryCount {
 	return _photos.count;
 }
 
 -(NSInteger) numberOfEntriesPerRow {
 	return numberOfEntriesPerRow;
-}
-
-- (void)dealloc {
-	[_photos release];
-	[_thumbnailImages release];
-	[_bsgView release];
-    [super dealloc];
-}
-
--(void) loadImagesForOnscreenRows {
-    NSArray *rows = [_bsgView visibleEntries];
-    for (DiskThumbEntryView *view in rows) {
-        [view triggerDownload];
-    }
-}
-
--(void) scrollViewWillBeginDragging:(UIScrollView *)scrollView {
-    //check = NO;
-}
-
-// Load images for all onscreen rows when scrolling is finished
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
-{
-    NSLog(@"BNABafdaf");
-    if (!decelerate)
-    {
-        //NSLog(@"BNABafdaf");
-        check = YES;
-        [self loadImagesForOnscreenRows];
-    }
-    //NSLog(@"TEETETETET");
-}
-
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
-{
-    [self loadImagesForOnscreenRows];
 }
 
 @end

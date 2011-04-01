@@ -30,15 +30,18 @@
 -(void) loadView {
 	[super loadView];	
 	[self setWantsFullScreenLayout:YES];
-	
+    
 	_bobPageScrollView = [[BobPageScrollView alloc] initWithFrame:CGRectMake(0.0f,0.0f,self.view.frame.size.width, self.view.frame.size.height)];
 	_bobPageScrollView.padding = 10.0f;
 	_bobPageScrollView.datasource = self;
 	_bobPageScrollView.currentIndex = currentIndex;
-	
+    [_bobPageScrollView reloadData];
+    
 	[self.view addSubview:_bobPageScrollView];
-	
-	[_bobPageScrollView reloadData];
+}
+
+-(void) viewWillAppear:(BOOL)animated {
+     [_bobPageScrollView reloadData];
 }
 
 -(void) setCurrentIndex:(NSUInteger)index {
@@ -48,13 +51,6 @@
 -(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
 	return YES;
 }
-
-
-//- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
-//	
-//	[super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
-//	
-///}
 
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 										 duration:(NSTimeInterval)duration {
