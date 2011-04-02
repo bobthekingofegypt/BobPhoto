@@ -96,7 +96,6 @@ NSInteger IndexFromIndexPath(NSIndexPath *path, NSInteger entriesPerRow) {
 	BSGEntryView *entry = [visibleEntries objectForKey:key];
 
 	if (entry != nil) {
-			//NSLog(@"Path %@", key);
 		[[entry retain] autorelease];
 		[entry removeFromSuperview];
 		[visibleEntries removeObjectForKey:key];
@@ -139,27 +138,20 @@ NSInteger IndexFromIndexPath(NSIndexPath *path, NSInteger entriesPerRow) {
 	 }
 }
 
--(void) drawEntryAtPointX:(NSInteger)x andY:(NSInteger)y animated:animated {
+-(void) drawEntryAtPointX:(NSInteger)x andY:(NSInteger)y {
 	NSIndexPath *key = [NSIndexPath indexPathForRow:y inSection:x];
-	//NSLog(@"X: %d, Y: %d", x, y);
 	NSInteger index = IndexFromIndexPath(key, _numberOfEntriesPerRow);
 	if (index >= _entryCount) {
 		return;
 	}
 	BSGEntryView *entry = [self.datasource bsgView:self viewForEntryAtIndexPath:key];
-	//[entry removeFromSuperview];
-	//NSLog(@"Entry %@", entry.superview);
+	
 	NSInteger xPoint = (x * _entrySizeWithPadding.width) + self.entryPadding.left;
 	NSInteger yPoint = (y * _entrySizeWithPadding.height) + self.entryPadding.top;
 	entry.frame = CGRectMake(xPoint, yPoint, self.entrySize.width, self.entrySize.height);
 	
-	//NSLog(@"Key %@", key);
-	//NSLog(@"X - %d, %f", xPoint, (self.contentOffset.x + self.frame.size.width));
-	//NSLog(@"Y - %d, %f", yPoint, (self.contentOffset.y + self.frame.size.height));
 	if (xPoint > (self.contentOffset.x + self.frame.size.width)) {
-		//NSLog(@"TRUE");
 		xPoint = self.contentOffset.x + self.frame.size.width;
-		
 	}
 	if (yPoint > (self.contentOffset.y + self.frame.size.height)) {
 		yPoint = self.contentOffset.y + self.frame.size.height;
@@ -167,15 +159,8 @@ NSInteger IndexFromIndexPath(NSIndexPath *path, NSInteger entriesPerRow) {
 	}
 	
 	if (!entry.superview) {
-		//NSLog(@"Adding");
 		if (!self.dragging) {
-			//entry.alpha = 0;
 			[self addSubview:entry];
-			//[UIView beginAnimations:nil context:NULL];
-			//[UIView setAnimationDuration:0.12];
-			//[UIView setAnimationRepeatAutoreverses:NO];
-			//entry.alpha = 1;
-			//[UIView commitAnimations];
 		} else {
 			[self addSubview:entry];
 		}
@@ -194,8 +179,7 @@ NSInteger IndexFromIndexPath(NSIndexPath *path, NSInteger entriesPerRow) {
 }
 
 -(void) addNewVisibleEntriesForStartingIndex:(NSIndexPath *)newStartingIndex 
-							   andEndingIndex:(NSIndexPath *)newEndingIndex
-									animated:(BOOL)animated {
+							   andEndingIndex:(NSIndexPath *)newEndingIndex {
 	BOOL movedBackwards = (startingIndexPath.section > newStartingIndex.section);
 	BOOL movedUp = (startingIndexPath.row > newStartingIndex.row);
 	
@@ -210,7 +194,7 @@ NSInteger IndexFromIndexPath(NSIndexPath *path, NSInteger entriesPerRow) {
 			NSIndexPath *key = [NSIndexPath indexPathForRow:y inSection:x];
 			if ([visibleEntries objectForKey:key])
 				continue;
-				[self drawEntryAtPointX:(NSInteger)x andY:(NSInteger)y animated:animated];
+				[self drawEntryAtPointX:(NSInteger)x andY:(NSInteger)y];
 			
 		}
 	}
@@ -225,17 +209,12 @@ NSInteger IndexFromIndexPath(NSIndexPath *path, NSInteger entriesPerRow) {
 			
 			if ([visibleEntries objectForKey:key])
 				continue;
-			[self drawEntryAtPointX:(NSInteger)x andY:(NSInteger)y animated:animated];
+			[self drawEntryAtPointX:(NSInteger)x andY:(NSInteger)y];
 		}
 	}
 }
 
-
-- (void)redrawForLocation:(CGPoint)scrollLocation {
-    [self redrawForLocation:scrollLocation animated:NO];
-}
-
-- (void)redrawForLocation:(CGPoint)scrollLocation animated:(BOOL)animated {    
+- (void)redrawForLocation:(CGPoint)scrollLocation {    
 	NSInteger minXIndex = MAX(floor(scrollLocation.x / _entrySizeWithPadding.width), 0);
 	NSInteger maxXIndex = MIN(ceil((scrollLocation.x + self.frame.size.width) / _entrySizeWithPadding.width), 
 							  _numberOfEntriesPerRow);
@@ -248,7 +227,7 @@ NSInteger IndexFromIndexPath(NSIndexPath *path, NSInteger entriesPerRow) {
 	NSIndexPath *newEndingIndex = [NSIndexPath indexPathForRow:maxYIndex inSection:maxXIndex];
 	
 	[self removePreviouslyVisibleEntriesForStartingIndex:newStartingIndex andEndingIndex:newEndingIndex];	
-	[self addNewVisibleEntriesForStartingIndex:newStartingIndex andEndingIndex:newEndingIndex animated:animated];
+	[self addNewVisibleEntriesForStartingIndex:newStartingIndex andEndingIndex:newEndingIndex];
 	
 	self.startingIndexPath = [[NSIndexPath indexPathForRow:minYIndex inSection:minXIndex] retain];
 	self.endingIndexPath = [[NSIndexPath indexPathForRow:maxYIndex inSection:maxXIndex] retain];
@@ -283,16 +262,12 @@ NSInteger IndexFromIndexPath(NSIndexPath *path, NSInteger entriesPerRow) {
 }
 
 -(void) reloadData {
-	[self reloadDataAnimated:NO];
-}
-
--(void) reloadDataAnimated:animated {
 	
     UIInterfaceOrientation orientation = [[UIDevice currentDevice] orientation];
-    if (UIInterfaceOrientationIsPortrait(orientation)) {
-        self.contentInset = _contentInsetsPortrait;
-    } else {
+    if (UIInterfaceOrientationIsLandscape(orientation)) {
         self.contentInset = _contentInsetsLandscape;
+    } else {
+        self.contentInset = _contentInsetsPortrait;
     }
     
 	[startingIndexPath release], startingIndexPath = nil;

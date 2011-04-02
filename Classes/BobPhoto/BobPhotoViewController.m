@@ -10,6 +10,7 @@
 - (id)init {
     self = [super init];
     if (self) {
+        _photos = [[NSMutableArray alloc] init];
 		_thumbnailImages = [[NSMutableDictionary alloc] initWithCapacity:[_photos count]];
         operationQueue = [[NSOperationQueue alloc] init];
         [operationQueue setMaxConcurrentOperationCount:3];
@@ -24,6 +25,9 @@
 	[_photos release];
 	[_thumbnailImages release];
 	[_bsgView release];
+    [operationQueue release];
+    [bobCache release];
+    
     [super dealloc];
 }
 
@@ -31,13 +35,9 @@
 	[super loadView];
 	self.wantsFullScreenLayout = YES;
 	[[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleBlackTranslucent];
-	
 	self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
-	UIView *backgroundView = [[UIView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame]];
-	backgroundView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-	backgroundView.backgroundColor = [UIColor greenColor];
-	
-	_bsgView = [[BSGView alloc] initWithFrame:CGRectMake(0.0f, 0.0f,backgroundView.frame.size.width, backgroundView.frame.size.height)];
+
+	_bsgView = [[BSGView alloc] initWithFrame:CGRectMake(0.0f, 0.0f,self.view.frame.size.width, self.view.frame.size.height)];
 	_bsgView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 	_bsgView.datasource = self;
 	_bsgView.bsgViewDelegate = self;
@@ -46,9 +46,8 @@
 	_bsgView.entrySize = CGSizeMake(75, 75);
 	_bsgView.entryPadding = UIEdgeInsetsMake(2.0f, 2.0f, 2.0f, 2.0f);
 	[_bsgView reloadData];
-	[backgroundView addSubview:_bsgView];
-	self.view = backgroundView;
-	[backgroundView release];
+    
+	[self.view addSubview:_bsgView];
 }
 
 -(void) viewWillAppear:(BOOL)animated {
