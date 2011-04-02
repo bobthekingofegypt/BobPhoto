@@ -42,6 +42,7 @@
 	_bsgView.datasource = self;
 	_bsgView.bsgViewDelegate = self;
 	_bsgView.alwaysBounceVertical = YES;
+    _bsgView.preCacheColumnCount = 15;
 	
 	_bsgView.entrySize = CGSizeMake(75, 75);
 	_bsgView.entryPadding = UIEdgeInsetsMake(2.0f, 2.0f, 2.0f, 2.0f);

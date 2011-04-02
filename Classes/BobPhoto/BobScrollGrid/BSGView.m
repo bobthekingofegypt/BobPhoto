@@ -27,7 +27,8 @@ NSInteger IndexFromIndexPath(NSIndexPath *path, NSInteger entriesPerRow) {
 			entrySize = _entrySize,
 			startingIndexPath,
 			endingIndexPath,
-            numberOfEntriesPerRow = _numberOfEntriesPerRow;
+            numberOfEntriesPerRow = _numberOfEntriesPerRow,
+            preCacheColumnCount;
 
 
 
@@ -65,6 +66,8 @@ NSInteger IndexFromIndexPath(NSIndexPath *path, NSInteger entriesPerRow) {
         
         _contentInsetsPortrait = UIEdgeInsetsMake(66.0f, 2.0f, 2.0f, 2.0f);
         _contentInsetsLandscape = UIEdgeInsetsMake(50.0f, 2.0f, 2.0f, 2.0f);
+        
+        preCacheColumnCount = 0;
 	}
 	
 	return self;
@@ -189,8 +192,8 @@ NSInteger IndexFromIndexPath(NSIndexPath *path, NSInteger entriesPerRow) {
 	NSInteger startY = movedUp ? newStartingIndex.row : endingIndexPath.row;
 	NSInteger endY = movedUp ? startingIndexPath.row : newEndingIndex.row;
 	
-	for (NSInteger x = startX; x < endX; ++x) {
-		for (NSInteger y = newStartingIndex.row; y < newEndingIndex.row; ++y) {
+    for (NSInteger y = newStartingIndex.row; y < newEndingIndex.row; ++y) {
+        for (NSInteger x = startX; x < endX; ++x) {
 			NSIndexPath *key = [NSIndexPath indexPathForRow:y inSection:x];
 			if ([visibleEntries objectForKey:key])
 				continue;
@@ -220,7 +223,7 @@ NSInteger IndexFromIndexPath(NSIndexPath *path, NSInteger entriesPerRow) {
 							  _numberOfEntriesPerRow);
 	
 	NSInteger minYIndex = MAX(floor(scrollLocation.y / _entrySizeWithPadding.height), 0);
-	NSInteger maxYIndex =  MIN(ceil((scrollLocation.y + self.frame.size.height) / _entrySizeWithPadding.height), 
+	NSInteger maxYIndex =  MIN((ceil((scrollLocation.y + self.frame.size.height) / _entrySizeWithPadding.height) + preCacheColumnCount), 
 							   _numberOfRows);
 	
 	NSIndexPath *newStartingIndex = [NSIndexPath indexPathForRow:minYIndex inSection:minXIndex];

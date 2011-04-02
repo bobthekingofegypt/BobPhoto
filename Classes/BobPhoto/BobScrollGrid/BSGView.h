@@ -35,6 +35,8 @@
     
     UIEdgeInsets _contentInsetsLandscape;
     UIEdgeInsets _contentInsetsPortrait;
+    
+    NSInteger preCacheColumnCount;
 }
 
 @property (nonatomic, assign) id<BSGDatasource> datasource;
@@ -42,6 +44,7 @@
 @property (nonatomic, assign) UIEdgeInsets entryPadding;
 @property (nonatomic, assign) CGSize entrySize;
 @property (nonatomic, readonly) NSInteger numberOfEntriesPerRow;
+@property (nonatomic, assign) NSInteger preCacheColumnCount;
 
 -(id) initWithFrame:(CGRect)frame;
 -(void) reloadData;
