@@ -56,6 +56,11 @@
 }
 
 -(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+    if (UIInterfaceOrientationIsPortrait(interfaceOrientation)) {
+        numberOfEntriesPerRow = 4;
+    } else {
+        numberOfEntriesPerRow = 6;
+    }
 	return YES;
 }
 
@@ -64,7 +69,7 @@
 }
 
 -(BSGEntryView *)bsgView:(BSGView *)bsgView viewForEntryAtIndexPath:(NSIndexPath *)indexPath {
-	NSInteger index = IndexFromIndexPath(indexPath, _bsgView.numberOfEntriesPerRow);
+	NSInteger index = IndexFromIndexPath(indexPath, [self numberOfEntriesPerRow]);
 	DiskThumbEntryView *entry = (DiskThumbEntryView *)[bsgView dequeReusableEntry:@"Bob"];
 	
 	if (entry == nil) {
@@ -92,11 +97,7 @@
 }
 
 -(NSInteger) numberOfEntriesPerRow {
-    UIInterfaceOrientation orientation = [[UIDevice currentDevice] orientation];
-    if (UIInterfaceOrientationIsPortrait(orientation)) {
-        return 4;
-    } 
-    return 6;
+    return numberOfEntriesPerRow;
 }
 
 @end

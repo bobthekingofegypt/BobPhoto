@@ -99,7 +99,7 @@
 }
 
 -(void) viewDidAppear:(BOOL)animated {
-    [self loadImagesForOnscreenRows];
+    
 }
 
 
