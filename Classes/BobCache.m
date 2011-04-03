@@ -1,11 +1,3 @@
-//
-//  BobCache.m
-//  BobPhoto
-//
-//  Created by Richard Martin on 12/03/2011.
-//  Copyright 2011 Richard Martin. All rights reserved.
-//
-
 #import "BobCache.h"
 
 
@@ -27,9 +19,7 @@
 -(id) objectForKey:(NSString *) key {
     [lock lock];    
     id object = [entries objectForKey:key];
-    //NSLog(@"CACHE reqest for key - %@", key);
     if (object != nil) {
-        //NSLog(@"CACHE HIT for key - %@", key);
         [keys removeObject:key];
         [keys insertObject:key atIndex:0];
     }
@@ -39,7 +29,6 @@
 
 -(void) addObject:(id) object forKey:(NSString *)key {
     [lock lock];
-    //NSLog(@"add for key - %@", key);
     if (capacity_ == keys.count) {
          
         id lastKey = [keys lastObject];

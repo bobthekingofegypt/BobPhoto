@@ -5,12 +5,12 @@
 
 
 @interface DiskThumbEntryView : BSGEntryView {
+    @private
 	UIImage *image;
     BobDiskLoadOperation *_bobDiskLoadOperation;
     BobCache *bobCache;
     NSOperationQueue *operationQueue;
     NSString *path_;
-    //UIImageView *imageView;
 }
 
 @property (nonatomic, retain) BobDiskLoadOperation *bobDiskLoadOperation;

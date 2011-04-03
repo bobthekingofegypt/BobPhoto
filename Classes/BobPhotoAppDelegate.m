@@ -66,9 +66,6 @@
 #pragma mark Memory management
 
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
-    //UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Memory warning" message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-	//[alert show];
-	//[alert release];
     NSLog(@"MEMORY WARNING !!!!!!!");
 }
 
