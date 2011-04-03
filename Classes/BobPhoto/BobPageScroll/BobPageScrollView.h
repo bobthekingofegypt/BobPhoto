@@ -16,6 +16,8 @@
 	NSMutableDictionary *visiblePages;
 	
 	NSUInteger currentIndex;
+    
+    
 }
 
 @property (nonatomic, assign) id<BobPageScrollViewDatasource> datasource;

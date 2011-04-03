@@ -12,7 +12,6 @@
 -(id) init {
 	if ((self = [super init])) {
 		self.title = @"Disk Gallery";
-		_photos = [[NSMutableArray alloc] init];
 		[_photos addObject:[self createBobPhotoWithThumbnail:@"5212023604_f20ea1fb5d_o_thumb.png" andImage:@"5212023604_f20ea1fb5d_o_medium.jpg"]];
 		[_photos addObject:[self createBobPhotoWithThumbnail:@"5212030714_14f06c4504_o_thumb.jpg" andImage:@"5212030714_14f06c4504_o_medium.jpg"]];
         [_photos addObject:[self createBobPhotoWithThumbnail:@"5212033470_abe76aaf15_o_thumb.png" andImage:@"5212033470_abe76aaf15_o_medium.jpg"]];

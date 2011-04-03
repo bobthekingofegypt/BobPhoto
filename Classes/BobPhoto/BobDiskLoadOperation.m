@@ -14,6 +14,14 @@
     return self;
 }
 
+-(void) dealloc {
+    [location_ release];
+    [image_ release];
+    [bobCache release];
+    
+    [super dealloc];
+}
+
 -(void)main {
     NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
     NSString *path = [[NSBundle mainBundle] pathForResource:location_ ofType:nil];
@@ -61,13 +69,6 @@
     UIImage *i = [UIImage imageWithCGImage:imageRef];
     [bobCache addObject:i forKey:location_];
     [delegate loadImage:i];
-}
-
--(void) dealloc {
-    [location_ release];
-    [image_ release];
-    
-    [super dealloc];
 }
 
 @end

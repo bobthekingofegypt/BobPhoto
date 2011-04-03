@@ -1,14 +1,17 @@
 #import <UIKit/UIKit.h>
 #import "BobPageScrollView.h"
 #import "BobCache.h"
+#import "BobPhotoPage.h"
 
-@interface BobPhotoPageController : UIViewController<BobPageScrollViewDatasource> {
+@interface BobPhotoPageController : UIViewController<BobPageScrollViewDatasource, BobPhotoPageTouchDelegate> {
 	NSMutableArray *_photos;
-    NSMutableDictionary *_photoOperations;
 	BobPageScrollView *_bobPageScrollView;
 	NSUInteger currentIndex;
     NSOperationQueue *operationQueue;
     BobCache *bobCache;
+    
+    @private 
+    BOOL showingChrome;
 }
 
 @property (nonatomic, retain) NSOperationQueue *operationQueue;

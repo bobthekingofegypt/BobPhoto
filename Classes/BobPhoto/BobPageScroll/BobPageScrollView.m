@@ -198,7 +198,6 @@
 #pragma mark ScrollView delegate methods
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-	//NSLog(@"dragging %d, zooming %d, decelerating %d, zoombouncing %d", pagedScrollView.dragging, pagedScrollView.zooming, pagedScrollView.decelerating, pagedScrollView.zoomBouncing);
 	if (pagedScrollView.dragging && !(!pagedScrollView.dragging && pagedScrollView.decelerating)) {
 		[self layoutPages];
 	}

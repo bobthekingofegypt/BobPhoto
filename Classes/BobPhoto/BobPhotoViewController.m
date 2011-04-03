@@ -36,7 +36,8 @@
 	self.wantsFullScreenLayout = YES;
 	[[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleBlackTranslucent];
 	self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
-
+    self.navigationController.toolbarHidden = NO;
+    self.navigationController.toolbar.barStyle = UIBarStyleBlackTranslucent;
 	_bsgView = [[BSGView alloc] initWithFrame:CGRectMake(0.0f, 0.0f,self.view.frame.size.width, self.view.frame.size.height)];
 	_bsgView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 	_bsgView.datasource = self;
@@ -46,7 +47,6 @@
 	
 	_bsgView.entrySize = CGSizeMake(75, 75);
 	_bsgView.entryPadding = UIEdgeInsetsMake(2.0f, 2.0f, 2.0f, 2.0f);
-	[_bsgView reloadData];
     
 	[self.view addSubview:_bsgView];
 }

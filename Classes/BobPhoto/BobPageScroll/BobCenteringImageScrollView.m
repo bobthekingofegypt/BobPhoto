@@ -7,7 +7,7 @@
 
 @implementation BobCenteringImageScrollView
 
-@synthesize manualZooming = _manualZooming;
+@synthesize manualZooming = _manualZooming, touchDelegate;
 
 -(id) initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
@@ -70,8 +70,6 @@
         minScale = maxScale;
     }
 	
-    //NSLog(@"Scale %f, %f, %@", xScale, maxScale, NSStringFromCGSize(boundsSize));
-    
 	self.zoomScale = 1.0f;
     self.contentSize = imageSize;
     self.maximumZoomScale = maxScale;
@@ -80,7 +78,6 @@
 
 
 -(void) setImage:(UIImage *)image {
-    //NSLog(@"SET IMAGE");
     if (!image) {
         _imageView.image = nil;
         _imageView.frame = CGRectMake(0.0f, 0.0f, self.bounds.size.width, self.bounds.size.height);
@@ -99,8 +96,6 @@
 }
 
 -(void) updateFrame:(CGRect)theFrame {
-    //NSLog(@"GAGAGA");
-    //self.frame = theFrame;
     if (CGRectEqualToRect(old, theFrame)) {
         return;
     }
@@ -112,7 +107,7 @@
     old = theFrame;
     
     BOOL isMin = (self.zoomScale == self.minimumZoomScale);
-    float old = self.zoomScale;
+    float oldZoomScale = self.zoomScale;
           
     self.zoomScale = 1.0f;
     _imageView.frame = CGRectMake(0.0f, 0.0f, _imageView.image.size.width, _imageView.image.size.height);
@@ -122,7 +117,7 @@
     if (isMin) {
         self.zoomScale = self.minimumZoomScale;
     } else {
-        self.zoomScale = old;
+        self.zoomScale = oldZoomScale;
     }
 }
 
@@ -143,7 +138,7 @@
 #pragma mark TapDetectingImageView Delegate methods
 
 -(void)tapDetectingImageView:(TapDetectingImageView *)view singleTapAtPoint:(CGPoint)tapPoint {
-	//inform the scroll view to show chrome
+	[touchDelegate bobCenteringImageScrollViewSingleClicked:self];
 }
 
 -(void)tapDetectingImageView:(TapDetectingImageView *)view doubleTapAtPoint:(CGPoint)tapPoint {

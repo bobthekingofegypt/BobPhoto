@@ -16,6 +16,14 @@
     return self;
 }
 
+-(void) dealloc {
+    [keys release];
+    [entries release];
+    [lock release];
+    
+    [super dealloc];
+}
+
 -(id) objectForKey:(NSString *) key {
     [lock lock];    
     id object = [entries objectForKey:key];

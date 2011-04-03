@@ -11,19 +11,20 @@
     self = [super init];
 	if (self) {
 		_photos = [photos retain];
-        _photoOperations = [[NSMutableDictionary alloc] init];
         bobCache = [[BobCache alloc] initWithCapacity:3];
 		
 		currentIndex = index;
+        showingChrome = YES;
 	}
 	
 	return self;
 }
 
 - (void)dealloc {
+    [bobCache release];
+    [operationQueue release];
 	[_bobPageScrollView release];
 	[_photos release];
-    [_photoOperations release];
     [super dealloc];
 }
 
@@ -52,11 +53,6 @@
 	return YES;
 }
 
-- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-										 duration:(NSTimeInterval)duration {
-	//[_bobPageScrollView reloadData];
-}
-
 -(void) didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
     [_bobPageScrollView reloadData];
 }
@@ -64,7 +60,6 @@
 -(void) didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
-
 
 -(void)viewDidUnload {
     [super viewDidUnload];
@@ -80,21 +75,25 @@
 
 -(BobPage *) bobPageScrollView:(BobPageScrollView *)bobPageScrollView pageForIndex:(NSUInteger)index {
 	static NSString *reuseIdentifier = @"PhotoPage";
-	NSLog(@"TEST %d", index);
 	BobPhotoPage *page = (BobPhotoPage *)[bobPageScrollView dequeueReusablePageWithIdentifier:reuseIdentifier];
 	if (!page) {
 		page = [[[BobPhotoPage alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 320.0f, 480.0f) andReuseIdentifier:reuseIdentifier] autorelease];
         page.bobCache = bobCache;
         page.operationQueue = operationQueue;
+        page.touchDelegate = self;
 	}
 	
 	BobDiskPhoto *photo = (BobDiskPhoto *)[_photos objectAtIndex:index];
-    //BobDiskLoadOperation *bobDiskLoadOperation = (BobDiskLoadOperation *)[_photoOperations objectForKey:[NSNumber numberWithInt:index]];
-   
-    
     [page setPath:[photo imageLocation]];
 	
 	return page;
+}
+
+-(void) photoViewTouched:(BobPhotoPage *)bobPhotoPage {
+    showingChrome = showingChrome ? NO : YES;
+    [[UIApplication sharedApplication] setStatusBarHidden:!showingChrome animated:YES];
+    [self.navigationController setNavigationBarHidden:!showingChrome animated:YES];
+    [self.navigationController setToolbarHidden:!showingChrome animated:YES];
 }
 
 @end
