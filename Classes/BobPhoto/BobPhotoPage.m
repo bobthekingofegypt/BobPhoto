@@ -3,7 +3,7 @@
 
 @implementation BobPhotoPage
 
-@synthesize bobDiskLoadOperation = _bobDiskLoadOperation, bobCache, operationQueue, touchDelegate;
+@synthesize bobDiskLoadOperation = _bobDiskLoadOperation, bobCache, operationQueue, touchDelegate, bobThumbnailCache;
 
 - (id)initWithFrame:(CGRect)frame andReuseIdentifier:(NSString *)reuseIdentifier {
     if ((self = [super initWithFrame:frame andReuseIdentifier:reuseIdentifier])) {
@@ -14,7 +14,7 @@
 		[self addSubview:_scrollView];
         
         loadingView = [[LoadingView alloc] initWithFrame:frame];
-        [self addSubview:loadingView];
+        //[self addSubview:loadingView];
     }
     return self;
 }
@@ -56,12 +56,19 @@
 #pragma mark -
 #pragma mark BobPageImage Methods
 
--(void) setPath:(NSString *) path {
-    path_ = [path copy];
-    UIImage *image = [bobCache objectForKey:path];
+-(void) setPath:(id<BobPhoto>) bobPhoto {
+    path_ = [[bobPhoto imageLocation] copy];
+    UIImage *image = [bobCache objectForKey:path_];
     if (image == nil) {
-        [self addSubview:loadingView];
-        BobDiskLoadOperation *bobDiskLoadOperation = [[[BobDiskLoadOperation alloc] initWithLocation:path] autorelease];
+        if (bobThumbnailCache) {
+            UIImage *thumbnail = [bobThumbnailCache objectForKey:[bobPhoto thumbnailLocation]];
+            if (thumbnail) {
+                [_scrollView setScaledThumbnail:thumbnail];
+                [self setNeedsLayout];
+            }
+        }
+        //[self addSubview:loadingView];
+        BobDiskLoadOperation *bobDiskLoadOperation = [[[BobDiskLoadOperation alloc] initWithLocation:path_] autorelease];
         bobDiskLoadOperation.delegate = self;
         bobDiskLoadOperation.bobCache = bobCache;
         [operationQueue addOperation:bobDiskLoadOperation];

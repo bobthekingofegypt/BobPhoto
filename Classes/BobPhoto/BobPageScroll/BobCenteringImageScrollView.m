@@ -76,8 +76,32 @@
     self.minimumZoomScale = minScale;
 }
 
+-(void) setImageToBoundsSize:(CGSize)boundsSize andImageSize:(CGSize)imageSize {	
+    CGFloat xScale = boundsSize.width / imageSize.width; 
+    CGFloat yScale = boundsSize.height / imageSize.height;
+    CGFloat minScale = MIN(xScale, yScale);
+	
+	self.zoomScale = 1.0f;
+    self.contentSize = imageSize;
+    self.maximumZoomScale = minScale;
+    self.minimumZoomScale = 1.0f;
+}
+
+
+-(void) setScaledThumbnail:(UIImage *) image {
+    thumbnail = YES;
+    
+    CGSize imageSize = image.size;
+    _imageView.image = image;
+    _imageView.frame = CGRectMake(0.0f, 0.0f, imageSize.width, imageSize.height);
+	
+    [self setImageToBoundsSize:self.bounds.size andImageSize:imageSize];
+    self.zoomScale = self.maximumZoomScale;
+    [self setNeedsLayout];
+}
 
 -(void) setImage:(UIImage *)image {
+     
     if (!image) {
         _imageView.image = nil;
         _imageView.frame = CGRectMake(0.0f, 0.0f, self.bounds.size.width, self.bounds.size.height);
@@ -86,6 +110,15 @@
         self.maximumZoomScale = 1.0f;
         self.minimumZoomScale = 1.0f;
     } else {
+        if (thumbnail) {
+            _imageView.image = nil;
+            _imageView.frame = CGRectMake(0.0f, 0.0f, self.bounds.size.width, self.bounds.size.height);
+            self.zoomScale = 1.0f;
+            self.contentSize = self.bounds.size;
+            self.maximumZoomScale = 1.0f;
+            self.minimumZoomScale = 1.0f;
+            thumbnail = NO;
+        }
         CGSize imageSize = image.size;
         _imageView.image = image;
         _imageView.frame = CGRectMake(0.0f, 0.0f, imageSize.width, imageSize.height);
@@ -105,14 +138,23 @@
         return;
     }
     old = theFrame;
+    oldSize = theFrame.size;
     
     BOOL isMin = (self.zoomScale == self.minimumZoomScale);
     float oldZoomScale = self.zoomScale;
           
-    self.zoomScale = 1.0f;
-    _imageView.frame = CGRectMake(0.0f, 0.0f, _imageView.image.size.width, _imageView.image.size.height);
-           
-    [self setScrollViewZoomScalesForBounds:theFrame.size andImageSize:_imageView.image.size];
+    if (thumbnail) {
+        if (CGSizeEqualToSize(oldSize, theFrame.size)) {
+            return;
+        }
+        self.zoomScale = 1.0f;
+        _imageView.frame = CGRectMake(0.0f, 0.0f, _imageView.image.size.width, _imageView.image.size.height);
+        [self setImageToBoundsSize:theFrame.size andImageSize:_imageView.image.size];
+    } else {
+        self.zoomScale = 1.0f;
+        _imageView.frame = CGRectMake(0.0f, 0.0f, _imageView.image.size.width, _imageView.image.size.height);
+        [self setScrollViewZoomScalesForBounds:theFrame.size andImageSize:_imageView.image.size];
+    }
           
     if (isMin) {
         self.zoomScale = self.minimumZoomScale;

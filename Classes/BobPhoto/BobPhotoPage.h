@@ -4,6 +4,7 @@
 #import "BobDiskLoadOperation.h"
 #import "BobCache.h"
 #import "LoadingView.h"
+#import "BobPhoto.h"
 
 @protocol BobPhotoPageTouchDelegate;
 
@@ -15,14 +16,16 @@
     NSString *path_;
     LoadingView *loadingView;
     id<BobPhotoPageTouchDelegate> touchDelegate;
+    BobCache *bobThumbnailCache;
 }
 
 @property (nonatomic, retain) BobDiskLoadOperation *bobDiskLoadOperation;
 @property (nonatomic, retain) BobCache *bobCache;
 @property (nonatomic, retain) NSOperationQueue *operationQueue;
 @property (nonatomic, assign) id<BobPhotoPageTouchDelegate> touchDelegate;
+@property (nonatomic, retain) BobCache *bobThumbnailCache;
 
--(void) setPath:(NSString *) location;
+-(void) setPath:(id<BobPhoto>) bobPhoto;
 
 @end
 

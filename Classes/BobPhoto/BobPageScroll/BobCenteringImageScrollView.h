@@ -8,12 +8,15 @@
 	TapDetectingImageView *_imageView;
 	BOOL _manualZooming;
     CGRect old;
+    CGSize oldSize;
     id<BobCenteringImageScrollViewDelegate> touchDelegate;
+    BOOL thumbnail;
 }
 
 @property (nonatomic, assign) id<BobCenteringImageScrollViewDelegate> touchDelegate;
 @property (nonatomic,assign, getter=isManualZooming) BOOL manualZooming;
 
+-(void) setScaledThumbnail:(UIImage *) image;
 -(void) setImage:(UIImage *)image;
 -(void) updateFrame:(CGRect)theFrame;
 

@@ -88,6 +88,7 @@
 -(void) didSelectEntryAtIndexPath:(NSIndexPath *) index {
 	BobPhotoPageController *controller = [[BobPhotoPageController alloc] initWithPhotos:_photos andCurrentIndex:IndexFromIndexPath(index, numberOfEntriesPerRow)];
     controller.operationQueue = operationQueue;
+    controller.bobThumbnailCache = bobCache;
 	[self.navigationController pushViewController:controller animated:YES];
 	[controller release];
 }

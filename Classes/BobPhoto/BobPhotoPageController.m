@@ -5,7 +5,7 @@
 
 @implementation BobPhotoPageController
 
-@synthesize operationQueue;
+@synthesize operationQueue, bobThumbnailCache;
 
 -(id) initWithPhotos:(NSMutableArray *)photos andCurrentIndex:(NSUInteger)index {
     self = [super init];
@@ -79,12 +79,13 @@
 	if (!page) {
 		page = [[[BobPhotoPage alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 320.0f, 480.0f) andReuseIdentifier:reuseIdentifier] autorelease];
         page.bobCache = bobCache;
+        page.bobThumbnailCache = bobThumbnailCache;
         page.operationQueue = operationQueue;
         page.touchDelegate = self;
 	}
 	
 	BobDiskPhoto *photo = (BobDiskPhoto *)[_photos objectAtIndex:index];
-    [page setPath:[photo imageLocation]];
+    [page setPath:photo];
 	
 	return page;
 }

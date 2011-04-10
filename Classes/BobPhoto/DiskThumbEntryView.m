@@ -50,7 +50,7 @@
 -(void) setPath:(NSString *) path {
     path_ = [path copy];
     UIImage *theImage = [bobCache objectForKey:path];
-    if (!theImage) {
+    if (theImage) {
         [self setImage:theImage];
     } 
 }
