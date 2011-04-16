@@ -49,6 +49,7 @@
 	_bsgView.entryPadding = UIEdgeInsetsMake(2.0f, 2.0f, 2.0f, 2.0f);
     
 	[self.view addSubview:_bsgView];
+    
 }
 
 -(void) viewWillAppear:(BOOL)animated {
@@ -61,12 +62,19 @@
     } else {
         numberOfEntriesPerRow = 6;
     }
+     [_bsgView prepareOrientationChange];
 	return YES;
 }
 
 -(void) willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
-    [_bsgView reloadData];
+    
 }
+
+-(void) didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
+   
+}
+
+
 
 -(BSGEntryView *)bsgView:(BSGView *)bsgView viewForEntryAtIndexPath:(NSIndexPath *)indexPath {
 	NSInteger index = IndexFromIndexPath(indexPath, [self numberOfEntriesPerRow]);

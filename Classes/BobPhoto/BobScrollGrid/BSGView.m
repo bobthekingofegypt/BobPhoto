@@ -6,6 +6,8 @@ NSInteger IndexFromIndexPath(NSIndexPath *path, NSInteger entriesPerRow) {
 	return (path.row * entriesPerRow) + path.section;
 }
 
+
+
 @interface BSGView ()
 @property (nonatomic, retain) NSIndexPath *startingIndexPath;
 @property (nonatomic, retain) NSIndexPath *endingIndexPath;
@@ -195,9 +197,24 @@ NSInteger IndexFromIndexPath(NSIndexPath *path, NSInteger entriesPerRow) {
     for (NSInteger y = newStartingIndex.row; y < newEndingIndex.row; ++y) {
         for (NSInteger x = startX; x < endX; ++x) {
 			NSIndexPath *key = [NSIndexPath indexPathForRow:y inSection:x];
-			if ([visibleEntries objectForKey:key])
+            BSGEntryView *entry = [visibleEntries objectForKey:key];
+			if (entry) {
+//                NSInteger xPoint = (x * _entrySizeWithPadding.width) + self.entryPadding.left;
+//                NSInteger yPoint = (y * _entrySizeWithPadding.height) + self.entryPadding.top;
+//                NSLog(@"Old - %@", NSStringFromCGRect(entry.frame));
+//                entry.frame = CGRectMake(xPoint, yPoint, self.entrySize.width, self.entrySize.height);
+//                NSLog(@"new - %@", NSStringFromCGRect(entry.frame));
+//                
+//                if (xPoint > (self.contentOffset.x + self.frame.size.width)) {
+//                    xPoint = self.contentOffset.x + self.frame.size.width;
+//                }
+//                if (yPoint > (self.contentOffset.y + self.frame.size.height)) {
+//                    yPoint = self.contentOffset.y + self.frame.size.height;
+//                
+//                }
 				continue;
-				[self drawEntryAtPointX:(NSInteger)x andY:(NSInteger)y];
+            }
+            [self drawEntryAtPointX:(NSInteger)x andY:(NSInteger)y];
 			
 		}
 	}
@@ -289,6 +306,51 @@ NSInteger IndexFromIndexPath(NSIndexPath *path, NSInteger entriesPerRow) {
 	[self removeAllVisibleItems];
 	
 	oldBounds = self.bounds;
+}
+
+-(void) prepareOrientationChange {
+    [self reloadData];
+    return;
+    UIInterfaceOrientation orientation = [[UIDevice currentDevice] orientation];
+    if (UIInterfaceOrientationIsLandscape(orientation)) {
+        self.contentInset = _contentInsetsLandscape;
+    } else {
+        self.contentInset = _contentInsetsPortrait;
+    }
+    
+    [startingIndexPath release], startingIndexPath = nil;
+	[endingIndexPath release], endingIndexPath = nil;
+    
+    NSInteger previousNumberOfEntriesPerRow = _numberOfEntriesPerRow;
+    NSInteger previousNumberOfRows = _numberOfRows;
+    
+    _numberOfEntriesPerRow = [self.datasource numberOfEntriesPerRow];
+	_numberOfRows = ceil(_entryCount / (double)_numberOfEntriesPerRow);
+    
+    entriesOnScreen = 0;
+    
+    NSInteger contentWidth = ceil((_entrySizeWithPadding.width) * _numberOfEntriesPerRow);
+	NSInteger contentHeight = ceil((_entrySizeWithPadding.height) * _numberOfRows);
+	self.contentSize = CGSizeMake(contentWidth, contentHeight);
+    
+    //NSMutableDictionary *correctedIndexes = [[NSMutableDictionary alloc] initWithCapacity:visibleEntries.count];
+    
+    NSArray *indexes = [visibleEntries allKeys];
+	for (NSIndexPath *indexPath in indexes) {
+        NSInteger index = IndexFromIndexPath(indexPath, previousNumberOfEntriesPerRow);
+        NSInteger row = index / _numberOfEntriesPerRow;
+        NSInteger section = index % _numberOfEntriesPerRow;
+        
+        NSIndexPath *newIndexPath = [NSIndexPath indexPathForRow:row inSection:section];
+        
+        //NSLog(@"Previous index = %@, new = %@", indexPath, newIndexPath);
+        
+        //[correctedIndexes setObject:[visibleEntries objectForKey:indexPath] forKey:newIndexPath];
+		//[self removeVisibleItemForX:index.section andY:index.row];
+	}
+    //[visibleEntries release];
+    //visibleEntries = correctedIndexes;
+    NSLog(@"DONE");
 }
 
 -(void) removeAllVisibleItems {

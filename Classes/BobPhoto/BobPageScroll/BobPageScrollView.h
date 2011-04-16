@@ -16,7 +16,7 @@
 	NSMutableDictionary *visiblePages;
 	
 	NSUInteger currentIndex;
-    
+    NSUInteger numberOfPages;
     
 }
 
@@ -26,6 +26,7 @@
 
 -(void) reloadData;
 -(BobPage *) dequeueReusablePageWithIdentifier:(NSString *)identifier;
+-(void) scrollToPage:(NSUInteger)page animated:(BOOL)animated;
 
 @end
 

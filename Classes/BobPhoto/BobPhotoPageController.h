@@ -13,6 +13,12 @@
     
     @private 
     BOOL showingChrome;
+    
+    NSTimer *slideshowTimer;
+    BOOL playingSlideshow;
+    UIBarButtonItem *play;
+    UIBarButtonItem *left;
+    UIBarButtonItem *right;
 }
 
 @property (nonatomic, retain) NSOperationQueue *operationQueue;

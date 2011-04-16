@@ -61,9 +61,9 @@
 #pragma mark BobPageScrollView methods
 
 -(void) reloadData {
-	NSUInteger pageCount = [self numberOfPages];
+	numberOfPages = [self numberOfPages];
 	pagedScrollView.frame = [self calculateFrameSize];
-	pagedScrollView.contentSize = [self calculateContentSize:pageCount];
+	pagedScrollView.contentSize = [self calculateContentSize:numberOfPages];
 	
 	if (!pagedScrollView.dragging) {
 		pagedScrollView.contentOffset = CGPointMake(currentIndex * pagedScrollView.frame.size.width, 0.0f);
@@ -191,6 +191,16 @@
 
 -(BobPage *) pageForIndex:(NSUInteger)index {
 	return [self.datasource bobPageScrollView:self pageForIndex:index];
+}
+
+#pragma mark -
+#pragma mark Position view methods
+
+-(void) scrollToPage:(NSUInteger)page animated:(BOOL)animated {
+    CGSize pageSize = CGSizeMake((self.bounds.size.width + (2 * self.padding)), self.bounds.size.height);
+    NSInteger x = page * pageSize.width;
+    [pagedScrollView scrollRectToVisible:CGRectMake(x, 0, pageSize.width, pageSize.height) animated:NO];
+    [self layoutPages];
 }
 
 

@@ -50,6 +50,7 @@
 -(void) reloadData;
 -(BSGEntryView *) dequeReusableEntry:(NSString *)reuseIdentifier;
 -(NSArray *) visibleEntries;
+-(void) prepareOrientationChange;
 
 @end
 

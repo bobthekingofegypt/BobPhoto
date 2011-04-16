@@ -33,7 +33,8 @@
         CGContextRef context = UIGraphicsGetCurrentContext();
         CGContextFillRect(context, rect);
     } else {
-        [image drawAtPoint:CGPointMake(1.0f,1.0f)];
+        //[image drawInRect:CGRectMake(1.0f,1.0f,self.frame.size.width - 2.0f,self.frame.size.height - 2.0f)];
+        [image drawAtPoint:CGPointMake(1.0f, 1.0f)];
     }
 }
 

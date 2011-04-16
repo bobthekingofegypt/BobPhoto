@@ -3,6 +3,11 @@
 #import "BobDiskPhoto.h"
 #import "BobPhotoPage.h"
 
+@interface BobPhotoPageController()
+-(void) setupArrows;
+-(void) updateChrome;
+@end
+
 @implementation BobPhotoPageController
 
 @synthesize operationQueue, bobThumbnailCache;
@@ -21,6 +26,9 @@
 }
 
 - (void)dealloc {
+    [left release];
+    [play release];
+    [right release];
     [bobCache release];
     [operationQueue release];
 	[_bobPageScrollView release];
@@ -37,8 +45,66 @@
 	_bobPageScrollView.datasource = self;
 	_bobPageScrollView.currentIndex = currentIndex;
     [_bobPageScrollView reloadData];
-    
+   
 	[self.view addSubview:_bobPageScrollView];
+    
+    
+    UIBarButtonItem *space = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    left = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"left.png"] style:UIBarButtonItemStylePlain target:self action:@selector(leftButtonPressed)];
+    play = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"play.png"] style:UIBarButtonItemStylePlain target:self action:@selector(playSlideShow)];
+    right = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"right.png"] style:UIBarButtonItemStylePlain target:self action:@selector(rightButtonPressed)];
+    self.toolbarItems = [NSArray arrayWithObjects:space, left, space, play, space, right, space, nil];
+    
+    [space release];
+    [self setupArrows];
+}
+
+-(void) setupArrows {
+   
+    if (_bobPageScrollView.currentIndex == 0) {
+        left.enabled = NO;
+    } else if (_bobPageScrollView.currentIndex == ([_photos count] - 1)) {
+        right.enabled = NO;
+    }
+}
+
+-(void) leftButtonPressed {
+    if (_bobPageScrollView.currentIndex  > 0) {
+        [_bobPageScrollView scrollToPage:(_bobPageScrollView.currentIndex - 1) animated:NO];
+         right.enabled = YES;
+        [self setupArrows];
+    }
+}
+
+-(void) rightButtonPressed {
+    if (_bobPageScrollView.currentIndex  < ([_photos count] - 1)) {
+        [_bobPageScrollView scrollToPage:(_bobPageScrollView.currentIndex + 1) animated:NO];
+        left.enabled = YES;
+        [self setupArrows];
+    }
+}
+
+-(void) changePage {
+    playingSlideshow = YES;
+    [self rightButtonPressed];
+}
+
+-(void) playSlideShow {
+    if (playingSlideshow) {
+        if (slideshowTimer) {
+            [slideshowTimer invalidate];
+            [slideshowTimer release], slideshowTimer = nil;
+            playingSlideshow = NO;
+        }
+    } else {
+        if (!slideshowTimer) {
+            slideshowTimer = [[NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(changePage) userInfo:nil repeats:YES] retain];
+        }
+        [play setImage:[UIImage imageNamed:@"pause.png"]];
+        showingChrome = NO;
+        [self updateChrome];
+        playingSlideshow = YES;
+    }
 }
 
 -(void) viewWillAppear:(BOOL)animated {
@@ -92,6 +158,18 @@
 
 -(void) photoViewTouched:(BobPhotoPage *)bobPhotoPage {
     showingChrome = showingChrome ? NO : YES;
+    
+    if (slideshowTimer) {
+        [slideshowTimer invalidate];
+        [slideshowTimer release], slideshowTimer = nil;
+        playingSlideshow = NO;
+        [play setImage:[UIImage imageNamed:@"play.png"]];
+    }
+    
+    [self updateChrome];
+}
+
+-(void) updateChrome {
     [[UIApplication sharedApplication] setStatusBarHidden:!showingChrome animated:YES];
     [self.navigationController setNavigationBarHidden:!showingChrome animated:YES];
     [self.navigationController setToolbarHidden:!showingChrome animated:YES];
