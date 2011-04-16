@@ -28,13 +28,21 @@
 #pragma mark draw methods
 
 -(void) drawRect:(CGRect)rect {
+    CGContextRef context = UIGraphicsGetCurrentContext();
     if (!image) {
         [[UIColor lightGrayColor] set];
-        CGContextRef context = UIGraphicsGetCurrentContext();
         CGContextFillRect(context, rect);
     } else {
-        //[image drawInRect:CGRectMake(1.0f,1.0f,self.frame.size.width - 2.0f,self.frame.size.height - 2.0f)];
         [image drawAtPoint:CGPointMake(1.0f, 1.0f)];
+        CGPoint addLines[] = {
+            CGPointMake(0.0f, 0.0f),
+            CGPointMake(rect.size.width, 0.0f),
+            CGPointMake(rect.size.width, rect.size.height),
+            CGPointMake(0.0f, rect.size.height),
+            CGPointMake(0.0f, 0.0f)
+        };
+        CGContextAddLines(context, addLines, sizeof(addLines)/sizeof(addLines[0]));
+        CGContextStrokePath(context);
     }
 }
 
