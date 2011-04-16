@@ -6,6 +6,7 @@
 @interface BobPhotoPageController()
 -(void) setupArrows;
 -(void) updateChrome;
+-(void) setPageTitle;
 @end
 
 @implementation BobPhotoPageController
@@ -57,10 +58,15 @@
     
     [space release];
     [self setupArrows];
+    [self setPageTitle];
+}
+
+-(void) setPageTitle {
+    self.title = [NSString stringWithFormat:@"%d of %d", _bobPageScrollView.currentIndex + 1, [_photos count]];
 }
 
 -(void) setupArrows {
-   
+   [self setPageTitle];
     if (_bobPageScrollView.currentIndex == 0) {
         left.enabled = NO;
     } else if (_bobPageScrollView.currentIndex == ([_photos count] - 1)) {
