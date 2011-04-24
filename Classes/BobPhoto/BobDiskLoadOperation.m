@@ -22,9 +22,24 @@
     [super dealloc];
 }
 
+-(NSString*) highResVersion:(NSString *)filename {
+    
+    NSString *path = [filename pathExtension];
+    NSInteger index = [filename length] - ([path length] + 1);
+    
+    // We insert the "@2x" token in the string at the proper position; if no 
+    // device modifier is present the token is added at the end of the string
+    NSString *highDefPath = [NSString stringWithFormat:@"%@@2x%@",[filename substringToIndex:index], [filename substringFromIndex:index]];
+    
+    //// We possibly add the extension, if there is any extension at all
+    //NSString *ext = [self pathExtension];
+    return highDefPath;//[ext length]>0? [highDefPath stringByAppendingPathExtension:ext] : highDefPath;
+}
+
 -(void)main {
     NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
-    NSString *path = [[NSBundle mainBundle] pathForResource:location_ ofType:nil];
+    NSString *path2 = [[NSBundle mainBundle] pathForResource:location_ ofType:nil];
+    NSString *path = [self highResVersion:path2];
     CGDataProviderRef dataProvider = CGDataProviderCreateWithFilename([path UTF8String]);
     
     CGImageRef image;
@@ -66,7 +81,7 @@
 
 -(void) preloadImage:(NSValue *) value  {
     CGImageRef imageRef = [value pointerValue];
-    UIImage *i = [UIImage imageWithCGImage:imageRef];
+    UIImage *i = [UIImage imageWithCGImage:imageRef scale:2.0f orientation:UIImageOrientationUp];
     [bobCache addObject:i forKey:location_];
     [delegate loadImage:i];
 }
