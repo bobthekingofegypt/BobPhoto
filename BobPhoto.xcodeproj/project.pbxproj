@@ -173,6 +173,8 @@
 		A1009EBC135B77FB00F85816 /* play@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A1009EB8135B77FB00F85816 /* play@2x.png */; };
 		A1009EBD135B77FB00F85816 /* right@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A1009EB9135B77FB00F85816 /* right@2x.png */; };
 		A1009EC0135B78B200F85816 /* RemoteGalleryController.m in Sources */ = {isa = PBXBuildFile; fileRef = A1009EBF135B78B100F85816 /* RemoteGalleryController.m */; };
+		A1009ECF1364AF1500F85816 /* BobPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = A1009ECE1364AF0200F85816 /* BobPhoto.m */; };
+		A1009ED41364B18700F85816 /* BobPhotoSourceImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = A1009ED31364B17600F85816 /* BobPhotoSourceImpl.m */; };
 		A11E7D21132BDFD9006ED868 /* 5212023604_f20ea1fb5d_o_medium.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A11E7CFB132BDFD9006ED868 /* 5212023604_f20ea1fb5d_o_medium.jpg */; };
 		A11E7D22132BDFD9006ED868 /* 5212030714_14f06c4504_o_medium.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A11E7CFC132BDFD9006ED868 /* 5212030714_14f06c4504_o_medium.jpg */; };
 		A11E7D23132BDFD9006ED868 /* 5212033470_abe76aaf15_o_medium.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A11E7CFD132BDFD9006ED868 /* 5212033470_abe76aaf15_o_medium.jpg */; };
@@ -338,7 +340,6 @@
 		A1A71DE412983F340064DD5E /* BSGEntryView.m in Sources */ = {isa = PBXBuildFile; fileRef = A1A71DE112983F340064DD5E /* BSGEntryView.m */; };
 		A1A71DE512983F340064DD5E /* BSGView.m in Sources */ = {isa = PBXBuildFile; fileRef = A1A71DE312983F340064DD5E /* BSGView.m */; };
 		A1A71DEE12A2C8ED0064DD5E /* BobPhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A1A71DED12A2C8ED0064DD5E /* BobPhotoViewController.m */; };
-		A1A71DF212A2CDCA0064DD5E /* BobDiskPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = A1A71DF112A2CDCA0064DD5E /* BobDiskPhoto.m */; };
 		A1A71E0C12A2D3B50064DD5E /* DiskThumbEntryView.m in Sources */ = {isa = PBXBuildFile; fileRef = A1A71E0B12A2D3B50064DD5E /* DiskThumbEntryView.m */; };
 		A1A71E1512A2D4B80064DD5E /* DiskGalleryController.m in Sources */ = {isa = PBXBuildFile; fileRef = A1A71E1412A2D4B80064DD5E /* DiskGalleryController.m */; };
 		A1A71E9F12A986850064DD5E /* BobPhotoPageController.m in Sources */ = {isa = PBXBuildFile; fileRef = A1A71E9E12A986850064DD5E /* BobPhotoPageController.m */; };
@@ -516,6 +517,11 @@
 		A1009EB9135B77FB00F85816 /* right@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "right@2x.png"; sourceTree = "<group>"; };
 		A1009EBE135B78B100F85816 /* RemoteGalleryController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RemoteGalleryController.h; sourceTree = "<group>"; };
 		A1009EBF135B78B100F85816 /* RemoteGalleryController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RemoteGalleryController.m; sourceTree = "<group>"; };
+		A1009ECD1364AEF100F85816 /* BobPhoto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BobPhoto.h; sourceTree = "<group>"; };
+		A1009ECE1364AF0200F85816 /* BobPhoto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BobPhoto.m; sourceTree = "<group>"; };
+		A1009ED01364AFBB00F85816 /* BobPhotoSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BobPhotoSource.h; sourceTree = "<group>"; };
+		A1009ED21364B16400F85816 /* BobPhotoSourceImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BobPhotoSourceImpl.h; sourceTree = "<group>"; };
+		A1009ED31364B17600F85816 /* BobPhotoSourceImpl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BobPhotoSourceImpl.m; sourceTree = "<group>"; };
 		A11E7CFB132BDFD9006ED868 /* 5212023604_f20ea1fb5d_o_medium.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 5212023604_f20ea1fb5d_o_medium.jpg; sourceTree = "<group>"; };
 		A11E7CFC132BDFD9006ED868 /* 5212030714_14f06c4504_o_medium.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 5212030714_14f06c4504_o_medium.jpg; sourceTree = "<group>"; };
 		A11E7CFD132BDFD9006ED868 /* 5212033470_abe76aaf15_o_medium.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 5212033470_abe76aaf15_o_medium.jpg; sourceTree = "<group>"; };
@@ -694,9 +700,6 @@
 		A1A71DE312983F340064DD5E /* BSGView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSGView.m; sourceTree = "<group>"; };
 		A1A71DEC12A2C8ED0064DD5E /* BobPhotoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BobPhotoViewController.h; sourceTree = "<group>"; };
 		A1A71DED12A2C8ED0064DD5E /* BobPhotoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BobPhotoViewController.m; sourceTree = "<group>"; };
-		A1A71DEF12A2CD380064DD5E /* BobPhoto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BobPhoto.h; path = BobPageScroll/BobPhoto.h; sourceTree = "<group>"; };
-		A1A71DF012A2CDCA0064DD5E /* BobDiskPhoto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BobDiskPhoto.h; sourceTree = "<group>"; };
-		A1A71DF112A2CDCA0064DD5E /* BobDiskPhoto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BobDiskPhoto.m; sourceTree = "<group>"; };
 		A1A71E0A12A2D3B50064DD5E /* DiskThumbEntryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiskThumbEntryView.h; sourceTree = "<group>"; };
 		A1A71E0B12A2D3B50064DD5E /* DiskThumbEntryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiskThumbEntryView.m; sourceTree = "<group>"; };
 		A1A71E1312A2D4B80064DD5E /* DiskGalleryController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiskGalleryController.h; sourceTree = "<group>"; };
@@ -1050,13 +1053,10 @@
 			children = (
 				A1A71DDF12983F340064DD5E /* BobScrollGrid */,
 				A12BDEA6126F68FF00A3AD65 /* BobPageScroll */,
-				A1A71DEF12A2CD380064DD5E /* BobPhoto.h */,
 				A1A71E0A12A2D3B50064DD5E /* DiskThumbEntryView.h */,
 				A1A71E0B12A2D3B50064DD5E /* DiskThumbEntryView.m */,
 				A1A71DEC12A2C8ED0064DD5E /* BobPhotoViewController.h */,
 				A1A71DED12A2C8ED0064DD5E /* BobPhotoViewController.m */,
-				A1A71DF012A2CDCA0064DD5E /* BobDiskPhoto.h */,
-				A1A71DF112A2CDCA0064DD5E /* BobDiskPhoto.m */,
 				A1A71E9D12A986850064DD5E /* BobPhotoPageController.h */,
 				A1A71E9E12A986850064DD5E /* BobPhotoPageController.m */,
 				A11E7D94132BE689006ED868 /* BobDiskLoadOperation.h */,
@@ -1065,6 +1065,11 @@
 				A11E7D98132BEBE6006ED868 /* BobPhotoPage.m */,
 				A1762E8013490C2900EA712D /* LoadingView.h */,
 				A1762E8113490C3800EA712D /* LoadingView.m */,
+				A1009ECD1364AEF100F85816 /* BobPhoto.h */,
+				A1009ECE1364AF0200F85816 /* BobPhoto.m */,
+				A1009ED01364AFBB00F85816 /* BobPhotoSource.h */,
+				A1009ED21364B16400F85816 /* BobPhotoSourceImpl.h */,
+				A1009ED31364B17600F85816 /* BobPhotoSourceImpl.m */,
 			);
 			path = BobPhoto;
 			sourceTree = "<group>";
@@ -1586,7 +1591,6 @@
 				A1A71DE412983F340064DD5E /* BSGEntryView.m in Sources */,
 				A1A71DE512983F340064DD5E /* BSGView.m in Sources */,
 				A1A71DEE12A2C8ED0064DD5E /* BobPhotoViewController.m in Sources */,
-				A1A71DF212A2CDCA0064DD5E /* BobDiskPhoto.m in Sources */,
 				A1A71E0C12A2D3B50064DD5E /* DiskThumbEntryView.m in Sources */,
 				A1A71E1512A2D4B80064DD5E /* DiskGalleryController.m in Sources */,
 				A1A71E9F12A986850064DD5E /* BobPhotoPageController.m in Sources */,
@@ -1595,6 +1599,8 @@
 				A174C1D2132C19EA005846F1 /* BobCache.m in Sources */,
 				A1762E8213490C4100EA712D /* LoadingView.m in Sources */,
 				A1009EC0135B78B200F85816 /* RemoteGalleryController.m in Sources */,
+				A1009ECF1364AF1500F85816 /* BobPhoto.m in Sources */,
+				A1009ED41364B18700F85816 /* BobPhotoSourceImpl.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

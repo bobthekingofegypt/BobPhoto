@@ -2,7 +2,7 @@
 #import "BSGEntryView.h"
 #import "BobDiskLoadOperation.h"
 #import "BobCache.h"
-
+#import "BobPhotoSource.h"
 
 @interface DiskThumbEntryView : BSGEntryView {
     @private
@@ -10,14 +10,14 @@
     BobDiskLoadOperation *_bobDiskLoadOperation;
     BobCache *bobCache;
     NSOperationQueue *operationQueue;
-    NSString *path_;
+    id<BobPhotoSource> photoSource_;
 }
 
 @property (nonatomic, retain) BobDiskLoadOperation *bobDiskLoadOperation;
 @property (nonatomic, retain) BobCache *bobCache;
 @property (nonatomic, retain) NSOperationQueue *operationQueue;
 
--(void) setPath:(NSString *) path;
+-(void) setPhotoSource:(id<BobPhotoSource>) photoSource;
 -(void) prepareForReuse;
 -(void) triggerDownload;
 

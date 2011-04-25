@@ -1,5 +1,6 @@
 #import "ExampleSelectionTableController.h"
 #import "DiskGalleryController.h"
+#import "RemoteGalleryController.h"
 
 @implementation ExampleSelectionTableController
 
@@ -68,6 +69,9 @@
 		[self.navigationController pushViewController:controller animated:YES];
 		[controller release];
 	} else if (indexPath.row == kWebLoadedImages) {
+        RemoteGalleryController *controller = [[RemoteGalleryController alloc] init];
+        [self.navigationController pushViewController:controller animated:YES];
+		[controller release];
 	}
 }
 

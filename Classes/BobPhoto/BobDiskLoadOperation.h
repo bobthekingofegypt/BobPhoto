@@ -8,12 +8,13 @@
 
 #import <Foundation/Foundation.h>
 #import "BobCache.h"
+#import "BobPhotoSource.h"
 
 @protocol BobDiskLoadOperationDelegate;
 
 @interface BobDiskLoadOperation : NSOperation {
     @private
-    NSString *location_;
+    id<BobPhotoSource> photoSource_;
     UIImage *image_;
     id<BobDiskLoadOperationDelegate> delegate;
     BobCache *bobCache;
@@ -23,7 +24,7 @@
 @property (nonatomic, assign) id delegate;
 @property (nonatomic, retain) BobCache *bobCache;
 
--(id) initWithLocation:(NSString *) location;
+-(id) initWithPhotoSource:(id<BobPhotoSource>) photoSource;
 
 @end
 

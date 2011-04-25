@@ -18,7 +18,7 @@
 -(void) dealloc {
     _bobDiskLoadOperation.delegate = nil;
     [_bobDiskLoadOperation release];
-    [path_ release];
+    [photoSource_ release];
 	[image release];
     [bobCache release];
     [operationQueue release];
@@ -56,9 +56,13 @@
 
 #pragma mark public methods
 
--(void) setPath:(NSString *) path {
-    path_ = [path copy];
-    UIImage *theImage = [bobCache objectForKey:path];
+-(void) setPhotoSource:(id<BobPhotoSource>) photoSource; {
+    //path_ = [path copy];
+    if (photoSource_) {
+        [photoSource_ release], photoSource_ = nil;
+    }
+    photoSource_ = [photoSource retain];
+    UIImage *theImage = [bobCache objectForKey:[photoSource_ location]];
     if (theImage) {
         [self setImage:theImage];
     } 
@@ -66,7 +70,7 @@
 
 -(void) triggerDownload {
     if (image == nil) {
-        BobDiskLoadOperation *bobDiskLoadOperation = [[[BobDiskLoadOperation alloc] initWithLocation:path_] autorelease];
+        BobDiskLoadOperation *bobDiskLoadOperation = [[[BobDiskLoadOperation alloc] initWithPhotoSource:photoSource_] autorelease];
         [bobDiskLoadOperation setDelegate:self];
         bobDiskLoadOperation.bobCache = bobCache;
         [operationQueue addOperation:bobDiskLoadOperation];

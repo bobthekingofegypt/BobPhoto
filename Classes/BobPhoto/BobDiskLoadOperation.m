@@ -5,17 +5,17 @@
 
 @synthesize image = image_, delegate, bobCache;
 
--(id) initWithLocation:(NSString *) location {
+-(id) initWithPhotoSource:(id<BobPhotoSource>) photoSource {
     self = [super init];
     if (self) {
-        location_ = [location copy];
+        photoSource_ = [photoSource retain];
     }
     
     return self;
 }
 
 -(void) dealloc {
-    [location_ release];
+    [photoSource_ release];
     [image_ release];
     [bobCache release];
     
@@ -36,14 +36,34 @@
     return highDefPath;//[ext length]>0? [highDefPath stringByAppendingPathExtension:ext] : highDefPath;
 }
 
+-(CGDataProviderRef) dataProvider {
+    if ([[photoSource_ location] hasPrefix:@"http"]) {
+        NSURL *url = [NSURL URLWithString:[photoSource_ location]];
+        NSURLRequest *request = [NSURLRequest requestWithURL:url];
+        
+        NSError *error;
+        NSURLResponse *response;
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+        NSData *result = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error]; 
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+        return CGDataProviderCreateWithCFData((CFDataRef)result);
+    } 
+    NSString *path = [[NSBundle mainBundle] pathForResource:[photoSource_ location] ofType:nil];
+    //NSString *path = [self highResVersion:path2];
+    return CGDataProviderCreateWithFilename([path UTF8String]);
+}
+
 -(void)main {
     NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
-    NSString *path2 = [[NSBundle mainBundle] pathForResource:location_ ofType:nil];
-    NSString *path = [self highResVersion:path2];
-    CGDataProviderRef dataProvider = CGDataProviderCreateWithFilename([path UTF8String]);
+    //NSString *path2 = [[NSBundle mainBundle] pathForResource:location_ ofType:nil];
+    //NSString *path = [self highResVersion:path2];
+    //CGDataProviderRef dataProvider = CGDataProviderCreateWithFilename([path UTF8String]);
+    //NSLog(@"location %@", location_);
+    CGDataProviderRef dataProvider = [self dataProvider];
+    
     
     CGImageRef image;
-    if ([path hasSuffix:@".png"]) {
+    if ([[photoSource_ location] hasSuffix:@".png"]) {
         image = CGImageCreateWithPNGDataProvider(dataProvider, NULL, NO, 
                                          kCGRenderingIntentDefault);
     } else {
@@ -81,8 +101,14 @@
 
 -(void) preloadImage:(NSValue *) value  {
     CGImageRef imageRef = [value pointerValue];
-    UIImage *i = [UIImage imageWithCGImage:imageRef scale:2.0f orientation:UIImageOrientationUp];
-    [bobCache addObject:i forKey:location_];
+    UIImage *i = nil;
+    if ([photoSource_ retina]) {
+        i = [UIImage imageWithCGImage:imageRef scale:2.0f orientation:UIImageOrientationUp];
+    } else {
+        i = [UIImage imageWithCGImage:imageRef];
+    }
+    
+    [bobCache addObject:i forKey:[photoSource_ location]];
     [delegate loadImage:i];
 }
 

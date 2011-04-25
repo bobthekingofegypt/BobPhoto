@@ -1,6 +1,6 @@
 #import "BobPhotoViewController.h"
 #import "DiskThumbEntryView.h"
-#import "BobDiskPhoto.h"
+#import "BobPhoto.h"
 #import "BobPhotoPageController.h"
 
 @implementation BobPhotoViewController
@@ -87,8 +87,8 @@
         entry.operationQueue = operationQueue;
 	} 
 	
-    BobDiskPhoto *photo = (BobDiskPhoto *)[_photos objectAtIndex:index];
-	[entry setPath:photo.thumbnailLocation];
+    BobPhoto *photo = (BobPhoto *)[_photos objectAtIndex:index];
+	[entry setPhotoSource:photo.thumbnail];
     [entry triggerDownload];
 	return entry;
 }

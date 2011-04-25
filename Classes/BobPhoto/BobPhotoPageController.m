@@ -1,6 +1,6 @@
 #import "BobPhotoPageController.h"
 #import "BobPageImage.h"
-#import "BobDiskPhoto.h"
+#import "BobPhoto.h"
 #import "BobPhotoPage.h"
 
 @interface BobPhotoPageController()
@@ -156,8 +156,8 @@
         page.touchDelegate = self;
 	}
 	
-	BobDiskPhoto *photo = (BobDiskPhoto *)[_photos objectAtIndex:index];
-    [page setPath:photo];
+	BobPhoto *photo = (BobPhoto *)[_photos objectAtIndex:index];
+    [page setPhoto:photo];
 	
 	return page;
 }

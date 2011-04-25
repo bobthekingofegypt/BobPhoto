@@ -1,9 +1,10 @@
 #import "DiskGalleryController.h"
-#import "BobDiskPhoto.h"
+#import "BobPhoto.h"
 #import "DiskThumbEntryView.h"
+#import "BobPhotoSourceImpl.h"
 
 @interface DiskGalleryController(Private) 
--(BobDiskPhoto *) createBobPhotoWithThumbnail:(NSString *)thumbnail 
+-(BobPhoto *) createBobPhotoWithThumbnail:(NSString *)thumbnail 
 									 andImage:(NSString *)image;
 @end
 
@@ -102,13 +103,21 @@
 }
 
 
--(BobDiskPhoto *) createBobPhotoWithThumbnail:(NSString *)thumbnail 
+-(BobPhoto *) createBobPhotoWithThumbnail:(NSString *)thumbnail 
 									 andImage:(NSString *)image {
-	BobDiskPhoto *photo = [[[BobDiskPhoto alloc] init] autorelease];
-	photo.imageLocation = image;
-	photo.thumbnailLocation = thumbnail;
+	//BobPhoto *photo = [[[BobDiskPhoto alloc] init] autorelease];
+	//photo.imageLocation = image;
+	//photo.thumbnailLocation = thumbnail;
 	
-	return photo;
+	//return photo;
+    
+    BobPhotoSourceImpl *imagePhotoSource = [[[BobPhotoSourceImpl alloc] init] autorelease];
+	imagePhotoSource.imageLocation = image;
+    BobPhotoSourceImpl *thumbnailPhotoSource = [[[BobPhotoSourceImpl alloc] init] autorelease];
+	thumbnailPhotoSource.imageLocation = thumbnail;
+	
+	return [BobPhoto bobPhotoWithThumbnail:thumbnailPhotoSource andImage:imagePhotoSource];
+    //return nil;
 }
 
 - (void)didReceiveMemoryWarning {

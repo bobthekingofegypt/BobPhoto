@@ -24,7 +24,7 @@
     [loadingView release];
 	[_scrollView release];
     [_bobDiskLoadOperation release];
-    [path_ release];
+    [photoSource_ release];
     [bobCache release];
     [operationQueue release];
     
@@ -56,19 +56,23 @@
 #pragma mark -
 #pragma mark BobPageImage Methods
 
--(void) setPath:(id<BobPhoto>) bobPhoto {
-    path_ = [[bobPhoto imageLocation] copy];
-    UIImage *image = [bobCache objectForKey:path_];
+-(void) setPhoto:(BobPhoto *)photo {
+    if (photoSource_) {
+        [photoSource_ release], photoSource_ = nil;
+    }
+    photoSource_ = [photo.image retain];
+    //path_ = [[bobPhoto imageLocation] copy];
+    UIImage *image = [bobCache objectForKey:[photoSource_ location]];
     if (image == nil) {
         if (bobThumbnailCache) {
-            UIImage *thumbnail = [bobThumbnailCache objectForKey:[bobPhoto thumbnailLocation]];
+            UIImage *thumbnail = [bobThumbnailCache objectForKey:[photo.thumbnail location]];
             if (thumbnail) {
                 [_scrollView setScaledThumbnail:thumbnail];
                 [self setNeedsLayout];
             }
         }
         //[self addSubview:loadingView];
-        BobDiskLoadOperation *bobDiskLoadOperation = [[[BobDiskLoadOperation alloc] initWithLocation:path_] autorelease];
+        BobDiskLoadOperation *bobDiskLoadOperation = [[[BobDiskLoadOperation alloc] initWithPhotoSource:photoSource_] autorelease];
         bobDiskLoadOperation.delegate = self;
         bobDiskLoadOperation.bobCache = bobCache;
         [operationQueue addOperation:bobDiskLoadOperation];
