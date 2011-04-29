@@ -6,7 +6,7 @@
 
 @implementation ThumbnailEntryView
 
-@synthesize bobDiskLoadOperation = _bobDiskLoadOperation, bobCache, operationQueue;
+@synthesize bobImageLoadOperation = _bobImageLoadOperation, bobCache, operationQueue;
 
 -(id) initWithFrame:(CGRect)frame andReuseIdentifier:(NSString *)reuseIdentifier {
     if ((self = [super initWithFrame:frame andReuseIdentifier:reuseIdentifier])) {
@@ -16,8 +16,8 @@
 }
 
 -(void) dealloc {
-    _bobDiskLoadOperation.delegate = nil;
-    [_bobDiskLoadOperation release];
+    _bobImageLoadOperation.delegate = nil;
+    [_bobImageLoadOperation release];
     [photoSource_ release];
 	[image release];
     [bobCache release];
@@ -54,18 +54,17 @@
 #pragma mark reuse methods
 
 -(void) prepareForReuse {
-    if (![self.bobDiskLoadOperation isExecuting]) {
-        [self.bobDiskLoadOperation cancel];
+    if (![self.bobImageLoadOperation isExecuting]) {
+        [self.bobImageLoadOperation cancel];
     }
-    _bobDiskLoadOperation.delegate = nil;
-    self.bobDiskLoadOperation = nil;
+    _bobImageLoadOperation.delegate = nil;
+    self.bobImageLoadOperation = nil;
     [self setImage:nil];
 }
 
 #pragma mark public methods
 
 -(void) setPhotoSource:(id<BobPhotoSource>) photoSource; {
-    //path_ = [path copy];
     if (photoSource_) {
         [photoSource_ release], photoSource_ = nil;
     }
@@ -78,11 +77,11 @@
 
 -(void) triggerDownload {
     if (image == nil) {
-        BobDiskLoadOperation *bobDiskLoadOperation = [[[BobDiskLoadOperation alloc] initWithPhotoSource:photoSource_] autorelease];
-        [bobDiskLoadOperation setDelegate:self];
-        bobDiskLoadOperation.bobCache = bobCache;
-        [operationQueue addOperation:bobDiskLoadOperation];
-        _bobDiskLoadOperation = [bobDiskLoadOperation retain];
+        BobImageLoadOperation *bobImageLoadOperation = [[[BobImageLoadOperation alloc] initWithPhotoSource:photoSource_] autorelease];
+        [bobImageLoadOperation setDelegate:self];
+        bobImageLoadOperation.bobCache = bobCache;
+        [operationQueue addOperation:bobImageLoadOperation];
+        _bobImageLoadOperation = [bobImageLoadOperation retain];
     }
 }
 

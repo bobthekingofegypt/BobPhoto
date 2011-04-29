@@ -3,7 +3,7 @@
 
 @implementation BobPhotoPage
 
-@synthesize bobDiskLoadOperation = _bobDiskLoadOperation, bobCache, operationQueue, touchDelegate, bobThumbnailCache;
+@synthesize bobImageLoadOperation = _bobImageLoadOperation, bobCache, operationQueue, touchDelegate, bobThumbnailCache;
 
 - (id)initWithFrame:(CGRect)frame andReuseIdentifier:(NSString *)reuseIdentifier {
     if ((self = [super initWithFrame:frame andReuseIdentifier:reuseIdentifier])) {
@@ -20,10 +20,10 @@
 }
 
 -(void) dealloc {
-    _bobDiskLoadOperation.delegate = nil;
+    _bobImageLoadOperation.delegate = nil;
     [loadingView release];
 	[_scrollView release];
-    [_bobDiskLoadOperation release];
+    [_bobImageLoadOperation release];
     [photoSource_ release];
     [bobCache release];
     [operationQueue release];
@@ -41,11 +41,11 @@
 #pragma mark BobPage Methods
 
 -(void) prepareForReuse {
-    if (![self.bobDiskLoadOperation isExecuting]) {
-        [self.bobDiskLoadOperation cancel];
+    if (![self.bobImageLoadOperation isExecuting]) {
+        [self.bobImageLoadOperation cancel];
     }
-    self.bobDiskLoadOperation.delegate = nil;
-    self.bobDiskLoadOperation = nil;
+    self.bobImageLoadOperation.delegate = nil;
+    self.bobImageLoadOperation = nil;
     [_scrollView setImage:nil];
 	[self setNeedsLayout];
 }
@@ -75,11 +75,11 @@
             }
         }
         //[self addSubview:loadingView];
-        BobDiskLoadOperation *bobDiskLoadOperation = [[[BobDiskLoadOperation alloc] initWithPhotoSource:photoSource_] autorelease];
-        bobDiskLoadOperation.delegate = self;
-        bobDiskLoadOperation.bobCache = bobCache;
-        [operationQueue addOperation:bobDiskLoadOperation];
-        _bobDiskLoadOperation = [bobDiskLoadOperation retain];
+        BobImageLoadOperation *bobImageLoadOperation = [[[BobImageLoadOperation alloc] initWithPhotoSource:photoSource_] autorelease];
+        bobImageLoadOperation.delegate = self;
+        bobImageLoadOperation.bobCache = bobCache;
+        [operationQueue addOperation:bobImageLoadOperation];
+        _bobImageLoadOperation = [bobImageLoadOperation retain];
     } else {
         [loadingView removeFromSuperview];
         [_scrollView setImage:image];

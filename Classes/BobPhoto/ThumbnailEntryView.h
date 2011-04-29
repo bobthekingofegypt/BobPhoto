@@ -1,19 +1,19 @@
 #import <Foundation/Foundation.h>
 #import "BSGEntryView.h"
-#import "BobDiskLoadOperation.h"
+#import "BobImageLoadOperation.h"
 #import "BobCache.h"
 #import "BobPhotoSource.h"
 
 @interface ThumbnailEntryView : BSGEntryView {
     @private
 	UIImage *image;
-    BobDiskLoadOperation *_bobDiskLoadOperation;
+    BobImageLoadOperation *_bobImageLoadOperation;
     BobCache *bobCache;
     NSOperationQueue *operationQueue;
     id<BobPhotoSource> photoSource_;
 }
 
-@property (nonatomic, retain) BobDiskLoadOperation *bobDiskLoadOperation;
+@property (nonatomic, retain) BobImageLoadOperation *bobImageLoadOperation;
 @property (nonatomic, retain) BobCache *bobCache;
 @property (nonatomic, retain) NSOperationQueue *operationQueue;
 

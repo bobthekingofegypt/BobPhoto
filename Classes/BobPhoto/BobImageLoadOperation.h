@@ -10,13 +10,13 @@
 #import "BobCache.h"
 #import "BobPhotoSource.h"
 
-@protocol BobDiskLoadOperationDelegate;
+@protocol BobImageLoadOperationDelegate;
 
-@interface BobDiskLoadOperation : NSOperation {
+@interface BobImageLoadOperation : NSOperation {
     @private
     id<BobPhotoSource> photoSource_;
     UIImage *image_;
-    id<BobDiskLoadOperationDelegate> delegate;
+    id<BobImageLoadOperationDelegate> delegate;
     BobCache *bobCache;
 }
 
@@ -28,6 +28,6 @@
 
 @end
 
-@protocol BobDiskLoadOperationDelegate <NSObject>
+@protocol BobImageLoadOperationDelegate <NSObject>
 -(void) loadImage:(UIImage *) i;
 @end

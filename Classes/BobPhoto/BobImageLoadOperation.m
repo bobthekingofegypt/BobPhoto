@@ -1,7 +1,7 @@
-#import "BobDiskLoadOperation.h"
+#import "BobImageLoadOperation.h"
 
 
-@implementation BobDiskLoadOperation
+@implementation BobImageLoadOperation
 
 @synthesize image = image_, delegate, bobCache;
 
@@ -22,26 +22,8 @@
     [super dealloc];
 }
 
--(NSString*) highResVersion:(NSString *)filename {
-    
-    NSString *path = [filename pathExtension];
-    NSInteger index = [filename length] - ([path length] + 1);
-    
-    // We insert the "@2x" token in the string at the proper position; if no 
-    // device modifier is present the token is added at the end of the string
-    NSString *highDefPath = [NSString stringWithFormat:@"%@@2x%@",[filename substringToIndex:index], [filename substringFromIndex:index]];
-    
-    //// We possibly add the extension, if there is any extension at all
-    //NSString *ext = [self pathExtension];
-    return highDefPath;//[ext length]>0? [highDefPath stringByAppendingPathExtension:ext] : highDefPath;
-}
-
 -(void)main {
     NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
-    //NSString *path2 = [[NSBundle mainBundle] pathForResource:location_ ofType:nil];
-    //NSString *path = [self highResVersion:path2];
-    //CGDataProviderRef dataProvider = CGDataProviderCreateWithFilename([path UTF8String]);
-    //NSLog(@"location %@", location_);
     CGDataProviderRef dataProvider;
     if ([[photoSource_ location] hasPrefix:@"http"]) {
         NSURL *url = [NSURL URLWithString:[photoSource_ location]];
