@@ -6,7 +6,7 @@
 
 @implementation ThumbnailEntryView
 
-@synthesize bobImageLoadOperation = _bobImageLoadOperation, bobCache, operationQueue;
+@synthesize bobImageLoadOperation = bobImageLoadOperation_, bobCache, operationQueue;
 
 -(id) initWithFrame:(CGRect)frame andReuseIdentifier:(NSString *)reuseIdentifier {
     if ((self = [super initWithFrame:frame andReuseIdentifier:reuseIdentifier])) {
@@ -16,8 +16,8 @@
 }
 
 -(void) dealloc {
-    _bobImageLoadOperation.delegate = nil;
-    [_bobImageLoadOperation release];
+    bobImageLoadOperation_.delegate = nil;
+    [bobImageLoadOperation_ release];
     [photoSource_ release];
 	[image release];
     [bobCache release];
@@ -57,7 +57,7 @@
     if (![self.bobImageLoadOperation isExecuting]) {
         [self.bobImageLoadOperation cancel];
     }
-    _bobImageLoadOperation.delegate = nil;
+    bobImageLoadOperation_.delegate = nil;
     self.bobImageLoadOperation = nil;
     [self setImage:nil];
 }
@@ -76,12 +76,12 @@
 }
 
 -(void) triggerDownload {
-    if (image == nil) {
+    if (image == nil && !bobImageLoadOperation_) {
         BobImageLoadOperation *bobImageLoadOperation = [[[BobImageLoadOperation alloc] initWithPhotoSource:photoSource_] autorelease];
         [bobImageLoadOperation setDelegate:self];
         bobImageLoadOperation.bobCache = bobCache;
         [operationQueue addOperation:bobImageLoadOperation];
-        _bobImageLoadOperation = [bobImageLoadOperation retain];
+        bobImageLoadOperation_ = [bobImageLoadOperation retain];
     }
 }
 

@@ -5,15 +5,15 @@
 
 @implementation BobPhotoViewController
 
-@synthesize photos = _photos, 
+@synthesize photos = photos_, 
             maximumConcurrentlyLoadingThumbnails = maximumConcurrentlyLoadingThumbnails_,
             maximumConcurrentlyLoadingImages = maximumConcurrentlyLoadingImages_;
 
-- (id)init {
+-(id) initWithPhotos:(NSMutableArray *)photos {
     self = [super init];
     if (self) {
-        _photos = [[NSMutableArray alloc] init];
-		_thumbnailImages = [[NSMutableDictionary alloc] initWithCapacity:[_photos count]];
+        photos_ = [photos retain];
+        thumbnailImages_ = [[NSMutableDictionary alloc] initWithCapacity:[photos_ count]];
         operationQueue = [[NSOperationQueue alloc] init];
         bobCache = [[BobCache alloc] initWithCapacity:100];
 		
@@ -22,18 +22,27 @@
         
 		numberOfEntriesPerRow = 4;
     }
+    
     return self;
 }
 
+- (id)init {
+    return [self initWithPhotos:[NSMutableArray array]];
+}
+
 - (void)dealloc {
-	[_photos release];
-	[_thumbnailImages release];
-	[_bsgView release];
+	[photos_ release];
+	[thumbnailImages_ release];
+	[bsgView_ release];
     [operationQueue release];
     [bobCache release];
     
     [super dealloc];
 }
+
+#pragma mark
+#pragma mark view lifecycle methods
+#pragma mark
 
 - (void)loadView {
 	[super loadView];
@@ -42,24 +51,27 @@
 	self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
     self.navigationController.toolbarHidden = NO;
     self.navigationController.toolbar.barStyle = UIBarStyleBlackTranslucent;
-	_bsgView = [[BSGView alloc] initWithFrame:CGRectMake(0.0f, 0.0f,self.view.frame.size.width, self.view.frame.size.height)];
-	_bsgView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-	_bsgView.datasource = self;
-	_bsgView.bsgViewDelegate = self;
-	_bsgView.alwaysBounceVertical = YES;
-    _bsgView.preCacheColumnCount = 2;
+	bsgView_ = [[BSGView alloc] initWithFrame:CGRectMake(0.0f, 0.0f,self.view.frame.size.width, self.view.frame.size.height)];
+	bsgView_.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+	bsgView_.datasource = self;
+	bsgView_.bsgViewDelegate = self;
+	bsgView_.alwaysBounceVertical = YES;
+    bsgView_.preCacheColumnCount = 2;
 	
-	_bsgView.entrySize = CGSizeMake(75, 75);
-	_bsgView.entryPadding = UIEdgeInsetsMake(2.0f, 2.0f, 2.0f, 2.0f);
+	bsgView_.entrySize = CGSizeMake(75, 75);
+	bsgView_.entryPadding = UIEdgeInsetsMake(2.0f, 2.0f, 2.0f, 2.0f);
     
-	[self.view addSubview:_bsgView];
-    
+	[self.view addSubview:bsgView_];
 }
 
 -(void) viewWillAppear:(BOOL)animated {
     [operationQueue setMaxConcurrentOperationCount:maximumConcurrentlyLoadingThumbnails_];
-    [_bsgView reloadData];
+    [bsgView_ reloadData];
 }
+
+#pragma mark
+#pragma mark Autorotation methods
+#pragma mark
 
 -(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     if (UIInterfaceOrientationIsPortrait(interfaceOrientation)) {
@@ -67,7 +79,6 @@
     } else {
         numberOfEntriesPerRow = 6;
     }
-     [_bsgView prepareOrientationChange];
 	return YES;
 }
 
@@ -79,20 +90,22 @@
    
 }
 
-
+#pragma mark
+#pragma mark BSGView delegate methods
+#pragma mark
 
 -(BSGEntryView *)bsgView:(BSGView *)bsgView viewForEntryAtIndexPath:(NSIndexPath *)indexPath {
 	NSInteger index = IndexFromIndexPath(indexPath, [self numberOfEntriesPerRow]);
 	ThumbnailEntryView *entry = (ThumbnailEntryView *)[bsgView dequeReusableEntry:@"thumbnail"];
 	
 	if (entry == nil) {
-		entry = [[[ThumbnailEntryView alloc] initWithFrame:CGRectMake(0, 0, _bsgView.entrySize.width, _bsgView.entrySize.height) 
+		entry = [[[ThumbnailEntryView alloc] initWithFrame:CGRectMake(0, 0, bsgView_.entrySize.width, bsgView_.entrySize.height) 
                                         andReuseIdentifier:@"thumbnail"] autorelease];
         entry.bobCache = bobCache;
         entry.operationQueue = operationQueue;
 	} 
 	
-    BobPhoto *photo = (BobPhoto *)[_photos objectAtIndex:index];
+    BobPhoto *photo = (BobPhoto *)[photos_ objectAtIndex:index];
 	[entry setPhotoSource:photo.thumbnail];
     [entry triggerDownload];
 	return entry;
@@ -100,7 +113,7 @@
 
 -(void) didSelectEntryAtIndexPath:(NSIndexPath *) index {
     [operationQueue setMaxConcurrentOperationCount:maximumConcurrentlyLoadingImages_];
-	BobPhotoPageController *controller = [[BobPhotoPageController alloc] initWithPhotos:_photos andCurrentIndex:IndexFromIndexPath(index, numberOfEntriesPerRow)];
+	BobPhotoPageController *controller = [[BobPhotoPageController alloc] initWithPhotos:photos_ andCurrentIndex:IndexFromIndexPath(index, numberOfEntriesPerRow)];
     controller.operationQueue = operationQueue;
     controller.bobThumbnailCache = bobCache;
 	[self.navigationController pushViewController:controller animated:YES];
@@ -108,7 +121,7 @@
 }
 
 -(NSInteger) entryCount {
-	return _photos.count;
+	return photos_.count;
 }
 
 -(NSInteger) numberOfEntriesPerRow {

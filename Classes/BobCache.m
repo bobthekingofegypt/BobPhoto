@@ -38,11 +38,9 @@
 -(void) addObject:(id) object forKey:(NSString *)key {
     [lock lock];
     if (capacity_ == keys.count) {
-         
         id lastKey = [keys lastObject];
         [keys removeLastObject];
         [entries removeObjectForKey:lastKey];
-         
     }
     
     [keys insertObject:key atIndex:0];

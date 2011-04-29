@@ -14,7 +14,6 @@
 		[self addSubview:_scrollView];
         
         loadingView = [[LoadingView alloc] initWithFrame:frame];
-        //[self addSubview:loadingView];
     }
     return self;
 }
@@ -64,7 +63,6 @@
         [photoSource_ release], photoSource_ = nil;
     }
     photoSource_ = [photo.image retain];
-    //path_ = [[bobPhoto imageLocation] copy];
     UIImage *image = [bobCache objectForKey:[photoSource_ location]];
     if (image == nil) {
         if (bobThumbnailCache) {
@@ -74,7 +72,6 @@
                 [self setNeedsLayout];
             }
         }
-        //[self addSubview:loadingView];
         BobImageLoadOperation *bobImageLoadOperation = [[[BobImageLoadOperation alloc] initWithPhotoSource:photoSource_] autorelease];
         bobImageLoadOperation.delegate = self;
         bobImageLoadOperation.bobCache = bobCache;

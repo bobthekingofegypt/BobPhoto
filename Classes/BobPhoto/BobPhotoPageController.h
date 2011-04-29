@@ -4,16 +4,13 @@
 #import "BobPhotoPage.h"
 
 @interface BobPhotoPageController : UIViewController<BobPageScrollViewDatasource, BobPhotoPageTouchDelegate> {
-	NSMutableArray *_photos;
-	BobPageScrollView *_bobPageScrollView;
+	NSMutableArray *photos_;
+	BobPageScrollView *bobPageScrollView_;
 	NSUInteger currentIndex;
     NSOperationQueue *operationQueue;
     BobCache *bobCache;
     BobCache *bobThumbnailCache;
-    
-    @private 
     BOOL showingChrome;
-    
     NSTimer *slideshowTimer;
     BOOL playingSlideshow;
     UIBarButtonItem *play;

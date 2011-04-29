@@ -16,7 +16,7 @@
 -(id) initWithPhotos:(NSMutableArray *)photos andCurrentIndex:(NSUInteger)index {
     self = [super init];
 	if (self) {
-		_photos = [photos retain];
+		photos_ = [photos retain];
         bobCache = [[BobCache alloc] initWithCapacity:3];
 		
 		currentIndex = index;
@@ -32,22 +32,26 @@
     [right release];
     [bobCache release];
     [operationQueue release];
-	[_bobPageScrollView release];
-	[_photos release];
+	[bobPageScrollView_ release];
+	[photos_ release];
     [super dealloc];
 }
+
+#pragma mark
+#pragma mark View lifecycle methods 
+#pragma mark
 
 -(void) loadView {
 	[super loadView];	
 	[self setWantsFullScreenLayout:YES];
     
-	_bobPageScrollView = [[BobPageScrollView alloc] initWithFrame:CGRectMake(0.0f,0.0f,self.view.frame.size.width, self.view.frame.size.height)];
-	_bobPageScrollView.padding = 10.0f;
-	_bobPageScrollView.datasource = self;
-	_bobPageScrollView.currentIndex = currentIndex;
-    [_bobPageScrollView reloadData];
+	bobPageScrollView_ = [[BobPageScrollView alloc] initWithFrame:CGRectMake(0.0f,0.0f,self.view.frame.size.width, self.view.frame.size.height)];
+	bobPageScrollView_.padding = 10.0f;
+	bobPageScrollView_.datasource = self;
+	bobPageScrollView_.currentIndex = currentIndex;
+    [bobPageScrollView_ reloadData];
    
-	[self.view addSubview:_bobPageScrollView];
+	[self.view addSubview:bobPageScrollView_];
     
     
     UIBarButtonItem *space = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
@@ -61,30 +65,58 @@
     [self setPageTitle];
 }
 
+-(void) viewWillAppear:(BOOL)animated {
+    [bobPageScrollView_ reloadData];
+}
+
+-(void) didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+}
+
+-(void)viewDidUnload {
+    [super viewDidUnload];
+}
+
+#pragma mark
+#pragma mark Autorotation methods
+#pragma mark
+
+-(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+	return YES;
+}
+
+-(void) didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
+    [bobPageScrollView_ reloadData];
+}
+
+#pragma mark
+#pragma mark Interaction button and title methods
+#pragma mark
+
 -(void) setPageTitle {
-    self.title = [NSString stringWithFormat:@"%d of %d", _bobPageScrollView.currentIndex + 1, [_photos count]];
+    self.title = [NSString stringWithFormat:@"%d of %d", bobPageScrollView_.currentIndex + 1, [photos_ count]];
 }
 
 -(void) setupArrows {
    [self setPageTitle];
-    if (_bobPageScrollView.currentIndex == 0) {
+    if (bobPageScrollView_.currentIndex == 0) {
         left.enabled = NO;
-    } else if (_bobPageScrollView.currentIndex == ([_photos count] - 1)) {
+    } else if (bobPageScrollView_.currentIndex == ([photos_ count] - 1)) {
         right.enabled = NO;
     }
 }
 
 -(void) leftButtonPressed {
-    if (_bobPageScrollView.currentIndex  > 0) {
-        [_bobPageScrollView scrollToPage:(_bobPageScrollView.currentIndex - 1) animated:NO];
+    if (bobPageScrollView_.currentIndex  > 0) {
+        [bobPageScrollView_ scrollToPage:(bobPageScrollView_.currentIndex - 1) animated:NO];
          right.enabled = YES;
         [self setupArrows];
     }
 }
 
 -(void) rightButtonPressed {
-    if (_bobPageScrollView.currentIndex  < ([_photos count] - 1)) {
-        [_bobPageScrollView scrollToPage:(_bobPageScrollView.currentIndex + 1) animated:NO];
+    if (bobPageScrollView_.currentIndex  < ([photos_ count] - 1)) {
+        [bobPageScrollView_ scrollToPage:(bobPageScrollView_.currentIndex + 1) animated:NO];
         left.enabled = YES;
         [self setupArrows];
     }
@@ -113,36 +145,21 @@
     }
 }
 
--(void) viewWillAppear:(BOOL)animated {
-     [_bobPageScrollView reloadData];
-}
-
 -(void) setCurrentIndex:(NSUInteger)index {
-	[_bobPageScrollView reloadData];
+	[bobPageScrollView_ reloadData];
 }
 
--(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-	return YES;
+-(void) updateChrome {
+    [[UIApplication sharedApplication] setStatusBarHidden:!showingChrome animated:YES];
+    [self.navigationController setNavigationBarHidden:!showingChrome animated:YES];
+    [self.navigationController setToolbarHidden:!showingChrome animated:YES];
 }
-
--(void) didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
-    [_bobPageScrollView reloadData];
-}
-
--(void) didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-}
-
--(void)viewDidUnload {
-    [super viewDidUnload];
-}
-
 
 #pragma mark -
 #pragma mark BobPageScrollViewDatasource methods
 
 -(NSUInteger) numberOfPages {
-	return [_photos count];
+	return [photos_ count];
 }
 
 -(BobPage *) bobPageScrollView:(BobPageScrollView *)bobPageScrollView pageForIndex:(NSUInteger)index {
@@ -156,7 +173,7 @@
         page.touchDelegate = self;
 	}
 	
-	BobPhoto *photo = (BobPhoto *)[_photos objectAtIndex:index];
+	BobPhoto *photo = (BobPhoto *)[photos_ objectAtIndex:index];
     [page setPhoto:photo];
 	
 	return page;
@@ -173,12 +190,6 @@
     }
     
     [self updateChrome];
-}
-
--(void) updateChrome {
-    [[UIApplication sharedApplication] setStatusBarHidden:!showingChrome animated:YES];
-    [self.navigationController setNavigationBarHidden:!showingChrome animated:YES];
-    [self.navigationController setToolbarHidden:!showingChrome animated:YES];
 }
 
 @end

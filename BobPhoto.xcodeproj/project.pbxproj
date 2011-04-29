@@ -700,7 +700,7 @@
 		A1A71DE312983F340064DD5E /* BSGView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSGView.m; sourceTree = "<group>"; };
 		A1A71DEC12A2C8ED0064DD5E /* BobPhotoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BobPhotoViewController.h; sourceTree = "<group>"; };
 		A1A71DED12A2C8ED0064DD5E /* BobPhotoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BobPhotoViewController.m; sourceTree = "<group>"; };
-		A1A71E0A12A2D3B50064DD5E /* ThumbnailEntryView.h */ = {isa = PBXFileReference; fileEncoding = 4; path = ThumbnailEntryView.h; sourceTree = "<group>"; };
+		A1A71E0A12A2D3B50064DD5E /* ThumbnailEntryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThumbnailEntryView.h; sourceTree = "<group>"; };
 		A1A71E0B12A2D3B50064DD5E /* ThumbnailEntryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThumbnailEntryView.m; sourceTree = "<group>"; };
 		A1A71E1312A2D4B80064DD5E /* DiskGalleryController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiskGalleryController.h; sourceTree = "<group>"; };
 		A1A71E1412A2D4B80064DD5E /* DiskGalleryController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiskGalleryController.m; sourceTree = "<group>"; };
@@ -1053,16 +1053,16 @@
 			children = (
 				A1A71DDF12983F340064DD5E /* BobScrollGrid */,
 				A12BDEA6126F68FF00A3AD65 /* BobPageScroll */,
-				A1A71E0A12A2D3B50064DD5E /* ThumbnailEntryView.h */,
-				A1A71E0B12A2D3B50064DD5E /* ThumbnailEntryView.m */,
 				A1A71DEC12A2C8ED0064DD5E /* BobPhotoViewController.h */,
 				A1A71DED12A2C8ED0064DD5E /* BobPhotoViewController.m */,
 				A1A71E9D12A986850064DD5E /* BobPhotoPageController.h */,
 				A1A71E9E12A986850064DD5E /* BobPhotoPageController.m */,
-				A11E7D94132BE689006ED868 /* BobImageLoadOperation.h */,
-				A11E7D95132BE692006ED868 /* BobImageLoadOperation.m */,
+				A1A71E0A12A2D3B50064DD5E /* ThumbnailEntryView.h */,
+				A1A71E0B12A2D3B50064DD5E /* ThumbnailEntryView.m */,
 				A11E7D97132BEBDE006ED868 /* BobPhotoPage.h */,
 				A11E7D98132BEBE6006ED868 /* BobPhotoPage.m */,
+				A11E7D94132BE689006ED868 /* BobImageLoadOperation.h */,
+				A11E7D95132BE692006ED868 /* BobImageLoadOperation.m */,
 				A1762E8013490C2900EA712D /* LoadingView.h */,
 				A1762E8113490C3800EA712D /* LoadingView.m */,
 				A1009ECD1364AEF100F85816 /* BobPhoto.h */,

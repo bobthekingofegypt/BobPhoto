@@ -2,7 +2,6 @@
 #import "BobPhotoViewController.h"
 
 @interface DiskGalleryController : BobPhotoViewController {
-	
 }
 
 @end

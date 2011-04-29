@@ -10,7 +10,6 @@
 #import "BobPhotoViewController.h"
 
 @interface RemoteGalleryController : BobPhotoViewController {
-    
 }
 
 @end

@@ -7,7 +7,7 @@
 @interface ThumbnailEntryView : BSGEntryView {
     @private
 	UIImage *image;
-    BobImageLoadOperation *_bobImageLoadOperation;
+    BobImageLoadOperation *bobImageLoadOperation_;
     BobCache *bobCache;
     NSOperationQueue *operationQueue;
     id<BobPhotoSource> photoSource_;
