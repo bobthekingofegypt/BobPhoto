@@ -1,12 +1,13 @@
 #import "BobPhotoViewController.h"
-#import "DiskThumbEntryView.h"
+#import "ThumbnailEntryView.h"
 #import "BobPhoto.h"
 #import "BobPhotoPageController.h"
 
 @implementation BobPhotoViewController
 
 @synthesize photos = _photos, 
-            maximumConcurrentlyLoadingThumbnails = maximumConcurrentlyLoadingThumbnails_;
+            maximumConcurrentlyLoadingThumbnails = maximumConcurrentlyLoadingThumbnails_,
+            maximumConcurrentlyLoadingImages = maximumConcurrentlyLoadingImages_;
 
 - (id)init {
     self = [super init];
@@ -82,11 +83,11 @@
 
 -(BSGEntryView *)bsgView:(BSGView *)bsgView viewForEntryAtIndexPath:(NSIndexPath *)indexPath {
 	NSInteger index = IndexFromIndexPath(indexPath, [self numberOfEntriesPerRow]);
-	DiskThumbEntryView *entry = (DiskThumbEntryView *)[bsgView dequeReusableEntry:@"Bob"];
+	ThumbnailEntryView *entry = (ThumbnailEntryView *)[bsgView dequeReusableEntry:@"thumbnail"];
 	
 	if (entry == nil) {
-		entry = [[[DiskThumbEntryView alloc] initWithFrame:CGRectMake(0, 0, _bsgView.entrySize.width, _bsgView.entrySize.height) 
-                                        andReuseIdentifier:@"Bob"] autorelease];
+		entry = [[[ThumbnailEntryView alloc] initWithFrame:CGRectMake(0, 0, _bsgView.entrySize.width, _bsgView.entrySize.height) 
+                                        andReuseIdentifier:@"thumbnail"] autorelease];
         entry.bobCache = bobCache;
         entry.operationQueue = operationQueue;
 	} 

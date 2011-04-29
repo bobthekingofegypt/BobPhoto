@@ -4,7 +4,7 @@
 #import "BobCache.h"
 #import "BobPhotoSource.h"
 
-@interface DiskThumbEntryView : BSGEntryView {
+@interface ThumbnailEntryView : BSGEntryView {
     @private
 	UIImage *image;
     BobDiskLoadOperation *_bobDiskLoadOperation;

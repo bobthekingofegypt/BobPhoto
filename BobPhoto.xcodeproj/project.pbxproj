@@ -340,7 +340,7 @@
 		A1A71DE412983F340064DD5E /* BSGEntryView.m in Sources */ = {isa = PBXBuildFile; fileRef = A1A71DE112983F340064DD5E /* BSGEntryView.m */; };
 		A1A71DE512983F340064DD5E /* BSGView.m in Sources */ = {isa = PBXBuildFile; fileRef = A1A71DE312983F340064DD5E /* BSGView.m */; };
 		A1A71DEE12A2C8ED0064DD5E /* BobPhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A1A71DED12A2C8ED0064DD5E /* BobPhotoViewController.m */; };
-		A1A71E0C12A2D3B50064DD5E /* DiskThumbEntryView.m in Sources */ = {isa = PBXBuildFile; fileRef = A1A71E0B12A2D3B50064DD5E /* DiskThumbEntryView.m */; };
+		A1A71E0C12A2D3B50064DD5E /* ThumbnailEntryView.m in Sources */ = {isa = PBXBuildFile; fileRef = A1A71E0B12A2D3B50064DD5E /* ThumbnailEntryView.m */; };
 		A1A71E1512A2D4B80064DD5E /* DiskGalleryController.m in Sources */ = {isa = PBXBuildFile; fileRef = A1A71E1412A2D4B80064DD5E /* DiskGalleryController.m */; };
 		A1A71E9F12A986850064DD5E /* BobPhotoPageController.m in Sources */ = {isa = PBXBuildFile; fileRef = A1A71E9E12A986850064DD5E /* BobPhotoPageController.m */; };
 /* End PBXBuildFile section */
@@ -700,8 +700,8 @@
 		A1A71DE312983F340064DD5E /* BSGView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSGView.m; sourceTree = "<group>"; };
 		A1A71DEC12A2C8ED0064DD5E /* BobPhotoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BobPhotoViewController.h; sourceTree = "<group>"; };
 		A1A71DED12A2C8ED0064DD5E /* BobPhotoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BobPhotoViewController.m; sourceTree = "<group>"; };
-		A1A71E0A12A2D3B50064DD5E /* DiskThumbEntryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiskThumbEntryView.h; sourceTree = "<group>"; };
-		A1A71E0B12A2D3B50064DD5E /* DiskThumbEntryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiskThumbEntryView.m; sourceTree = "<group>"; };
+		A1A71E0A12A2D3B50064DD5E /* ThumbnailEntryView.h */ = {isa = PBXFileReference; fileEncoding = 4; path = ThumbnailEntryView.h; sourceTree = "<group>"; };
+		A1A71E0B12A2D3B50064DD5E /* ThumbnailEntryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThumbnailEntryView.m; sourceTree = "<group>"; };
 		A1A71E1312A2D4B80064DD5E /* DiskGalleryController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiskGalleryController.h; sourceTree = "<group>"; };
 		A1A71E1412A2D4B80064DD5E /* DiskGalleryController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiskGalleryController.m; sourceTree = "<group>"; };
 		A1A71E9D12A986850064DD5E /* BobPhotoPageController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BobPhotoPageController.h; sourceTree = "<group>"; };
@@ -1053,8 +1053,8 @@
 			children = (
 				A1A71DDF12983F340064DD5E /* BobScrollGrid */,
 				A12BDEA6126F68FF00A3AD65 /* BobPageScroll */,
-				A1A71E0A12A2D3B50064DD5E /* DiskThumbEntryView.h */,
-				A1A71E0B12A2D3B50064DD5E /* DiskThumbEntryView.m */,
+				A1A71E0A12A2D3B50064DD5E /* ThumbnailEntryView.h */,
+				A1A71E0B12A2D3B50064DD5E /* ThumbnailEntryView.m */,
 				A1A71DEC12A2C8ED0064DD5E /* BobPhotoViewController.h */,
 				A1A71DED12A2C8ED0064DD5E /* BobPhotoViewController.m */,
 				A1A71E9D12A986850064DD5E /* BobPhotoPageController.h */,
@@ -1591,7 +1591,7 @@
 				A1A71DE412983F340064DD5E /* BSGEntryView.m in Sources */,
 				A1A71DE512983F340064DD5E /* BSGView.m in Sources */,
 				A1A71DEE12A2C8ED0064DD5E /* BobPhotoViewController.m in Sources */,
-				A1A71E0C12A2D3B50064DD5E /* DiskThumbEntryView.m in Sources */,
+				A1A71E0C12A2D3B50064DD5E /* ThumbnailEntryView.m in Sources */,
 				A1A71E1512A2D4B80064DD5E /* DiskGalleryController.m in Sources */,
 				A1A71E9F12A986850064DD5E /* BobPhotoPageController.m in Sources */,
 				A11E7D96132BE6A7006ED868 /* BobDiskLoadOperation.m in Sources */,

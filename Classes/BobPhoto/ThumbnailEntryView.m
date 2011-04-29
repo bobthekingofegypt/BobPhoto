@@ -1,10 +1,10 @@
-#import "DiskThumbEntryView.h"
+#import "ThumbnailEntryView.h"
 
-@interface DiskThumbEntryView()
+@interface ThumbnailEntryView()
 -(void) setImage:(UIImage *)theImage;
 @end
 
-@implementation DiskThumbEntryView
+@implementation ThumbnailEntryView
 
 @synthesize bobDiskLoadOperation = _bobDiskLoadOperation, bobCache, operationQueue;
 
