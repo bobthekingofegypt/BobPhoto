@@ -126,11 +126,11 @@
 -(BobPhoto *) createBobPhotoWithThumbnail:(NSString *)thumbnail 
 									 andImage:(NSString *)image {
     BobPhotoSourceImpl *imagePhotoSource = [[[BobPhotoSourceImpl alloc] init] autorelease];
-	imagePhotoSource.imageLocation = image;
-    imagePhotoSource.imageLocationRetina = [self highResVersion:image];
+	imagePhotoSource.imageLocation = [[NSBundle mainBundle] pathForResource:image ofType:nil];
+    imagePhotoSource.imageLocationRetina = [[NSBundle mainBundle] pathForResource:[self highResVersion:image] ofType:nil];
     BobPhotoSourceImpl *thumbnailPhotoSource = [[[BobPhotoSourceImpl alloc] init] autorelease];
-	thumbnailPhotoSource.imageLocation = thumbnail;
-    thumbnailPhotoSource.imageLocationRetina = [self highResVersion:thumbnail];
+	thumbnailPhotoSource.imageLocation = [[NSBundle mainBundle] pathForResource:thumbnail ofType:nil];
+    thumbnailPhotoSource.imageLocationRetina = [[NSBundle mainBundle] pathForResource:[self highResVersion:thumbnail] ofType:nil];
 	
 	return [BobPhoto bobPhotoWithThumbnail:thumbnailPhotoSource andImage:imagePhotoSource];
 }

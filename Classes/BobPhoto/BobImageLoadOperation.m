@@ -36,8 +36,7 @@
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
         dataProvider = CGDataProviderCreateWithCFData((CFDataRef)result);
     } else {
-        NSString *path = [[NSBundle mainBundle] pathForResource:[photoSource_ location] ofType:nil];
-        dataProvider = CGDataProviderCreateWithFilename([path UTF8String]);
+        dataProvider = CGDataProviderCreateWithFilename([[photoSource_ location] UTF8String]);
     }
     
     CGImageRef image;

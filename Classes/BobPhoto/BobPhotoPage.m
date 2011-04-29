@@ -72,11 +72,13 @@
                 [self setNeedsLayout];
             }
         }
-        BobImageLoadOperation *bobImageLoadOperation = [[[BobImageLoadOperation alloc] initWithPhotoSource:photoSource_] autorelease];
-        bobImageLoadOperation.delegate = self;
-        bobImageLoadOperation.bobCache = bobCache;
-        [operationQueue addOperation:bobImageLoadOperation];
-        _bobImageLoadOperation = [bobImageLoadOperation retain];
+        if (!_bobImageLoadOperation) {
+            BobImageLoadOperation *bobImageLoadOperation = [[[BobImageLoadOperation alloc] initWithPhotoSource:photoSource_] autorelease];
+            bobImageLoadOperation.delegate = self;
+            bobImageLoadOperation.bobCache = bobCache;
+            [operationQueue addOperation:bobImageLoadOperation];
+            _bobImageLoadOperation = [bobImageLoadOperation retain];
+        }
     } else {
         [loadingView removeFromSuperview];
         [_scrollView setImage:image];
