@@ -21,6 +21,7 @@
 -(id) init {
 	if ((self = [super init])) {
         self.title = @"Remote Gallery";
+        self.maximumConcurrentlyLoadingThumbnails = 4;
 		[_photos addObject:[self createBobPhotoWithThumbnail:@"5212023604_f20ea1fb5d_o_medium.jpg_thumb.png" andImage:@"5212023604_f20ea1fb5d_o_medium.jpg"]];
 		[_photos addObject:[self createBobPhotoWithThumbnail:@"5212030714_14f06c4504_o_medium.jpg_thumb.png" andImage:@"5212030714_14f06c4504_o_medium.jpg"]];
         [_photos addObject:[self createBobPhotoWithThumbnail:@"5212033470_abe76aaf15_o_medium.jpg_thumb.png" andImage:@"5212033470_abe76aaf15_o_medium.jpg"]];
@@ -110,20 +111,31 @@
     
 }
 
+-(NSString*) highResVersion:(NSString *)filename {
+    
+    NSString *path = [filename pathExtension];
+    NSInteger index = [filename length] - ([path length] + 1);
+    
+    NSString *highDefPath = [NSString stringWithFormat:@"%@@2x%@",[filename substringToIndex:index], [filename substringFromIndex:index]];
+    
+    return highDefPath;
+}
 
 -(BobPhoto *) createBobPhotoWithThumbnail:(NSString *)thumbnail 
 									 andImage:(NSString *)image {
     static NSString *host = @"http://www.bobstuff.org/media/Images/";
     NSString *thumbnailUrl = [NSString stringWithFormat:@"%@thumbs/%@", host, thumbnail];
+    NSString *thumbnailUrlRetina = [NSString stringWithFormat:@"%@thumbs2x/%@", host, [self highResVersion:thumbnail]];
     NSString *imageUrl = [NSString stringWithFormat:@"%@medium/%@", host, image];
-    //NSLog(@"thumb %@", thumbnailUrl);
+    NSString *imageUrlRetina = [NSString stringWithFormat:@"%@medium2x/%@", host, [self highResVersion:image]];
+    
 	BobPhotoSourceImpl *imagePhotoSource = [[[BobPhotoSourceImpl alloc] init] autorelease];
 	imagePhotoSource.imageLocation = imageUrl;
+    imagePhotoSource.imageLocationRetina = imageUrlRetina;
     BobPhotoSourceImpl *thumbnailPhotoSource = [[[BobPhotoSourceImpl alloc] init] autorelease];
 	thumbnailPhotoSource.imageLocation = thumbnailUrl;
-    //image.imageLocationRetina = imageUrl;
-	//photo.thumbnailLocation = thumbnailUrl;
-    //photo.remote = YES;
+    thumbnailPhotoSource.imageLocationRetina = thumbnailUrlRetina;
+    
 	
 	return [BobPhoto bobPhotoWithThumbnail:thumbnailPhotoSource andImage:imagePhotoSource];
 }

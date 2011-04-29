@@ -41,6 +41,9 @@
 #pragma mark BobPage Methods
 
 -(void) prepareForReuse {
+    if (![self.bobDiskLoadOperation isExecuting]) {
+        [self.bobDiskLoadOperation cancel];
+    }
     self.bobDiskLoadOperation.delegate = nil;
     self.bobDiskLoadOperation = nil;
     [_scrollView setImage:nil];

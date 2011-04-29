@@ -248,8 +248,8 @@ NSInteger IndexFromIndexPath(NSIndexPath *path, NSInteger entriesPerRow) {
 	[self removePreviouslyVisibleEntriesForStartingIndex:newStartingIndex andEndingIndex:newEndingIndex];	
 	[self addNewVisibleEntriesForStartingIndex:newStartingIndex andEndingIndex:newEndingIndex];
 	
-	self.startingIndexPath = [[NSIndexPath indexPathForRow:minYIndex inSection:minXIndex] retain];
-	self.endingIndexPath = [[NSIndexPath indexPathForRow:maxYIndex inSection:maxXIndex] retain];
+	self.startingIndexPath = [NSIndexPath indexPathForRow:minYIndex inSection:minXIndex];
+	self.endingIndexPath = [NSIndexPath indexPathForRow:maxYIndex inSection:maxXIndex];
 }
 
 -(NSIndexPath *) indexPathForPoint:(CGPoint)point {

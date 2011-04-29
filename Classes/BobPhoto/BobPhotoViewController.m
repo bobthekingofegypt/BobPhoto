@@ -5,7 +5,8 @@
 
 @implementation BobPhotoViewController
 
-@synthesize photos = _photos;
+@synthesize photos = _photos, 
+            maximumConcurrentlyLoadingThumbnails = maximumConcurrentlyLoadingThumbnails_;
 
 - (id)init {
     self = [super init];
@@ -13,9 +14,11 @@
         _photos = [[NSMutableArray alloc] init];
 		_thumbnailImages = [[NSMutableDictionary alloc] initWithCapacity:[_photos count]];
         operationQueue = [[NSOperationQueue alloc] init];
-        [operationQueue setMaxConcurrentOperationCount:3];
         bobCache = [[BobCache alloc] initWithCapacity:100];
 		
+        maximumConcurrentlyLoadingThumbnails_ = 1;
+        maximumConcurrentlyLoadingImages_ = 1;
+        
 		numberOfEntriesPerRow = 4;
     }
     return self;
@@ -43,7 +46,7 @@
 	_bsgView.datasource = self;
 	_bsgView.bsgViewDelegate = self;
 	_bsgView.alwaysBounceVertical = YES;
-    _bsgView.preCacheColumnCount = 15;
+    _bsgView.preCacheColumnCount = 2;
 	
 	_bsgView.entrySize = CGSizeMake(75, 75);
 	_bsgView.entryPadding = UIEdgeInsetsMake(2.0f, 2.0f, 2.0f, 2.0f);
@@ -53,6 +56,7 @@
 }
 
 -(void) viewWillAppear:(BOOL)animated {
+    [operationQueue setMaxConcurrentOperationCount:maximumConcurrentlyLoadingThumbnails_];
     [_bsgView reloadData];
 }
 
@@ -94,6 +98,7 @@
 }
 
 -(void) didSelectEntryAtIndexPath:(NSIndexPath *) index {
+    [operationQueue setMaxConcurrentOperationCount:maximumConcurrentlyLoadingImages_];
 	BobPhotoPageController *controller = [[BobPhotoPageController alloc] initWithPhotos:_photos andCurrentIndex:IndexFromIndexPath(index, numberOfEntriesPerRow)];
     controller.operationQueue = operationQueue;
     controller.bobThumbnailCache = bobCache;

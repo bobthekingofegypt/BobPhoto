@@ -33,7 +33,12 @@
         [[UIColor lightGrayColor] set];
         CGContextFillRect(context, rect);
     } else {
-        [image drawAtPoint:CGPointMake(1.0f, 1.0f)];
+        NSInteger imageWidth = image.size.width;
+        NSInteger imageHeight = image.size.height;
+        NSInteger xPoint = (imageWidth / 2.0) - (self.frame.size.width / 2.0) - 1.0f;
+        NSInteger yPoint = (imageHeight / 2.0) - (self.frame.size.height / 2.0) - 1.0f;
+        
+        [image drawAtPoint:CGPointMake(-xPoint, -yPoint)];
         CGPoint addLines[] = {
             CGPointMake(0.0f, 0.0f),
             CGPointMake(rect.size.width, 0.0f),
@@ -49,6 +54,9 @@
 #pragma mark reuse methods
 
 -(void) prepareForReuse {
+    if (![self.bobDiskLoadOperation isExecuting]) {
+        [self.bobDiskLoadOperation cancel];
+    }
     _bobDiskLoadOperation.delegate = nil;
     self.bobDiskLoadOperation = nil;
     [self setImage:nil];

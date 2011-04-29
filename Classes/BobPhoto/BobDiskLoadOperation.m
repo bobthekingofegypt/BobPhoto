@@ -36,7 +36,13 @@
     return highDefPath;//[ext length]>0? [highDefPath stringByAppendingPathExtension:ext] : highDefPath;
 }
 
--(CGDataProviderRef) dataProvider {
+-(void)main {
+    NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
+    //NSString *path2 = [[NSBundle mainBundle] pathForResource:location_ ofType:nil];
+    //NSString *path = [self highResVersion:path2];
+    //CGDataProviderRef dataProvider = CGDataProviderCreateWithFilename([path UTF8String]);
+    //NSLog(@"location %@", location_);
+    CGDataProviderRef dataProvider;
     if ([[photoSource_ location] hasPrefix:@"http"]) {
         NSURL *url = [NSURL URLWithString:[photoSource_ location]];
         NSURLRequest *request = [NSURLRequest requestWithURL:url];
@@ -46,21 +52,11 @@
         [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
         NSData *result = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error]; 
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-        return CGDataProviderCreateWithCFData((CFDataRef)result);
-    } 
-    NSString *path = [[NSBundle mainBundle] pathForResource:[photoSource_ location] ofType:nil];
-    //NSString *path = [self highResVersion:path2];
-    return CGDataProviderCreateWithFilename([path UTF8String]);
-}
-
--(void)main {
-    NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
-    //NSString *path2 = [[NSBundle mainBundle] pathForResource:location_ ofType:nil];
-    //NSString *path = [self highResVersion:path2];
-    //CGDataProviderRef dataProvider = CGDataProviderCreateWithFilename([path UTF8String]);
-    //NSLog(@"location %@", location_);
-    CGDataProviderRef dataProvider = [self dataProvider];
-    
+        dataProvider = CGDataProviderCreateWithCFData((CFDataRef)result);
+    } else {
+        NSString *path = [[NSBundle mainBundle] pathForResource:[photoSource_ location] ofType:nil];
+        dataProvider = CGDataProviderCreateWithFilename([path UTF8String]);
+    }
     
     CGImageRef image;
     if ([[photoSource_ location] hasSuffix:@".png"]) {

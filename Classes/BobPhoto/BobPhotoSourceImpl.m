@@ -14,21 +14,19 @@
 @synthesize imageLocation, imageLocationRetina;
 
 -(NSString *) location {
-    if ([[UIScreen mainScreen] respondsToSelector:@selector(scale)] && [[UIScreen mainScreen] scale] == 2){
-        if (imageLocationRetina) {
-            return imageLocationRetina;
-        }
-    }
+    if (imageLocationRetina && [[UIScreen mainScreen] respondsToSelector:@selector(scale)]
+        && [[UIScreen mainScreen] scale] == 2.0) {
+        return imageLocationRetina;
+    } 
     
     return imageLocation;
 }
 
 -(BOOL) retina {
-    if ([[UIScreen mainScreen] respondsToSelector:@selector(scale)] && [[UIScreen mainScreen] scale] == 2){
-        if (imageLocationRetina) {
-            return YES;
-        }
-    }
+    if (imageLocationRetina && [[UIScreen mainScreen] respondsToSelector:@selector(scale)]
+        && [[UIScreen mainScreen] scale] == 2.0) {
+        return YES;
+    }  
     return NO;
 }
 
