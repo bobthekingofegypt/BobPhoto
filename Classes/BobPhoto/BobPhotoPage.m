@@ -14,6 +14,7 @@
 		[self addSubview:_scrollView];
         
         loadingView = [[LoadingView alloc] initWithFrame:frame];
+        [self addSubview:loadingView];
     }
     return self;
 }
@@ -50,7 +51,7 @@
 }
 
 -(void) setScrollViewImage:(UIImage *) theImage {
-    [loadingView removeFromSuperview];
+    loadingView.hidden = YES;
     [_scrollView setImage:theImage];
 }
 
@@ -68,8 +69,11 @@
         if (bobThumbnailCache) {
             UIImage *thumbnail = [bobThumbnailCache objectForKey:[photo.thumbnail location]];
             if (thumbnail) {
+                loadingView.hidden = YES;
                 [_scrollView setScaledThumbnail:thumbnail];
                 [self setNeedsLayout];
+            } else {
+                loadingView.hidden = NO;
             }
         }
         if (!_bobImageLoadOperation) {
@@ -80,7 +84,7 @@
             _bobImageLoadOperation = [bobImageLoadOperation retain];
         }
     } else {
-        [loadingView removeFromSuperview];
+        loadingView.hidden = YES;
         [_scrollView setImage:image];
     } 
 }
