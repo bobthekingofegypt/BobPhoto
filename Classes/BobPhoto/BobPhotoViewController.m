@@ -62,6 +62,12 @@
 	bsgView_.entryPadding = UIEdgeInsetsMake(2.0f, 2.0f, 2.0f, 2.0f);
     
 	[self.view addSubview:bsgView_];
+    
+    UIBarButtonItem *space = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    UIBarButtonItem *play = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"play.png"] style:UIBarButtonItemStylePlain target:self action:@selector(playSlideShow)];
+    self.toolbarItems = [NSArray arrayWithObjects:space, play, space, nil];
+    [space release];
+    [play release];
 }
 
 -(void) viewWillAppear:(BOOL)animated {
@@ -79,6 +85,7 @@
     } else {
         numberOfEntriesPerRow = 6;
     }
+    [bsgView_ prepareOrientationChange];
 	return YES;
 }
 
@@ -126,6 +133,16 @@
 
 -(NSInteger) numberOfEntriesPerRow {
     return numberOfEntriesPerRow;
+}
+
+-(void) playSlideShow {
+    [operationQueue setMaxConcurrentOperationCount:maximumConcurrentlyLoadingImages_];
+	BobPhotoPageController *controller = [[BobPhotoPageController alloc] initWithPhotos:photos_ andCurrentIndex:IndexFromIndexPath(0, numberOfEntriesPerRow)];
+    controller.operationQueue = operationQueue;
+    controller.bobThumbnailCache = bobCache;
+	[self.navigationController pushViewController:controller animated:YES];
+    [controller playSlideShow];
+	[controller release];  
 }
 
 @end

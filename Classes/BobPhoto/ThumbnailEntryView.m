@@ -35,8 +35,8 @@
     } else {
         NSInteger imageWidth = image.size.width;
         NSInteger imageHeight = image.size.height;
-        NSInteger xPoint = (imageWidth / 2.0) - (self.frame.size.width / 2.0) - 1.0f;
-        NSInteger yPoint = (imageHeight / 2.0) - (self.frame.size.height / 2.0) - 1.0f;
+        NSInteger xPoint = (imageWidth / 2.0) - (self.frame.size.width / 2.0) ;
+        NSInteger yPoint = (imageHeight / 2.0) - (self.frame.size.height / 2.0);
         
         [image drawAtPoint:CGPointMake(-xPoint, -yPoint)];
         CGPoint addLines[] = {

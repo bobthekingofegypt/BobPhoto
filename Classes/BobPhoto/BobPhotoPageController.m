@@ -149,6 +149,8 @@
 	[bobPageScrollView_ reloadData];
 }
 
+
+
 -(void) updateChrome {
     [[UIApplication sharedApplication] setStatusBarHidden:!showingChrome animated:YES];
     [self.navigationController setNavigationBarHidden:!showingChrome animated:YES];
