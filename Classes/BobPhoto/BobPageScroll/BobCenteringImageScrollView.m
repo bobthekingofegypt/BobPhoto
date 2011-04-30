@@ -179,6 +179,35 @@
 #pragma mark -
 #pragma mark TapDetectingImageView Delegate methods
 
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(handleSingleTap) object:nil];
+    
+    if ([[event touchesForView:self] count] > 1)
+        multipleTouches = YES;
+    
+}
+
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+    BOOL allTouchesEnded = ([touches count] == [[event touchesForView:self] count]);
+    
+    if (!multipleTouches) {
+        UITouch *touch = [touches anyObject];
+        tapLocation = [touch locationInView:self];
+        
+        if ([touch tapCount] == 1) {
+            [touchDelegate bobCenteringImageScrollViewSingleClicked:self];
+        }
+    }    
+    
+    if (allTouchesEnded) {
+        multipleTouches = NO;
+    }
+}
+
+- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
+    multipleTouches = NO;
+}
+
 -(void)tapDetectingImageView:(TapDetectingImageView *)view singleTapAtPoint:(CGPoint)tapPoint {
 	[touchDelegate bobCenteringImageScrollViewSingleClicked:self];
 }

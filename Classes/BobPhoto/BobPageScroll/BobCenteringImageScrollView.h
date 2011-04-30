@@ -11,6 +11,9 @@
     CGSize oldSize;
     id<BobCenteringImageScrollViewDelegate> touchDelegate;
     BOOL thumbnail;
+    
+    CGPoint tapLocation;
+    BOOL multipleTouches;
 }
 
 @property (nonatomic, assign) id<BobCenteringImageScrollViewDelegate> touchDelegate;

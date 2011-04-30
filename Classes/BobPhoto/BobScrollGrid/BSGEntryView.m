@@ -31,8 +31,8 @@
 }
 
 -(void) prepareForReuse {
-	_selected = NO;
-    _highlighted = NO;
+	[self setSelected:NO animated:NO];
+    [self setHighlighted:NO animated:NO];
 }
 
 -(void) setSelected:(BOOL)selected animated:(BOOL)animated {
