@@ -72,6 +72,12 @@
 
 -(void) viewWillAppear:(BOOL)animated {
     [operationQueue setMaxConcurrentOperationCount:maximumConcurrentlyLoadingThumbnails_];
+    UIInterfaceOrientation orientation = [[UIDevice currentDevice] orientation];
+    if (UIInterfaceOrientationIsPortrait(orientation)) {
+        numberOfEntriesPerRow = 4;
+    } else {
+        numberOfEntriesPerRow = 6;
+    }
     [bsgView_ reloadData];
 }
 

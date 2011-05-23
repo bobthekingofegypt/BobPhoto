@@ -1,6 +1,11 @@
 #import "BobImageLoadOperation.h"
 
 
+@interface BobImageLoadOperation()
+-(void)cache:(NSData *)imageData;
+-(NSData*) getStoredImage;
+@end
+
 @implementation BobImageLoadOperation
 
 @synthesize image = image_, delegate, bobCache;
@@ -95,23 +100,14 @@
     [delegate loadImage:i];
 }
 
--(void)cache:(NSData *)imageData{
-	
-	
-	NSArray* paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, 
-														 NSUserDomainMask, YES); 
+-(void)cache:(NSData *)imageData {
+	NSArray* paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES); 
 	NSString* imagesDirectory = [NSString stringWithFormat:@"%@/bobphoto",[paths objectAtIndex:0]];
-	NSString* cacheDirectory = [paths objectAtIndex:0];  
 	
 	NSFileManager *fileman = [[NSFileManager alloc] init];
-	if (![fileman fileExistsAtPath:cacheDirectory]) {
-		[fileman createDirectoryAtPath:cacheDirectory attributes:nil];
-	}
-	
 	if (![fileman fileExistsAtPath:imagesDirectory]) {
-		[fileman createDirectoryAtPath:imagesDirectory attributes:nil];
+		[fileman createDirectoryAtPath:imagesDirectory withIntermediateDirectories:YES attributes:nil error:nil];
 	}
-	
 	[fileman release];
 	
 	NSString *withoutHTTP = [[photoSource_ location] stringByReplacingOccurrencesOfString:@"http://" withString:@""];
@@ -125,23 +121,17 @@
 
 
 -(NSData*) getStoredImage {
-	
 	if ([photoSource_ location] == (id)[NSNull null]) return nil;
 	
 	NSArray* paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, 
 														 NSUserDomainMask, YES); 
 	NSString* imagesDirectory = [NSString stringWithFormat:@"%@/bobphoto",[paths objectAtIndex:0]];
-    
-	
 	NSString *withoutHTTP = [[photoSource_ location] stringByReplacingOccurrencesOfString:@"http://" withString:@""];
 	NSString *withoutSlash = [withoutHTTP stringByReplacingOccurrencesOfString:@"/" withString:@"_"];
-	
 	NSString* filenameStr = [imagesDirectory
 							 stringByAppendingPathComponent:withoutSlash];
 	
-	
 	NSFileManager *fileManager = [[NSFileManager alloc] init];
-	
 	NSData *imageData = nil;
 	
 	if ([fileManager fileExistsAtPath:filenameStr]) {

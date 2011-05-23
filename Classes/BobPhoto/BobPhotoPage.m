@@ -55,7 +55,6 @@
     [_scrollView setImage:theImage];
 }
 
-
 #pragma mark -
 #pragma mark BobPageImage Methods
 

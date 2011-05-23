@@ -173,7 +173,12 @@
 	static NSString *reuseIdentifier = @"PhotoPage";
 	BobPhotoPage *page = (BobPhotoPage *)[bobPageScrollView dequeueReusablePageWithIdentifier:reuseIdentifier];
 	if (!page) {
-		page = [[[BobPhotoPage alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 320.0f, 480.0f) andReuseIdentifier:reuseIdentifier] autorelease];
+        UIInterfaceOrientation orientation = [[UIDevice currentDevice] orientation];
+        if (UIInterfaceOrientationIsPortrait(orientation)) {
+            page = [[[BobPhotoPage alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 320.0f, 480.0f) andReuseIdentifier:reuseIdentifier] autorelease];
+        } else {
+            page = [[[BobPhotoPage alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 480.0f, 320.0f) andReuseIdentifier:reuseIdentifier] autorelease];
+        }
         page.bobCache = bobCache;
         page.bobThumbnailCache = bobThumbnailCache;
         page.operationQueue = operationQueue;
