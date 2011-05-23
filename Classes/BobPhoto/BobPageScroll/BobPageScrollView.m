@@ -213,4 +213,9 @@
 	}
 }
 
+-(void) scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    //currentIndex = 
+    [_datasource bobPageScrollView:self settledOnPage:currentIndex];
+}
+
 @end

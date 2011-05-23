@@ -99,9 +99,12 @@
 
 -(void) setupArrows {
    [self setPageTitle];
+    left.enabled = YES;
+    right.enabled = YES;
     if (bobPageScrollView_.currentIndex == 0) {
         left.enabled = NO;
-    } else if (bobPageScrollView_.currentIndex == ([photos_ count] - 1)) {
+    } 
+    if (bobPageScrollView_.currentIndex == ([photos_ count] - 1)) {
         right.enabled = NO;
     }
 }
@@ -109,7 +112,6 @@
 -(void) leftButtonPressed {
     if (bobPageScrollView_.currentIndex  > 0) {
         [bobPageScrollView_ scrollToPage:(bobPageScrollView_.currentIndex - 1) animated:NO];
-         right.enabled = YES;
         [self setupArrows];
     }
 }
@@ -117,7 +119,6 @@
 -(void) rightButtonPressed {
     if (bobPageScrollView_.currentIndex  < ([photos_ count] - 1)) {
         [bobPageScrollView_ scrollToPage:(bobPageScrollView_.currentIndex + 1) animated:NO];
-        left.enabled = YES;
         [self setupArrows];
     }
 }
@@ -149,6 +150,10 @@
 	[bobPageScrollView_ reloadData];
 }
 
+-(void) bobPageScrollView:(BobPageScrollView *)bobPageScrollView settledOnPage:(NSUInteger) index {
+    [self setupArrows];
+}
+
 
 
 -(void) updateChrome {
@@ -177,6 +182,7 @@
 	
 	BobPhoto *photo = (BobPhoto *)[photos_ objectAtIndex:index];
     [page setPhoto:photo];
+    
 	
 	return page;
 }

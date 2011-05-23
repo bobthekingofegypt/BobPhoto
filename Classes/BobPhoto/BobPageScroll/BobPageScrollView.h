@@ -33,4 +33,5 @@
 @protocol BobPageScrollViewDatasource<NSObject>
 -(NSUInteger) numberOfPages;
 -(BobPage *) bobPageScrollView:(BobPageScrollView *)bobPageScrollView pageForIndex:(NSUInteger)index;
+-(void) bobPageScrollView:(BobPageScrollView *)bobPageScrollView settledOnPage:(NSUInteger) index;
 @end

@@ -26,6 +26,10 @@
     NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
     CGDataProviderRef dataProvider;
     if ([[photoSource_ location] hasPrefix:@"http"]) {
+        NSData *imageData = [self getStoredImage];
+        if (imageData) {
+            dataProvider = CGDataProviderCreateWithCFData((CFDataRef)imageData);
+        } else {
         NSURL *url = [NSURL URLWithString:[photoSource_ location]];
         NSURLRequest *request = [NSURLRequest requestWithURL:url];
         
@@ -35,6 +39,8 @@
         NSData *result = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error]; 
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
         dataProvider = CGDataProviderCreateWithCFData((CFDataRef)result);
+            [self cache:result];
+        }
     } else {
         dataProvider = CGDataProviderCreateWithFilename([[photoSource_ location] UTF8String]);
     }
@@ -87,6 +93,63 @@
     
     [bobCache addObject:i forKey:[photoSource_ location]];
     [delegate loadImage:i];
+}
+
+-(void)cache:(NSData *)imageData{
+	
+	
+	NSArray* paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, 
+														 NSUserDomainMask, YES); 
+	NSString* imagesDirectory = [NSString stringWithFormat:@"%@/bobphoto",[paths objectAtIndex:0]];
+	NSString* cacheDirectory = [paths objectAtIndex:0];  
+	
+	NSFileManager *fileman = [[NSFileManager alloc] init];
+	if (![fileman fileExistsAtPath:cacheDirectory]) {
+		[fileman createDirectoryAtPath:cacheDirectory attributes:nil];
+	}
+	
+	if (![fileman fileExistsAtPath:imagesDirectory]) {
+		[fileman createDirectoryAtPath:imagesDirectory attributes:nil];
+	}
+	
+	[fileman release];
+	
+	NSString *withoutHTTP = [[photoSource_ location] stringByReplacingOccurrencesOfString:@"http://" withString:@""];
+	NSString *withoutSlash = [withoutHTTP stringByReplacingOccurrencesOfString:@"/" withString:@"_"];
+    
+	NSString* filenameStr = [imagesDirectory
+							 stringByAppendingPathComponent:withoutSlash];
+    
+	[imageData writeToFile:filenameStr atomically:YES];
+}
+
+
+-(NSData*) getStoredImage {
+	
+	if ([photoSource_ location] == (id)[NSNull null]) return nil;
+	
+	NSArray* paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, 
+														 NSUserDomainMask, YES); 
+	NSString* imagesDirectory = [NSString stringWithFormat:@"%@/bobphoto",[paths objectAtIndex:0]];
+    
+	
+	NSString *withoutHTTP = [[photoSource_ location] stringByReplacingOccurrencesOfString:@"http://" withString:@""];
+	NSString *withoutSlash = [withoutHTTP stringByReplacingOccurrencesOfString:@"/" withString:@"_"];
+	
+	NSString* filenameStr = [imagesDirectory
+							 stringByAppendingPathComponent:withoutSlash];
+	
+	
+	NSFileManager *fileManager = [[NSFileManager alloc] init];
+	
+	NSData *imageData = nil;
+	
+	if ([fileManager fileExistsAtPath:filenameStr]) {
+		imageData = [NSData dataWithContentsOfFile:filenameStr];
+	}
+	
+	[fileManager release];
+	return imageData;	
 }
 
 @end
