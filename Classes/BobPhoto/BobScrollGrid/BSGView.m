@@ -1,12 +1,8 @@
 #import "BSGView.h"
 
-
-
 NSInteger IndexFromIndexPath(NSIndexPath *path, NSInteger entriesPerRow) {
 	return (path.row * entriesPerRow) + path.section;
 }
-
-
 
 @interface BSGView ()
 @property (nonatomic, retain) NSIndexPath *startingIndexPath;
