@@ -1,4 +1,4 @@
-#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 #import "BSGEntryView.h"
 #import "BobImageLoadOperation.h"
 #import "BobCache.h"

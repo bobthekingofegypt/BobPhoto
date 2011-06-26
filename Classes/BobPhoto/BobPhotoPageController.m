@@ -3,6 +3,10 @@
 #import "BobPhoto.h"
 #import "BobPhotoPage.h"
 
+@protocol UIApplicationDeprecatedMethods
+- (void)setStatusBarHidden:(BOOL)hidden animated:(BOOL)animated;
+@end
+
 @interface BobPhotoPageController()
 -(void) setupArrows;
 -(void) updateChrome;
@@ -157,7 +161,12 @@
 
 
 -(void) updateChrome {
-    [[UIApplication sharedApplication] setStatusBarHidden:!showingChrome animated:YES];
+    if([[UIApplication sharedApplication] respondsToSelector:@selector(setStatusBarHidden:withAnimation:)]) {
+        [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide]; 
+    } else { 
+        id<UIApplicationDeprecatedMethods> app = (id)[UIApplication sharedApplication];
+        [app setStatusBarHidden:!showingChrome animated:YES];
+    }
     [self.navigationController setNavigationBarHidden:!showingChrome animated:YES];
     [self.navigationController setToolbarHidden:!showingChrome animated:YES];
 }

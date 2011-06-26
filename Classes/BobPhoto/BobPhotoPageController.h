@@ -24,6 +24,5 @@
 -(id) initWithPhotos:(NSMutableArray *)photos andCurrentIndex:(NSUInteger)index;
 -(void) setCurrentIndex:(NSUInteger)index;
 -(void) playSlideShow;
--(void) setShowChrome:(BOOL)showChrome animated:(BOOL)animated;
 
 @end

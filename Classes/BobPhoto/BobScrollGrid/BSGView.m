@@ -317,9 +317,6 @@ NSInteger IndexFromIndexPath(NSIndexPath *path, NSInteger entriesPerRow) {
     [startingIndexPath release], startingIndexPath = nil;
 	[endingIndexPath release], endingIndexPath = nil;
     
-    NSInteger previousNumberOfEntriesPerRow = _numberOfEntriesPerRow;
-    NSInteger previousNumberOfRows = _numberOfRows;
-    
     _numberOfEntriesPerRow = [self.datasource numberOfEntriesPerRow];
 	_numberOfRows = ceil(_entryCount / (double)_numberOfEntriesPerRow);
     
@@ -328,25 +325,6 @@ NSInteger IndexFromIndexPath(NSIndexPath *path, NSInteger entriesPerRow) {
     NSInteger contentWidth = ceil((_entrySizeWithPadding.width) * _numberOfEntriesPerRow);
 	NSInteger contentHeight = ceil((_entrySizeWithPadding.height) * _numberOfRows);
 	self.contentSize = CGSizeMake(contentWidth, contentHeight);
-    
-    //NSMutableDictionary *correctedIndexes = [[NSMutableDictionary alloc] initWithCapacity:visibleEntries.count];
-    
-    NSArray *indexes = [visibleEntries allKeys];
-	for (NSIndexPath *indexPath in indexes) {
-        NSInteger index = IndexFromIndexPath(indexPath, previousNumberOfEntriesPerRow);
-        NSInteger row = index / _numberOfEntriesPerRow;
-        NSInteger section = index % _numberOfEntriesPerRow;
-        
-        NSIndexPath *newIndexPath = [NSIndexPath indexPathForRow:row inSection:section];
-        
-        //NSLog(@"Previous index = %@, new = %@", indexPath, newIndexPath);
-        
-        //[correctedIndexes setObject:[visibleEntries objectForKey:indexPath] forKey:newIndexPath];
-		//[self removeVisibleItemForX:index.section andY:index.row];
-	}
-    //[visibleEntries release];
-    //visibleEntries = correctedIndexes;
-    NSLog(@"DONE");
 }
 
 -(void) removeAllVisibleItems {

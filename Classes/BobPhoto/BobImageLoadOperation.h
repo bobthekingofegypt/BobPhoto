@@ -6,7 +6,7 @@
 //  Copyright 2011 Richard Martin. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 #import "BobCache.h"
 #import "BobPhotoSource.h"
 

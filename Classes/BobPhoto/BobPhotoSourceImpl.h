@@ -6,7 +6,7 @@
 //  Copyright 2011 Richard Martin. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 #import "BobPhotoSource.h"
 
 @interface BobPhotoSourceImpl : NSObject<BobPhotoSource> {

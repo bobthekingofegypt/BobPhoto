@@ -30,20 +30,33 @@
 -(void)main {
     NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
     CGDataProviderRef dataProvider;
+    NSString *mimeType = nil;
     if ([[photoSource_ location] hasPrefix:@"http"]) {
-        NSData *imageData = [self getStoredImage];
+        NSData *imageData = nil; //[self getStoredImage];
         if (imageData) {
             dataProvider = CGDataProviderCreateWithCFData((CFDataRef)imageData);
         } else {
-        NSURL *url = [NSURL URLWithString:[photoSource_ location]];
-        NSURLRequest *request = [NSURLRequest requestWithURL:url];
+            NSURL *url = [NSURL URLWithString:[photoSource_ location]];
+            NSURLRequest *request = [NSURLRequest requestWithURL:url];
         
-        NSError *error;
-        NSURLResponse *response;
-        [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-        NSData *result = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error]; 
-        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-        dataProvider = CGDataProviderCreateWithCFData((CFDataRef)result);
+            NSError *error;
+            NSURLResponse *response;
+            [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+            NSData *result = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error]; 
+            [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+            mimeType = [response MIMEType];
+            
+            if ([[photoSource_ location] hasSuffix:@".gif"] || [mimeType isEqualToString:@"image/gif"]) {
+                UIImage *image = [[UIImage alloc] initWithData:result];
+                [self performSelectorOnMainThread:@selector(preloadImage:) 
+                                       withObject:[NSValue valueWithPointer:[image CGImage]] waitUntilDone:YES];
+                [image release];
+                
+                return;
+            }
+            
+            dataProvider = CGDataProviderCreateWithCFData((CFDataRef)result);
+            
             [self cache:result];
         }
     } else {
@@ -51,7 +64,8 @@
     }
     
     CGImageRef image;
-    if ([[photoSource_ location] hasSuffix:@".png"]) {
+    
+    if ([[photoSource_ location] hasSuffix:@".png"] || [mimeType isEqualToString:@"image/png"]) {
         image = CGImageCreateWithPNGDataProvider(dataProvider, NULL, NO, 
                                          kCGRenderingIntentDefault);
     } else {
