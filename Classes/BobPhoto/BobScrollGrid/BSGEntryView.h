@@ -3,11 +3,13 @@
 
 @interface BSGEntryView : UIView {
 	
+    BOOL _selected;
+	BOOL _highlighted;
+    
 	@private
 	NSString *_reuseIdentifier;
 		
-	BOOL _selected;
-	BOOL _highlighted;
+	
 	
 	UIView *backgroundView;
 	UIView *selectedBackgroundView;

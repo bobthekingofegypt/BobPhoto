@@ -5,7 +5,7 @@
 #import "BobPhotoSource.h"
 
 @interface ThumbnailEntryView : BSGEntryView {
-    @private
+    //@private
 	UIImage *image;
     BobImageLoadOperation *bobImageLoadOperation_;
     BobCache *bobCache;

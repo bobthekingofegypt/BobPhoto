@@ -64,7 +64,7 @@
 
 #pragma mark public methods
 
--(void) setPhotoSource:(id<BobPhotoSource>) photoSource; {
+-(void) setPhotoSource:(id<BobPhotoSource>) photoSource {
     if (photoSource_) {
         [photoSource_ release], photoSource_ = nil;
     }

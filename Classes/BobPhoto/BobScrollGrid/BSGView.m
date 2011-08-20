@@ -26,7 +26,10 @@ NSInteger IndexFromIndexPath(NSIndexPath *path, NSInteger entriesPerRow) {
 			startingIndexPath,
 			endingIndexPath,
             numberOfEntriesPerRow = _numberOfEntriesPerRow,
-            preCacheColumnCount;
+            preCacheColumnCount,
+            contentInsetsLandscape = _contentInsetsLandscape,
+            contentInsetsPortrait = _contentInsetsPortrait,
+            selectedEntry;
 
 
 
@@ -304,6 +307,32 @@ NSInteger IndexFromIndexPath(NSIndexPath *path, NSInteger entriesPerRow) {
 	oldBounds = self.bounds;
 }
 
+-(void) resetBounds {
+    UIInterfaceOrientation orientation = [[UIDevice currentDevice] orientation];
+    if (UIInterfaceOrientationIsLandscape(orientation)) {
+        self.contentInset = _contentInsetsLandscape;
+    } else {
+        self.contentInset = _contentInsetsPortrait;
+    }
+    
+	[startingIndexPath release], startingIndexPath = nil;
+	[endingIndexPath release], endingIndexPath = nil;
+	
+	_entryCount = [self.datasource entryCount];
+	_numberOfEntriesPerRow = [self.datasource numberOfEntriesPerRow];
+	_numberOfRows = ceil(_entryCount / (double)_numberOfEntriesPerRow);
+    
+	NSInteger entryWidthWithPadding = (self.entrySize.width + self.entryPadding.left + self.entryPadding.right);
+	NSInteger entryHeightWithPadding = (self.entrySize.height + self.entryPadding.top + self.entryPadding.bottom);
+	_entrySizeWithPadding = CGSizeMake(entryWidthWithPadding, entryHeightWithPadding);
+	
+	NSInteger contentWidth = ceil((_entrySizeWithPadding.width) * _numberOfEntriesPerRow);
+	NSInteger contentHeight = ceil((_entrySizeWithPadding.height) * _numberOfRows);
+	self.contentSize = CGSizeMake(contentWidth, contentHeight);
+	
+	oldBounds = self.bounds;
+}
+
 -(void) prepareOrientationChange {
     [self reloadData];
     return;
@@ -419,6 +448,13 @@ NSInteger IndexFromIndexPath(NSIndexPath *path, NSInteger entriesPerRow) {
 
 -(NSArray *) visibleEntries {
     return [visibleEntries allValues];
+}
+
+-(void) deselectEntryAtIndexPath:(NSIndexPath *)indexPath {
+    BSGEntryView *entry = [visibleEntries objectForKey:indexPath];
+    [entry setHighlighted:NO animated:NO];
+    [entry setSelected:NO animated:YES];
+
 }
 
 @end

@@ -18,7 +18,7 @@
 
 @implementation BobPageScrollView
 
-@synthesize datasource = _datasource, padding = _padding, currentIndex;
+@synthesize datasource = _datasource, padding = _padding, currentIndex, pagedScrollView;
 
 - (id)initWithFrame:(CGRect)frame {
     if ((self = [super initWithFrame:frame])) {
@@ -208,6 +208,11 @@
 #pragma mark ScrollView delegate methods
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    
+        [scrollView setContentOffset: CGPointMake(scrollView.contentOffset.x, 0.0f)];
+        // or if you are sure you wanna it always on top:
+        // [aScrollView setContentOffset: CGPointMake(aScrollView.contentOffset.x, 0)];
+    
 	if (pagedScrollView.dragging && !(!pagedScrollView.dragging && pagedScrollView.decelerating)) {
 		[self layoutPages];
 	}

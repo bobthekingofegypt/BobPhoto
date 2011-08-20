@@ -23,6 +23,7 @@
 @property (nonatomic, assign) id<BobPageScrollViewDatasource> datasource;
 @property (nonatomic, assign) NSUInteger padding;
 @property (nonatomic, assign) NSUInteger currentIndex;
+@property (nonatomic, readonly) UIScrollView *pagedScrollView;
 
 -(void) reloadData;
 -(BobPage *) dequeueReusablePageWithIdentifier:(NSString *)identifier;

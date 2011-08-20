@@ -45,12 +45,17 @@
 @property (nonatomic, assign) CGSize entrySize;
 @property (nonatomic, readonly) NSInteger numberOfEntriesPerRow;
 @property (nonatomic, assign) NSInteger preCacheColumnCount;
+@property (nonatomic, assign) UIEdgeInsets contentInsetsLandscape;
+@property (nonatomic, assign) UIEdgeInsets contentInsetsPortrait;
+@property (nonatomic, assign) NSIndexPath *selectedEntry;
 
 -(id) initWithFrame:(CGRect)frame;
 -(void) reloadData;
 -(BSGEntryView *) dequeReusableEntry:(NSString *)reuseIdentifier;
 -(NSArray *) visibleEntries;
 -(void) prepareOrientationChange;
+-(void) deselectEntryAtIndexPath:(NSIndexPath *)indexPath;
+-(void) resetBounds;
 
 @end
 

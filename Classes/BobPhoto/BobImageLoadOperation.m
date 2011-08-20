@@ -31,29 +31,22 @@
     NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
     CGDataProviderRef dataProvider;
     NSString *mimeType = nil;
+    
     if ([[photoSource_ location] hasPrefix:@"http"]) {
-        NSData *imageData = nil; //[self getStoredImage];
+        NSData *imageData = [self getStoredImage];
         if (imageData) {
             dataProvider = CGDataProviderCreateWithCFData((CFDataRef)imageData);
         } else {
             NSURL *url = [NSURL URLWithString:[photoSource_ location]];
             NSURLRequest *request = [NSURLRequest requestWithURL:url];
-        
+            
             NSError *error;
             NSURLResponse *response;
             [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
             NSData *result = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error]; 
+            
             [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
             mimeType = [response MIMEType];
-            
-            if ([[photoSource_ location] hasSuffix:@".gif"] || [mimeType isEqualToString:@"image/gif"]) {
-                UIImage *image = [[UIImage alloc] initWithData:result];
-                [self performSelectorOnMainThread:@selector(preloadImage:) 
-                                       withObject:[NSValue valueWithPointer:[image CGImage]] waitUntilDone:YES];
-                [image release];
-                
-                return;
-            }
             
             dataProvider = CGDataProviderCreateWithCFData((CFDataRef)result);
             
@@ -69,11 +62,20 @@
         image = CGImageCreateWithPNGDataProvider(dataProvider, NULL, NO, 
                                          kCGRenderingIntentDefault);
     } else {
-        image = CGImageCreateWithJPEGDataProvider(dataProvider, NULL, NO, 
-                                         kCGRenderingIntentDefault);
+        //image = CGImageCreateWithJPEGDataProvider(dataProvider, NULL, NO, 
+        //                                 kCGRenderingIntentDefault);
+        image = CGImageCreateWithPNGDataProvider(dataProvider, NULL, NO, 
+                                                 kCGRenderingIntentDefault);
     }
     
     CGDataProviderRelease(dataProvider);
+    
+    [self performSelectorOnMainThread:@selector(preloadImage:) 
+                           withObject:[NSValue valueWithPointer:image] waitUntilDone:YES];
+    
+    [pool release];
+    
+    return;
     
     size_t width = CGImageGetWidth(image);
     size_t height = CGImageGetHeight(image);
@@ -81,9 +83,9 @@
     
     CGColorSpaceRef colourSpace = CGColorSpaceCreateDeviceRGB();
     
-    CGContextRef imageContext =
+    CGContextRef imageContext = 
     CGBitmapContextCreate(imageBuffer, width, height, 8, width*4, colourSpace,
-                          kCGImageAlphaPremultipliedFirst | kCGBitmapByteOrder32Little);
+                          kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Little);
     
     CGColorSpaceRelease(colourSpace);
     CGContextDrawImage(imageContext, CGRectMake(0, 0, width, height), image);
