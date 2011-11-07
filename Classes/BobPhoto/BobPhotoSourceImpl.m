@@ -8,15 +8,19 @@
 
 #import "BobPhotoSourceImpl.h"
 
+@interface UIScreen(custom) 
+-(double) scale;
+@end
 
 @implementation BobPhotoSourceImpl
 
 @synthesize imageLocation, imageLocationRetina;
 
 -(NSString *) location {
-    if (imageLocationRetina && [[UIScreen mainScreen] respondsToSelector:@selector(scale)]
-        && [[UIScreen mainScreen] scale] == 2.0) {
-        return imageLocationRetina;
+    if (imageLocationRetina && [[UIScreen mainScreen] respondsToSelector:@selector(scale)]) {
+        if ([[UIScreen mainScreen] scale] == 2.0) {
+            return imageLocationRetina;
+        }
     } 
     
     return imageLocation;

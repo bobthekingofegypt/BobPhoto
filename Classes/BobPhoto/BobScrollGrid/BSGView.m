@@ -60,8 +60,8 @@ NSInteger IndexFromIndexPath(NSIndexPath *path, NSInteger entriesPerRow) {
 		self.scrollEnabled = YES;
 		self.delegate = self;
 		self.bsgViewDelegate = nil;
-		self.alwaysBounceVertical = NO;
-		self.alwaysBounceHorizontal = NO;
+		//self.alwaysBounceVertical = NO;
+		//self.alwaysBounceHorizontal = NO;
 		
 		self.autoresizesSubviews = NO;
         
@@ -305,6 +305,8 @@ NSInteger IndexFromIndexPath(NSIndexPath *path, NSInteger entriesPerRow) {
 	[self removeAllVisibleItems];
 	
 	oldBounds = self.bounds;
+    
+    [self redrawForLocation:self.contentOffset];
 }
 
 -(void) resetBounds {

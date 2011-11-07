@@ -333,6 +333,9 @@
 		A14ECB3B1352012E00FF76E6 /* 5500769892_64b6639866_o_medium_2.jpg_thumb.png in Resources */ = {isa = PBXBuildFile; fileRef = A14ECAEF1352012E00FF76E6 /* 5500769892_64b6639866_o_medium_2.jpg_thumb.png */; };
 		A14ECB3C1352012E00FF76E6 /* 5500774964_cdd61f55c3_o_medium.jpg_thumb.png in Resources */ = {isa = PBXBuildFile; fileRef = A14ECAF01352012E00FF76E6 /* 5500774964_cdd61f55c3_o_medium.jpg_thumb.png */; };
 		A14ECB3D1352012E00FF76E6 /* 5500774964_cdd61f55c3_o_medium_2.jpg_thumb.png in Resources */ = {isa = PBXBuildFile; fileRef = A14ECAF11352012E00FF76E6 /* 5500774964_cdd61f55c3_o_medium_2.jpg_thumb.png */; };
+		A15FB36613FFFDFF005CB6D7 /* TempScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = A15FB36513FFFDFF005CB6D7 /* TempScrollView.m */; };
+		A15FB36713FFFF95005CB6D7 /* TempScrollView.h in Headers */ = {isa = PBXBuildFile; fileRef = A15FB36413FFFDFF005CB6D7 /* TempScrollView.h */; };
+		A15FB36813FFFF9F005CB6D7 /* TempScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = A15FB36513FFFDFF005CB6D7 /* TempScrollView.m */; };
 		A174C1F9132D416B005846F1 /* 5212023604_f20ea1fb5d_o_medium_2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A174C1D3132D4147005846F1 /* 5212023604_f20ea1fb5d_o_medium_2.jpg */; };
 		A174C1FA132D416B005846F1 /* 5212030714_14f06c4504_o_medium_2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A174C1D4132D4147005846F1 /* 5212030714_14f06c4504_o_medium_2.jpg */; };
 		A174C1FB132D416B005846F1 /* 5212033470_abe76aaf15_o_medium_2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A174C1D5132D4147005846F1 /* 5212033470_abe76aaf15_o_medium_2.jpg */; };
@@ -698,6 +701,8 @@
 		A14ECAEF1352012E00FF76E6 /* 5500769892_64b6639866_o_medium_2.jpg_thumb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 5500769892_64b6639866_o_medium_2.jpg_thumb.png; sourceTree = "<group>"; };
 		A14ECAF01352012E00FF76E6 /* 5500774964_cdd61f55c3_o_medium.jpg_thumb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 5500774964_cdd61f55c3_o_medium.jpg_thumb.png; sourceTree = "<group>"; };
 		A14ECAF11352012E00FF76E6 /* 5500774964_cdd61f55c3_o_medium_2.jpg_thumb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 5500774964_cdd61f55c3_o_medium_2.jpg_thumb.png; sourceTree = "<group>"; };
+		A15FB36413FFFDFF005CB6D7 /* TempScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TempScrollView.h; sourceTree = "<group>"; };
+		A15FB36513FFFDFF005CB6D7 /* TempScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TempScrollView.m; sourceTree = "<group>"; };
 		A174C1D3132D4147005846F1 /* 5212023604_f20ea1fb5d_o_medium_2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = 5212023604_f20ea1fb5d_o_medium_2.jpg; path = Images/medium/5212023604_f20ea1fb5d_o_medium_2.jpg; sourceTree = SOURCE_ROOT; };
 		A174C1D4132D4147005846F1 /* 5212030714_14f06c4504_o_medium_2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = 5212030714_14f06c4504_o_medium_2.jpg; path = Images/medium/5212030714_14f06c4504_o_medium_2.jpg; sourceTree = SOURCE_ROOT; };
 		A174C1D5132D4147005846F1 /* 5212033470_abe76aaf15_o_medium_2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = 5212033470_abe76aaf15_o_medium_2.jpg; path = Images/medium/5212033470_abe76aaf15_o_medium_2.jpg; sourceTree = SOURCE_ROOT; };
@@ -1197,6 +1202,8 @@
 				A12BDEAE126F68FF00A3AD65 /* BobPageScrollView.m */,
 				A12BDEAF126F68FF00A3AD65 /* TapDetectingImageView.h */,
 				A12BDEB0126F68FF00A3AD65 /* TapDetectingImageView.m */,
+				A15FB36413FFFDFF005CB6D7 /* TempScrollView.h */,
+				A15FB36513FFFDFF005CB6D7 /* TempScrollView.m */,
 			);
 			path = BobPageScroll;
 			sourceTree = "<group>";
@@ -1388,6 +1395,7 @@
 				A10694F013B6824A00AD51B3 /* BobPhoto.h in Headers */,
 				A10694F113B6824A00AD51B3 /* BobPhotoSource.h in Headers */,
 				A10694F213B6824A00AD51B3 /* BobPhotoSourceImpl.h in Headers */,
+				A15FB36713FFFF95005CB6D7 /* TempScrollView.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1845,6 +1853,7 @@
 				A1009ECF1364AF1500F85816 /* BobPhoto.m in Sources */,
 				A1009ED41364B18700F85816 /* BobPhotoSourceImpl.m in Sources */,
 				A106948013B67E7200AD51B3 /* BobCache.m in Sources */,
+				A15FB36613FFFDFF005CB6D7 /* TempScrollView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1868,6 +1877,7 @@
 				A10694DF13B6823000AD51B3 /* LoadingView.m in Sources */,
 				A10694E013B6823000AD51B3 /* BobPhoto.m in Sources */,
 				A10694E113B6823000AD51B3 /* BobPhotoSourceImpl.m in Sources */,
+				A15FB36813FFFF9F005CB6D7 /* TempScrollView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1903,6 +1913,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = BobPhoto_Prefix.pch;
 				INFOPLIST_FILE = "BobPhoto-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 3.1;
 				PRODUCT_NAME = BobPhoto;
 				SDKROOT = iphoneos;
 			};
@@ -1916,6 +1927,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = BobPhoto_Prefix.pch;
 				INFOPLIST_FILE = "BobPhoto-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 3.1;
 				PRODUCT_NAME = BobPhoto;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;

@@ -1,5 +1,6 @@
 #import "BobPageScrollView.h"
 #import "BobPage.h"
+#import "TempScrollView.h"
 
 #define kDefaultPadding 0
 
@@ -27,7 +28,8 @@
 		
 		originalFrame = frame;
 		
-        pagedScrollView = [[UIScrollView alloc] initWithFrame:originalFrame];
+        pagedScrollView = [[TempScrollView alloc] initWithFrame:originalFrame];
+        pagedScrollView.userInteractionEnabled = YES;
 		pagedScrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 		pagedScrollView.pagingEnabled = YES;
 		pagedScrollView.showsVerticalScrollIndicator = NO;
@@ -197,10 +199,11 @@
 #pragma mark Position view methods
 
 -(void) scrollToPage:(NSUInteger)page animated:(BOOL)animated {
+    if (page < 0) return;
     CGSize pageSize = CGSizeMake((self.bounds.size.width + (2 * self.padding)), self.bounds.size.height);
     NSInteger x = page * pageSize.width;
-    [pagedScrollView scrollRectToVisible:CGRectMake(x, 0, pageSize.width, pageSize.height) animated:NO];
-    [self layoutPages];
+    [pagedScrollView scrollRectToVisible:CGRectMake(x, 0, pageSize.width, pageSize.height) animated:YES];
+    //[self layoutPages];
 }
 
 
@@ -209,17 +212,19 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     
-        [scrollView setContentOffset: CGPointMake(scrollView.contentOffset.x, 0.0f)];
+        [scrollView setContentOffset: CGPointMake(0.0f, 0.0f)];
         // or if you are sure you wanna it always on top:
         // [aScrollView setContentOffset: CGPointMake(aScrollView.contentOffset.x, 0)];
     
-	if (pagedScrollView.dragging && !(!pagedScrollView.dragging && pagedScrollView.decelerating)) {
+	//if (pagedScrollView.dragging && !(!pagedScrollView.dragging && pagedScrollView.decelerating)) {
 		[self layoutPages];
-	}
+	//}
 }
 
 -(void) scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     [_datasource bobPageScrollView:self settledOnPage:currentIndex];
 }
+
+
 
 @end

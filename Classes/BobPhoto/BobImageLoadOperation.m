@@ -73,34 +73,10 @@
     [self performSelectorOnMainThread:@selector(preloadImage:) 
                            withObject:[NSValue valueWithPointer:image] waitUntilDone:YES];
     
+    CGImageRelease(image);
     [pool release];
     
     return;
-    
-    size_t width = CGImageGetWidth(image);
-    size_t height = CGImageGetHeight(image);
-    unsigned char *imageBuffer = (unsigned char *)malloc(width*height*4);
-    
-    CGColorSpaceRef colourSpace = CGColorSpaceCreateDeviceRGB();
-    
-    CGContextRef imageContext = 
-    CGBitmapContextCreate(imageBuffer, width, height, 8, width*4, colourSpace,
-                          kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Little);
-    
-    CGColorSpaceRelease(colourSpace);
-    CGContextDrawImage(imageContext, CGRectMake(0, 0, width, height), image);
-    CGImageRelease(image);
-    
-    CGImageRef outputImage = CGBitmapContextCreateImage(imageContext);
-    
-    [self performSelectorOnMainThread:@selector(preloadImage:) 
-                           withObject:[NSValue valueWithPointer:outputImage] waitUntilDone:YES];
-    
-    CGImageRelease(outputImage);
-    CGContextRelease(imageContext);
-    free(imageBuffer);
-    
-    [pool release];
 }
 
 -(void) preloadImage:(NSValue *) value  {
