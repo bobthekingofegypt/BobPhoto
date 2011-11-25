@@ -8,9 +8,6 @@
 
 #import "BobPhotoSourceImpl.h"
 
-@interface UIScreen(custom) 
--(double) scale;
-@end
 
 @implementation BobPhotoSourceImpl
 

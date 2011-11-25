@@ -11,5 +11,6 @@
 -(id) initWithCapacity:(NSUInteger) capacity;
 -(id) objectForKey:(NSString *) key;
 -(void) addObject:(id) object forKey:(NSString *)key;
+-(void) clear;
 
 @end

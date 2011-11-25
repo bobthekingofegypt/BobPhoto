@@ -63,7 +63,7 @@ NSInteger IndexFromIndexPath(NSIndexPath *path, NSInteger entriesPerRow) {
 		//self.alwaysBounceVertical = NO;
 		//self.alwaysBounceHorizontal = NO;
 		
-		self.autoresizesSubviews = NO;
+		self.autoresizesSubviews = YES;
         
         _contentInsetsPortrait = UIEdgeInsetsMake(66.0f, 2.0f, 46.0f, 2.0f);
         _contentInsetsLandscape = UIEdgeInsetsMake(52.0f, 2.0f, 32.0f, 2.0f);

@@ -24,6 +24,13 @@
     [super dealloc];
 }
 
+-(void) clear {
+    [lock lock];
+    [keys removeAllObjects];
+    [entries removeAllObjects];
+    [lock unlock];
+}
+
 -(id) objectForKey:(NSString *) key {
     [lock lock];    
     id object = [entries objectForKey:key];
