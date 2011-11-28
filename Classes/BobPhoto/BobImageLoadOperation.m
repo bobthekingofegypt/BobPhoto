@@ -30,11 +30,13 @@
 -(void)main {
     NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
     CGDataProviderRef dataProvider;
+    bool success = NO;
     NSString *mimeType = nil;
-    
+    //NSLog(@"%@", [photoSource_ location]);
     if ([[photoSource_ location] hasPrefix:@"http"]) {
         NSData *imageData = [self getStoredImage];
         if (imageData) {
+            success = YES;
             dataProvider = CGDataProviderCreateWithCFData((CFDataRef)imageData);
         } else {
             NSURL *url = [NSURL URLWithString:[photoSource_ location]];
@@ -46,14 +48,28 @@
             NSData *result = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error]; 
             
             [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-            mimeType = [response MIMEType];
             
-            dataProvider = CGDataProviderCreateWithCFData((CFDataRef)result);
+            NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *) response;
+            //NSLog(@"Status code %d", [httpResponse statusCode] );
+            if ([httpResponse statusCode] == 200) {
+                success = YES;
+                mimeType = [response MIMEType];
             
-            [self cache:result];
+                dataProvider = CGDataProviderCreateWithCFData((CFDataRef)result);
+            
+                [self cache:result];
+            }
         }
     } else {
+
+        success = YES;
+
         dataProvider = CGDataProviderCreateWithFilename([[photoSource_ location] UTF8String]);
+    }
+    
+    if (!success) {
+        NSLog(@"No data provider");
+        return;
     }
     
     CGImageRef image;
@@ -87,9 +103,10 @@
     } else {
         i = [UIImage imageWithCGImage:imageRef];
     }
-    
     [bobCache addObject:i forKey:[photoSource_ location]];
-    [delegate loadImage:i];
+    if (i) {
+        [delegate loadImage:i];
+    }
 }
 
 -(void)cache:(NSData *)imageData {
@@ -102,11 +119,9 @@
 	}
 	[fileman release];
 	
-	NSString *withoutHTTP = [[photoSource_ location] stringByReplacingOccurrencesOfString:@"http://" withString:@""];
-	NSString *withoutSlash = [withoutHTTP stringByReplacingOccurrencesOfString:@"/" withString:@"_"];
-    
+    NSString *key = [photoSource_ cacheKey];
 	NSString* filenameStr = [imagesDirectory
-							 stringByAppendingPathComponent:withoutSlash];
+							 stringByAppendingPathComponent:key];
     
 	[imageData writeToFile:filenameStr atomically:YES];
 }
@@ -118,10 +133,10 @@
 	NSArray* paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, 
 														 NSUserDomainMask, YES); 
 	NSString* imagesDirectory = [NSString stringWithFormat:@"%@/bobphoto",[paths objectAtIndex:0]];
-	NSString *withoutHTTP = [[photoSource_ location] stringByReplacingOccurrencesOfString:@"http://" withString:@""];
-	NSString *withoutSlash = [withoutHTTP stringByReplacingOccurrencesOfString:@"/" withString:@"_"];
+    NSString *key = [photoSource_ cacheKey];
+
 	NSString* filenameStr = [imagesDirectory
-							 stringByAppendingPathComponent:withoutSlash];
+							 stringByAppendingPathComponent:key];
 	
 	NSFileManager *fileManager = [[NSFileManager alloc] init];
 	NSData *imageData = nil;

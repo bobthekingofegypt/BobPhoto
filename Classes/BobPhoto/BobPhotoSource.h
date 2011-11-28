@@ -8,10 +8,19 @@
 
 #import <Foundation/Foundation.h>
 
+typedef enum {
+   ImageTypePNG,
+   ImageTypeJPG,
+    ImageTypeGIF
+} ImageType;
 
 @protocol BobPhotoSource <NSObject>
 
 -(NSString *) location;
 -(BOOL) retina;
+-(NSString *) cacheKey;
+
+@optional
+-(ImageType) imageType;
 
 @end

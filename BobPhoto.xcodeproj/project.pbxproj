@@ -1214,7 +1214,6 @@
 				A12BDEC3126F771500A3AD65 /* ExampleSelectionTableController.h */,
 				A12BDEC4126F771500A3AD65 /* ExampleSelectionTableController.m */,
 				A1A71E1312A2D4B80064DD5E /* DiskGalleryController.h */,
-				A1A71E1412A2D4B80064DD5E /* DiskGalleryController.m */,
 				A1009EBE135B78B100F85816 /* RemoteGalleryController.h */,
 				A1009EBF135B78B100F85816 /* RemoteGalleryController.m */,
 			);
