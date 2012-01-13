@@ -30,4 +30,5 @@
 
 @protocol BobImageLoadOperationDelegate <NSObject>
 -(void) loadImage:(UIImage *) i;
+-(void) imageLoadFailed;
 @end

@@ -1,0 +1,6 @@
+[submodule "Fameworks/BobPagedScroll"]
+	path = Fameworks/BobPagedScroll
+	url = git@github.com:bobthekingofegypt/BobPagedScroll.git
+[submodule "Frameworks/BobPagedScroll"]
+	path = Frameworks/BobPagedScroll
+	url = git@github.com:bobthekingofegypt/BobPagedScroll.git

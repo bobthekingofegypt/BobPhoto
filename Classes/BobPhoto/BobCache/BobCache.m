@@ -45,7 +45,7 @@
 -(void) addObject:(id) object forKey:(NSString *)key {
     [lock lock];
     if (capacity_ == keys.count) {
-        id lastKey = [keys lastObject];
+        id lastKey = [[[keys lastObject] retain] autorelease];
         [keys removeLastObject];
         [entries removeObjectForKey:lastKey];
     }

@@ -69,6 +69,7 @@
     
     if (!success) {
         NSLog(@"No data provider");
+        [delegate imageLoadFailed];
         return;
     }
     
@@ -78,10 +79,8 @@
         image = CGImageCreateWithPNGDataProvider(dataProvider, NULL, NO, 
                                          kCGRenderingIntentDefault);
     } else {
-        //image = CGImageCreateWithJPEGDataProvider(dataProvider, NULL, NO, 
-        //                                 kCGRenderingIntentDefault);
-        image = CGImageCreateWithPNGDataProvider(dataProvider, NULL, NO, 
-                                                 kCGRenderingIntentDefault);
+        image = CGImageCreateWithJPEGDataProvider(dataProvider, NULL, NO, 
+                                         kCGRenderingIntentDefault);
     }
     
     CGDataProviderRelease(dataProvider);

@@ -257,6 +257,7 @@
 		A12BDEB4126F68FF00A3AD65 /* BobPageScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = A12BDEAE126F68FF00A3AD65 /* BobPageScrollView.m */; };
 		A12BDEB5126F68FF00A3AD65 /* TapDetectingImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = A12BDEB0126F68FF00A3AD65 /* TapDetectingImageView.m */; };
 		A12BDEC5126F771500A3AD65 /* ExampleSelectionTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = A12BDEC4126F771500A3AD65 /* ExampleSelectionTableController.m */; };
+		A12C3169148EB18F00427A8C /* DiskGalleryController.m in Sources */ = {isa = PBXBuildFile; fileRef = A12C3168148EB18F00427A8C /* DiskGalleryController.m */; };
 		A14ECAF21352012E00FF76E6 /* 5212023604_f20ea1fb5d_o_medium.jpg_thumb.png in Resources */ = {isa = PBXBuildFile; fileRef = A14ECAA61352012E00FF76E6 /* 5212023604_f20ea1fb5d_o_medium.jpg_thumb.png */; };
 		A14ECAF31352012E00FF76E6 /* 5212023604_f20ea1fb5d_o_medium_2.jpg_thumb.png in Resources */ = {isa = PBXBuildFile; fileRef = A14ECAA71352012E00FF76E6 /* 5212023604_f20ea1fb5d_o_medium_2.jpg_thumb.png */; };
 		A14ECAF41352012E00FF76E6 /* 5212030714_14f06c4504_o_medium.jpg_thumb.png in Resources */ = {isa = PBXBuildFile; fileRef = A14ECAA81352012E00FF76E6 /* 5212030714_14f06c4504_o_medium.jpg_thumb.png */; };
@@ -379,7 +380,6 @@
 		A1A71DE512983F340064DD5E /* BSGView.m in Sources */ = {isa = PBXBuildFile; fileRef = A1A71DE312983F340064DD5E /* BSGView.m */; };
 		A1A71DEE12A2C8ED0064DD5E /* BobPhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A1A71DED12A2C8ED0064DD5E /* BobPhotoViewController.m */; };
 		A1A71E0C12A2D3B50064DD5E /* ThumbnailEntryView.m in Sources */ = {isa = PBXBuildFile; fileRef = A1A71E0B12A2D3B50064DD5E /* ThumbnailEntryView.m */; };
-		A1A71E1512A2D4B80064DD5E /* DiskGalleryController.m in Sources */ = {isa = PBXBuildFile; fileRef = A1A71E1412A2D4B80064DD5E /* DiskGalleryController.m */; };
 		A1A71E9F12A986850064DD5E /* BobPhotoPageController.m in Sources */ = {isa = PBXBuildFile; fileRef = A1A71E9E12A986850064DD5E /* BobPhotoPageController.m */; };
 		A1B4B4AB13B68485004F7F7C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1B4B4AA13B68485004F7F7C /* CoreGraphics.framework */; };
 		A1FC252713AFE796006343DE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
@@ -625,6 +625,7 @@
 		A12BDEB0126F68FF00A3AD65 /* TapDetectingImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TapDetectingImageView.m; sourceTree = "<group>"; };
 		A12BDEC3126F771500A3AD65 /* ExampleSelectionTableController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExampleSelectionTableController.h; sourceTree = "<group>"; };
 		A12BDEC4126F771500A3AD65 /* ExampleSelectionTableController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExampleSelectionTableController.m; sourceTree = "<group>"; };
+		A12C3168148EB18F00427A8C /* DiskGalleryController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiskGalleryController.m; sourceTree = "<group>"; };
 		A14ECAA61352012E00FF76E6 /* 5212023604_f20ea1fb5d_o_medium.jpg_thumb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 5212023604_f20ea1fb5d_o_medium.jpg_thumb.png; sourceTree = "<group>"; };
 		A14ECAA71352012E00FF76E6 /* 5212023604_f20ea1fb5d_o_medium_2.jpg_thumb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 5212023604_f20ea1fb5d_o_medium_2.jpg_thumb.png; sourceTree = "<group>"; };
 		A14ECAA81352012E00FF76E6 /* 5212030714_14f06c4504_o_medium.jpg_thumb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 5212030714_14f06c4504_o_medium.jpg_thumb.png; sourceTree = "<group>"; };
@@ -752,7 +753,6 @@
 		A1A71E0A12A2D3B50064DD5E /* ThumbnailEntryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThumbnailEntryView.h; sourceTree = "<group>"; };
 		A1A71E0B12A2D3B50064DD5E /* ThumbnailEntryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThumbnailEntryView.m; sourceTree = "<group>"; };
 		A1A71E1312A2D4B80064DD5E /* DiskGalleryController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiskGalleryController.h; sourceTree = "<group>"; };
-		A1A71E1412A2D4B80064DD5E /* DiskGalleryController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiskGalleryController.m; sourceTree = "<group>"; };
 		A1A71E9D12A986850064DD5E /* BobPhotoPageController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BobPhotoPageController.h; sourceTree = "<group>"; };
 		A1A71E9E12A986850064DD5E /* BobPhotoPageController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BobPhotoPageController.m; sourceTree = "<group>"; };
 		A1B4B49B13B683C4004F7F7C /* libBobPhotoFramework.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libBobPhotoFramework.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1211,6 +1211,7 @@
 		A12BDEB6126F746E00A3AD65 /* Examples */ = {
 			isa = PBXGroup;
 			children = (
+				A12C3168148EB18F00427A8C /* DiskGalleryController.m */,
 				A12BDEC3126F771500A3AD65 /* ExampleSelectionTableController.h */,
 				A12BDEC4126F771500A3AD65 /* ExampleSelectionTableController.m */,
 				A1A71E1312A2D4B80064DD5E /* DiskGalleryController.h */,
@@ -1846,7 +1847,6 @@
 				A1A71DE512983F340064DD5E /* BSGView.m in Sources */,
 				A1A71DEE12A2C8ED0064DD5E /* BobPhotoViewController.m in Sources */,
 				A1A71E0C12A2D3B50064DD5E /* ThumbnailEntryView.m in Sources */,
-				A1A71E1512A2D4B80064DD5E /* DiskGalleryController.m in Sources */,
 				A1A71E9F12A986850064DD5E /* BobPhotoPageController.m in Sources */,
 				A11E7D96132BE6A7006ED868 /* BobImageLoadOperation.m in Sources */,
 				A11E7D99132BEC07006ED868 /* BobPhotoPage.m in Sources */,
@@ -1856,6 +1856,7 @@
 				A1009ED41364B18700F85816 /* BobPhotoSourceImpl.m in Sources */,
 				A106948013B67E7200AD51B3 /* BobCache.m in Sources */,
 				A15FB36613FFFDFF005CB6D7 /* TempScrollView.m in Sources */,
+				A12C3169148EB18F00427A8C /* DiskGalleryController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1942,6 +1943,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = (
+					i386,
+					armv6,
+				);
 				DSTROOT = /tmp/BobPhotoFramework.dst;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -1950,7 +1955,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 3.1;
 				LINK_WITH_STANDARD_LIBRARIES = YES;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1962,12 +1967,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = (
+					i386,
+					armv6,
+				);
 				DSTROOT = /tmp/BobPhotoFramework.dst;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "BobPhotoFramework/BobPhotoFramework-Prefix.pch";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 3.1;
 				LINK_WITH_STANDARD_LIBRARIES = YES;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2036,6 +2045,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
 				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
@@ -2050,6 +2060,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
 			};
 			name = Release;
 		};
