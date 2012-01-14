@@ -52,6 +52,9 @@
 	bobPageScrollView_ = [[BobPagedScrollView alloc] initWithFrame:CGRectMake(0.0f,0.0f,self.view.frame.size.width, self.view.frame.size.height)];
 	bobPageScrollView_.padding = 10.0f;
 	bobPageScrollView_.datasource = self;
+    bobPageScrollView_.delegate = self;
+    [bobPageScrollView_ scrollToPage:currentIndex animated:NO];
+    
 	//bobPageScrollView_.currentIndex = currentIndex;
     [bobPageScrollView_ reloadData];
    
@@ -94,33 +97,35 @@
 #pragma mark
 
 -(void) setPageTitle {
-    //self.title = [NSString stringWithFormat:@"%d of %d", bobPageScrollView_.currentIndex + 1, [photos_ count]];
+    self.title = [NSString stringWithFormat:@"%d of %d", currentIndex + 1, [photos_ count]];
 }
 
 -(void) setupArrows {
-   [self setPageTitle];
+    [self setPageTitle];
     left.enabled = YES;
     right.enabled = YES;
-    //if (bobPageScrollView_.currentIndex == 0) {
-    //    left.enabled = NO;
-    //} 
-    //if (bobPageScrollView_.currentIndex == ([photos_ count] - 1)) {
-    //    right.enabled = NO;
-    //}
+    if (currentIndex == 0) {
+        left.enabled = NO;
+    } 
+    if (currentIndex == ([photos_ count] - 1)) {
+        right.enabled = NO;
+    }
 }
 
 -(void) leftButtonPressed {
-   // if (bobPageScrollView_.currentIndex  > 0) {
-    //    [bobPageScrollView_ scrollToPage:(bobPageScrollView_.currentIndex - 1) animated:NO];
-    //    [self setupArrows];
-    //}
+    if (currentIndex  > 0) {
+        currentIndex = currentIndex - 1;
+        [bobPageScrollView_ scrollToPage:(currentIndex) animated:NO];
+        [self setupArrows];
+    }
 }
 
 -(void) rightButtonPressed {
-    //if (bobPageScrollView_.currentIndex  < ([photos_ count] - 1)) {
-    //    [bobPageScrollView_ scrollToPage:(bobPageScrollView_.currentIndex + 1) animated:NO];
-    //    [self setupArrows];
-    //}
+    if (currentIndex  < ([photos_ count] - 1)) {
+        currentIndex = currentIndex + 1;
+        [bobPageScrollView_ scrollToPage:(currentIndex) animated:NO];
+        [self setupArrows];
+    }
 }
 
 -(void) changePage {
@@ -151,6 +156,7 @@
 }
 
 -(void) bobPagedScrollView:(BobPagedScrollView *)bobPageScrollView settledOnPage:(NSUInteger) index {
+    currentIndex = index;
     [self setupArrows];
 }
 
