@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:Frameworks/BobUtils/BobUtils.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:Frameworks/BobScrollGrid/BobScrollGrid.xcodeproj">
    </FileRef>
    <FileRef

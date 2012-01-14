@@ -51,6 +51,7 @@
 	self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
     self.navigationController.toolbarHidden = NO;
     self.navigationController.toolbar.barStyle = UIBarStyleBlackTranslucent;
+    
 	bsgView_ = [[BSGView alloc] initWithFrame:CGRectMake(0.0f, 0.0f,self.view.frame.size.width, self.view.frame.size.height)];
 	bsgView_.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 	bsgView_.datasource = self;
@@ -63,6 +64,8 @@
     
 	[self.view addSubview:bsgView_];
     
+    [bsgView_ reloadData];
+    
     UIBarButtonItem *space = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     UIBarButtonItem *play = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"play.png"] style:UIBarButtonItemStylePlain target:self action:@selector(playSlideShow)];
     self.toolbarItems = [NSArray arrayWithObjects:space, play, space, nil];
@@ -72,13 +75,8 @@
 
 -(void) viewWillAppear:(BOOL)animated {
     [operationQueue setMaxConcurrentOperationCount:maximumConcurrentlyLoadingThumbnails_];
-    UIInterfaceOrientation orientation = [[UIDevice currentDevice] orientation];
-    if (UIInterfaceOrientationIsPortrait(orientation)) {
-        numberOfEntriesPerRow = 4;
-    } else {
-        numberOfEntriesPerRow = 6;
-    }
-    [bsgView_ reloadData];
+    
+    //[bsgView_ reloadData];
 }
 
 #pragma mark
@@ -86,21 +84,7 @@
 #pragma mark
 
 -(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    if (UIInterfaceOrientationIsPortrait(interfaceOrientation)) {
-        numberOfEntriesPerRow = 4;
-    } else {
-        numberOfEntriesPerRow = 6;
-    }
-    [bsgView_ prepareOrientationChange];
 	return YES;
-}
-
--(void) willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
-    
-}
-
--(void) didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
-   
 }
 
 #pragma mark
@@ -108,7 +92,7 @@
 #pragma mark
 
 -(BSGEntryView *)bsgView:(BSGView *)bsgView viewForEntryAtIndexPath:(NSIndexPath *)indexPath {
-	NSInteger index = IndexFromIndexPath(indexPath, [self numberOfEntriesPerRow]);
+	NSInteger index = [bsgView indexForEntryAtIndexPath:indexPath];
 	ThumbnailEntryView *entry = (ThumbnailEntryView *)[bsgView dequeReusableEntry:@"thumbnail"];
 	
 	if (entry == nil) {
@@ -124,9 +108,10 @@
 	return entry;
 }
 
--(void) didSelectEntryAtIndexPath:(NSIndexPath *) index {
+-(void) bsgView:(BSGView *)bsgView didSelectEntryAtIndexPath:(NSIndexPath *)indexPath; {
+    [operationQueue cancelAllOperations];
     [operationQueue setMaxConcurrentOperationCount:maximumConcurrentlyLoadingImages_];
-	BobPhotoPageController *controller = [[BobPhotoPageController alloc] initWithPhotos:photos_ andCurrentIndex:IndexFromIndexPath(index, numberOfEntriesPerRow)];
+	BobPhotoPageController *controller = [[BobPhotoPageController alloc] initWithPhotos:photos_ andCurrentIndex:IndexFromIndexPath(indexPath, numberOfEntriesPerRow)];
     controller.operationQueue = operationQueue;
     controller.bobThumbnailCache = bobCache;
 	[self.navigationController pushViewController:controller animated:YES];
@@ -142,8 +127,9 @@
 }
 
 -(void) playSlideShow {
+    [operationQueue cancelAllOperations];
     [operationQueue setMaxConcurrentOperationCount:maximumConcurrentlyLoadingImages_];
-	BobPhotoPageController *controller = [[BobPhotoPageController alloc] initWithPhotos:photos_ andCurrentIndex:IndexFromIndexPath(0, numberOfEntriesPerRow)];
+	BobPhotoPageController *controller = [[BobPhotoPageController alloc] initWithPhotos:photos_ andCurrentIndex:IndexFromIndexPath(nil, numberOfEntriesPerRow)];
     controller.operationQueue = operationQueue;
     controller.bobThumbnailCache = bobCache;
 	[self.navigationController pushViewController:controller animated:YES];
