@@ -4,3 +4,9 @@
 [submodule "Frameworks/BobPagedScroll"]
 	path = Frameworks/BobPagedScroll
 	url = git@github.com:bobthekingofegypt/BobPagedScroll.git
+[submodule "Frameworks/BobScrollGrid"]
+	path = Frameworks/BobScrollGrid
+	url = git@github.com:bobthekingofegypt/BobScrollGrid.git
+[submodule "Frameworks/BobUtils"]
+	path = Frameworks/BobUtils
+	url = git@github.com:bobthekingofegypt/BobUtils.git

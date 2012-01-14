@@ -1,5 +1,5 @@
 #import "BobPhotoPageController.h"
-#import "BobPageImage.h"
+//#import "BobPageImage.h"
 #import "BobPhoto.h"
 #import "BobPhotoPage.h"
 
@@ -49,10 +49,10 @@
 	[super loadView];	
 	[self setWantsFullScreenLayout:YES];
     
-	bobPageScrollView_ = [[BobPageScrollView alloc] initWithFrame:CGRectMake(0.0f,0.0f,self.view.frame.size.width, self.view.frame.size.height)];
+	bobPageScrollView_ = [[BobPagedScrollView alloc] initWithFrame:CGRectMake(0.0f,0.0f,self.view.frame.size.width, self.view.frame.size.height)];
 	bobPageScrollView_.padding = 10.0f;
 	bobPageScrollView_.datasource = self;
-	bobPageScrollView_.currentIndex = currentIndex;
+	//bobPageScrollView_.currentIndex = currentIndex;
     [bobPageScrollView_ reloadData];
    
 	[self.view addSubview:bobPageScrollView_];
@@ -89,42 +89,38 @@
 	return YES;
 }
 
--(void) didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
-    [bobPageScrollView_ reloadData];
-}
-
 #pragma mark
 #pragma mark Interaction button and title methods
 #pragma mark
 
 -(void) setPageTitle {
-    self.title = [NSString stringWithFormat:@"%d of %d", bobPageScrollView_.currentIndex + 1, [photos_ count]];
+    //self.title = [NSString stringWithFormat:@"%d of %d", bobPageScrollView_.currentIndex + 1, [photos_ count]];
 }
 
 -(void) setupArrows {
    [self setPageTitle];
     left.enabled = YES;
     right.enabled = YES;
-    if (bobPageScrollView_.currentIndex == 0) {
-        left.enabled = NO;
-    } 
-    if (bobPageScrollView_.currentIndex == ([photos_ count] - 1)) {
-        right.enabled = NO;
-    }
+    //if (bobPageScrollView_.currentIndex == 0) {
+    //    left.enabled = NO;
+    //} 
+    //if (bobPageScrollView_.currentIndex == ([photos_ count] - 1)) {
+    //    right.enabled = NO;
+    //}
 }
 
 -(void) leftButtonPressed {
-    if (bobPageScrollView_.currentIndex  > 0) {
-        [bobPageScrollView_ scrollToPage:(bobPageScrollView_.currentIndex - 1) animated:NO];
-        [self setupArrows];
-    }
+   // if (bobPageScrollView_.currentIndex  > 0) {
+    //    [bobPageScrollView_ scrollToPage:(bobPageScrollView_.currentIndex - 1) animated:NO];
+    //    [self setupArrows];
+    //}
 }
 
 -(void) rightButtonPressed {
-    if (bobPageScrollView_.currentIndex  < ([photos_ count] - 1)) {
-        [bobPageScrollView_ scrollToPage:(bobPageScrollView_.currentIndex + 1) animated:NO];
-        [self setupArrows];
-    }
+    //if (bobPageScrollView_.currentIndex  < ([photos_ count] - 1)) {
+    //    [bobPageScrollView_ scrollToPage:(bobPageScrollView_.currentIndex + 1) animated:NO];
+    //    [self setupArrows];
+    //}
 }
 
 -(void) changePage {
@@ -154,7 +150,7 @@
 	[bobPageScrollView_ reloadData];
 }
 
--(void) bobPageScrollView:(BobPageScrollView *)bobPageScrollView settledOnPage:(NSUInteger) index {
+-(void) bobPagedScrollView:(BobPagedScrollView *)bobPageScrollView settledOnPage:(NSUInteger) index {
     [self setupArrows];
 }
 
@@ -178,7 +174,7 @@
 	return [photos_ count];
 }
 
--(BobPage *) bobPageScrollView:(BobPageScrollView *)bobPageScrollView pageForIndex:(NSUInteger)index {
+-(BobPage *) bobPagedScrollView:(BobPagedScrollView *)bobPageScrollView pageForIndex:(NSUInteger)index {
 	static NSString *reuseIdentifier = @"PhotoPage";
 	BobPhotoPage *page = (BobPhotoPage *)[bobPageScrollView dequeueReusablePageWithIdentifier:reuseIdentifier];
 	if (!page) {

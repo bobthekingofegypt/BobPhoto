@@ -1,11 +1,11 @@
 #import <UIKit/UIKit.h>
-#import "BobPageScrollView.h"
+#import "BobPagedScrollView.h"
 #import "BobCache.h"
 #import "BobPhotoPage.h"
 
-@interface BobPhotoPageController : UIViewController<BobPageScrollViewDatasource, BobPhotoPageTouchDelegate> {
+@interface BobPhotoPageController : UIViewController<BobPagedScrollViewDatasource, BobPhotoPageTouchDelegate> {
 	NSMutableArray *photos_;
-	BobPageScrollView *bobPageScrollView_;
+	BobPagedScrollView *bobPageScrollView_;
 	NSUInteger currentIndex;
     NSOperationQueue *operationQueue;
     BobCache *bobCache;
