@@ -10,13 +10,13 @@
 #import "BobPhotoSource.h"
 
 @interface BobPhoto : NSObject {
-    id<BobPhotoSource> image_;
-    id<BobPhotoSource> thumbnail_;
+    BobPhotoSource *image_;
+    BobPhotoSource *thumbnail_;
 }
 
-@property (nonatomic, retain) id<BobPhotoSource> image;
-@property (nonatomic, retain) id<BobPhotoSource> thumbnail;
+@property (nonatomic, retain) BobPhotoSource *image;
+@property (nonatomic, retain) BobPhotoSource *thumbnail;
 
-+(BobPhoto *) bobPhotoWithThumbnail:(id<BobPhotoSource>)thumbnail andImage:(id<BobPhotoSource>)image;
++(BobPhoto *) bobPhotoWithThumbnail:(BobPhotoSource *)thumbnail andImage:(BobPhotoSource *)image;
 
 @end

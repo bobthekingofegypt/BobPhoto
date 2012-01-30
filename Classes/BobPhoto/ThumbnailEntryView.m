@@ -64,7 +64,7 @@
 
 #pragma mark public methods
 
--(void) setPhotoSource:(id<BobPhotoSource>) photoSource {
+-(void) setPhotoSource:(BobPhotoSource *) photoSource {
     if (photoSource_) {
         [photoSource_ release], photoSource_ = nil;
     }
@@ -93,8 +93,12 @@
 	[self setNeedsDisplay];
 }
 
--(void) loadImage:(UIImage *) i {
+-(void) bobImageLoadOperation:(BobImageLoadOperation *)bobImageLoadOperation imageLoaded:(UIImage *) i {
     [self setImage:i];
+}
+
+-(void) bobImageLoadOperation:(BobImageLoadOperation *)bobImageLoadOperation imageLoadFailed:(NSError *)error {
+    NSLog(@"Image load failed");
 }
 
 @end

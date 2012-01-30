@@ -54,12 +54,9 @@
 	bobPageScrollView_.datasource = self;
     bobPageScrollView_.delegate = self;
     [bobPageScrollView_ scrollToPage:currentIndex animated:NO];
-    
-	//bobPageScrollView_.currentIndex = currentIndex;
     [bobPageScrollView_ reloadData];
    
 	[self.view addSubview:bobPageScrollView_];
-    
     
     UIBarButtonItem *space = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     left = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"left.png"] style:UIBarButtonItemStylePlain target:self action:@selector(leftButtonPressed)];

@@ -88,8 +88,12 @@
     } 
 }
    
--(void) loadImage:(UIImage *) i {
-    [self setScrollViewImage:i];
+-(void) bobImageLoadOperation:(BobImageLoadOperation *)bobImageLoadOperation imageLoaded:(UIImage *) image {
+    [self setScrollViewImage:image];
+}
+
+-(void) bobImageLoadOperation:(BobImageLoadOperation *)bobImageLoadOperation imageLoadFailed:(NSError *)error {
+    NSLog(@"Image load failed");
 }
 
 -(void) bobCenteringImageScrollViewSingleClicked:(BobCenteringImageScrollView *)bobCenteringImageScrollView {

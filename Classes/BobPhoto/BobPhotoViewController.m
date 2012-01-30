@@ -62,6 +62,8 @@
 	bsgView_.entrySize = CGSizeMake(75, 75);
 	bsgView_.entryPadding = UIEdgeInsetsMake(2.0f, 2.0f, 2.0f, 2.0f);
     
+    bsgView_.contentInset = UIEdgeInsetsMake(66.0f, 0.0f, 46.0f, 0.0f);
+    
 	[self.view addSubview:bsgView_];
     
     [bsgView_ reloadData];
@@ -75,8 +77,6 @@
 
 -(void) viewWillAppear:(BOOL)animated {
     [operationQueue setMaxConcurrentOperationCount:maximumConcurrentlyLoadingThumbnails_];
-    
-    //[bsgView_ reloadData];
 }
 
 #pragma mark
@@ -84,6 +84,11 @@
 #pragma mark
 
 -(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+    if (UIInterfaceOrientationIsPortrait(interfaceOrientation)) {
+        bsgView_.contentInset = UIEdgeInsetsMake(66.0f, 0.0f, 46.0f, 0.0f);
+    } else {
+        bsgView_.contentInset = UIEdgeInsetsMake(52.0f, 2.0f, 32.0f, 2.0f);
+    }
 	return YES;
 }
 

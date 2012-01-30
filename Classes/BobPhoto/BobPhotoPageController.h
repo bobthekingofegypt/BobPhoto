@@ -3,7 +3,7 @@
 #import "BobCache.h"
 #import "BobPhotoPage.h"
 
-@interface BobPhotoPageController : UIViewController<BobPagedScrollViewDatasource, BobPhotoPageTouchDelegate> {
+@interface BobPhotoPageController : UIViewController<BobPagedScrollViewDatasource, BobPagedScrollViewDelegate, BobPhotoPageTouchDelegate> {
 	NSMutableArray *photos_;
 	BobPagedScrollView *bobPageScrollView_;
 	NSUInteger currentIndex;

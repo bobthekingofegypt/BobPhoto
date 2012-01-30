@@ -658,7 +658,7 @@
 		A14ECAF11352012E00FF76E6 /* 5500774964_cdd61f55c3_o_medium_2.jpg_thumb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 5500774964_cdd61f55c3_o_medium_2.jpg_thumb.png; sourceTree = "<group>"; };
 		A15BE1A414C0CDD4009DE3DE /* libBobPagedScrollView.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libBobPagedScrollView.a; path = "Frameworks/BobPagedScroll/build/Release-iphoneos/libBobPagedScrollView.a"; sourceTree = "<group>"; };
 		A15BE1B614C0D261009DE3DE /* libBobScrollGrid.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libBobScrollGrid.a; path = "Frameworks/BobScrollGrid/build/Release-iphoneos/libBobScrollGrid.a"; sourceTree = "<group>"; };
-		A15BE21114C1FAFC009DE3DE /* libBobUtils.a */ = {isa = PBXFileReference; lastKnownFileType = file; name = libBobUtils.a; path = "Frameworks/BobUtils/build/Release-iphoneos/libBobUtils.a"; sourceTree = "<group>"; };
+		A15BE21114C1FAFC009DE3DE /* libBobUtils.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libBobUtils.a; path = "Frameworks/BobUtils/build/Release-iphoneos/libBobUtils.a"; sourceTree = "<group>"; };
 		A174C1D3132D4147005846F1 /* 5212023604_f20ea1fb5d_o_medium_2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = 5212023604_f20ea1fb5d_o_medium_2.jpg; path = Images/medium/5212023604_f20ea1fb5d_o_medium_2.jpg; sourceTree = SOURCE_ROOT; };
 		A174C1D4132D4147005846F1 /* 5212030714_14f06c4504_o_medium_2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = 5212030714_14f06c4504_o_medium_2.jpg; path = Images/medium/5212030714_14f06c4504_o_medium_2.jpg; sourceTree = SOURCE_ROOT; };
 		A174C1D5132D4147005846F1 /* 5212033470_abe76aaf15_o_medium_2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = 5212033470_abe76aaf15_o_medium_2.jpg; path = Images/medium/5212033470_abe76aaf15_o_medium_2.jpg; sourceTree = SOURCE_ROOT; };
@@ -1139,10 +1139,10 @@
 		A12BDEB6126F746E00A3AD65 /* Examples */ = {
 			isa = PBXGroup;
 			children = (
-				A12C3168148EB18F00427A8C /* DiskGalleryController.m */,
 				A12BDEC3126F771500A3AD65 /* ExampleSelectionTableController.h */,
 				A12BDEC4126F771500A3AD65 /* ExampleSelectionTableController.m */,
 				A1A71E1312A2D4B80064DD5E /* DiskGalleryController.h */,
+				A12C3168148EB18F00427A8C /* DiskGalleryController.m */,
 				A1009EBE135B78B100F85816 /* RemoteGalleryController.h */,
 				A1009EBF135B78B100F85816 /* RemoteGalleryController.m */,
 			);

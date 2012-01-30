@@ -9,12 +9,12 @@
 
 @protocol BobPhotoPageTouchDelegate;
 
-@interface BobPhotoPage : BobPage<BobCenteringImageScrollViewDelegate> {
+@interface BobPhotoPage : BobPage<BobCenteringImageScrollViewDelegate, BobImageLoadOperationDelegate> {
     BobCenteringImageScrollView *_scrollView;
     BobImageLoadOperation *_bobImageLoadOperation;
     BobCache *bobCache;
     NSOperationQueue *operationQueue;
-    id<BobPhotoSource> photoSource_;
+    BobPhotoSource * photoSource_;
     LoadingView *loadingView;
     id<BobPhotoPageTouchDelegate> touchDelegate;
     BobCache *bobThumbnailCache;

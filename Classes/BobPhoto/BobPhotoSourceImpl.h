@@ -9,17 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "BobPhotoSource.h"
 
-@interface BobPhotoSourceImpl : NSObject<BobPhotoSource> {
-    NSString *imageLocation;
-    NSString *imageLocationRetina;
-    NSString *imageCacheKey;
-
-    BOOL cached;
-    BOOL retina;
+@interface BobPhotoSourceImpl : BobPhotoSource {
+    
 }
 
-@property (nonatomic, copy) NSString *imageLocation;
-@property (nonatomic, copy) NSString *imageLocationRetina;
-@property (nonatomic, copy) NSString *imageCacheKey;
+-(NSString *) cacheKey;
 
 @end

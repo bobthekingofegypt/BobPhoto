@@ -4,20 +4,19 @@
 #import "BobCache.h"
 #import "BobPhotoSource.h"
 
-@interface ThumbnailEntryView : BSGEntryView {
-    //@private
+@interface ThumbnailEntryView : BSGEntryView <BobImageLoadOperationDelegate> {
 	UIImage *image;
     BobImageLoadOperation *bobImageLoadOperation_;
     BobCache *bobCache;
     NSOperationQueue *operationQueue;
-    id<BobPhotoSource> photoSource_;
+    BobPhotoSource * photoSource_;
 }
 
 @property (nonatomic, retain) BobImageLoadOperation *bobImageLoadOperation;
 @property (nonatomic, retain) BobCache *bobCache;
 @property (nonatomic, retain) NSOperationQueue *operationQueue;
 
--(void) setPhotoSource:(id<BobPhotoSource>) photoSource;
+-(void) setPhotoSource:(BobPhotoSource *) photoSource;
 -(void) prepareForReuse;
 -(void) triggerDownload;
 

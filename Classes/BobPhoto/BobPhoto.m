@@ -13,7 +13,7 @@
 
 @synthesize image= image_, thumbnail = thumbnail_;
 
-+(BobPhoto *) bobPhotoWithThumbnail:(id<BobPhotoSource>)thumbnail andImage:(id<BobPhotoSource>)image {
++(BobPhoto *) bobPhotoWithThumbnail:(BobPhotoSource *)thumbnail andImage:(BobPhotoSource *)image {
     BobPhoto *bobPhoto = [[[BobPhoto alloc] init] autorelease];
     bobPhoto.thumbnail = thumbnail;
     bobPhoto.image = image;
