@@ -8,34 +8,6 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          isPathRelative = "1"
-         filePath = "Classes/BobPhoto/BobPhotoViewController.m"
-         timestampString = "349308677.599053"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "100"
-         endingLineNumber = "100"
-         landmarkName = "-bsgView:viewForEntryAtIndexPath:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         isPathRelative = "1"
-         filePath = "Classes/BobPhoto/BobPhotoViewController.m"
-         timestampString = "349308677.599053"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "101"
-         endingLineNumber = "101"
-         landmarkName = "-bsgView:viewForEntryAtIndexPath:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         isPathRelative = "1"
          filePath = "Frameworks/BobScrollGrid/BobScrollGrid/BSGView.m"
          timestampString = "349307823.711802"
          startingColumnNumber = "9223372036854775807"
@@ -70,7 +42,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "92"
          endingLineNumber = "92"
-         landmarkName = "-imageLoaded:"
+         landmarkName = "-bobImageLoadOperation:imageLoaded:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint

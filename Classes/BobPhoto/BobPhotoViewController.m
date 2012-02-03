@@ -19,8 +19,6 @@
 		
         maximumConcurrentlyLoadingThumbnails_ = 1;
         maximumConcurrentlyLoadingImages_ = 1;
-        
-		numberOfEntriesPerRow = 4;
     }
     
     return self;
@@ -76,6 +74,12 @@
 }
 
 -(void) viewWillAppear:(BOOL)animated {
+    UIInterfaceOrientation currentOrientation = [[UIApplication sharedApplication] statusBarOrientation];
+    if (UIInterfaceOrientationIsPortrait(currentOrientation)) {
+        bsgView_.contentInset = UIEdgeInsetsMake(66.0f, 0.0f, 46.0f, 0.0f);
+    } else {
+        bsgView_.contentInset = UIEdgeInsetsMake(52.0f, 2.0f, 32.0f, 2.0f);
+    }
     [operationQueue setMaxConcurrentOperationCount:maximumConcurrentlyLoadingThumbnails_];
 }
 
@@ -116,7 +120,7 @@
 -(void) bsgView:(BSGView *)bsgView didSelectEntryAtIndexPath:(NSIndexPath *)indexPath; {
     [operationQueue cancelAllOperations];
     [operationQueue setMaxConcurrentOperationCount:maximumConcurrentlyLoadingImages_];
-	BobPhotoPageController *controller = [[BobPhotoPageController alloc] initWithPhotos:photos_ andCurrentIndex:IndexFromIndexPath(indexPath, numberOfEntriesPerRow)];
+	BobPhotoPageController *controller = [[BobPhotoPageController alloc] initWithPhotos:photos_ andCurrentIndex:[bsgView indexForEntryAtIndexPath:indexPath]];
     controller.operationQueue = operationQueue;
     controller.bobThumbnailCache = bobCache;
 	[self.navigationController pushViewController:controller animated:YES];
@@ -127,14 +131,10 @@
 	return photos_.count;
 }
 
--(NSInteger) numberOfEntriesPerRow {
-    return numberOfEntriesPerRow;
-}
-
 -(void) playSlideShow {
     [operationQueue cancelAllOperations];
     [operationQueue setMaxConcurrentOperationCount:maximumConcurrentlyLoadingImages_];
-	BobPhotoPageController *controller = [[BobPhotoPageController alloc] initWithPhotos:photos_ andCurrentIndex:IndexFromIndexPath(nil, numberOfEntriesPerRow)];
+	BobPhotoPageController *controller = [[BobPhotoPageController alloc] initWithPhotos:photos_ andCurrentIndex:0];
     controller.operationQueue = operationQueue;
     controller.bobThumbnailCache = bobCache;
 	[self.navigationController pushViewController:controller animated:YES];

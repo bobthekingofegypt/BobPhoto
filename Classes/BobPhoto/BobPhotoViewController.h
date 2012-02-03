@@ -5,7 +5,6 @@
 
 @interface BobPhotoViewController : UIViewController<BSGDatasource, BSGViewDelegate> {
 	NSMutableDictionary *thumbnailImages_;
-	NSInteger numberOfEntriesPerRow;
 	BSGView *bsgView_;
     NSOperationQueue *operationQueue;
 	BobCache *bobCache;
