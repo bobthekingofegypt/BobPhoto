@@ -1,0 +1,32 @@
+# BobPhoto 
+
+BobPhoto is an example of a project using BobPagedScroll, BobScrollGrid and BobUtil to create a photo's like application.
+
+# Features
+
+Supports a grid view of images in landscape or portrait
+Supports photo views in landscape and portrait
+Supports zooming and scrolling of large images
+Supports interaction with touch and controls
+Supports slideshows
+
+# Screen shots of photo app
+
+__Grid view of images__
+![Grid View](http://bobstuff.org/media/shots/shot1.png)
+
+__Grid view supports orientation changes__
+![Grid View rotated](http://bobstuff.org/media/shots/shot2.png)
+
+__Photo view supports landscape and portrait__
+![Photo View](http://bobstuff.org/media/shots/shot5.png)
+![Photo View rotated](http://bobstuff.org/media/shots/shot3.png)
+![Photo View rotated](http://bobstuff.org/media/shots/shot4.png)
+
+
+# Attributions
+
+All images used in the examples are used with the permission of Richard Marshall.  The ownership and copyright of all images are retained by Richard Marshall please do not reuse them with out consulting Richard Marshall first.
+http://www.flickr.com/photos/rmmarshall/
+
+
